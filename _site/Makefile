@@ -1,6 +1,6 @@
 deploy:
 	git checkout source
-	jekyll
+	jekyll build
 	git add -A
 	git commit -m "update source"
 	cp -r _site/ /tmp/

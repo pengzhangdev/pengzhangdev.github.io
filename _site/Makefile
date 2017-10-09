@@ -14,3 +14,4 @@ deploy:
 	echo "deploy succeed"
 	git push origin source
 	echo "push source"
+	rm -rf /tmp/_site/

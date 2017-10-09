@@ -43,7 +43,7 @@
 
     <!-- Google Analytics End -->
 
-    <title>首页</title>
+    <title>Monthly archive for 2017/9</title>
   </head>
 
   <body>
@@ -110,8 +110,9 @@
 
       <article>
 
-<ul class="post-list">
-    
+<div class="post-list">
+    <ul>
+
     <li>
       <div class="post-title">
         <a href="/%E6%8A%80%E6%9C%AF/2017/09/19/android8-partiton-table.html"> Android8 分区表变化和相关信息</a> </br>
@@ -120,9 +121,7 @@
       <div class="post-info">
         <ol>
           <li class="post-time">2017-09-19</li> 
-          <li class="post-category"> 
-           技术
-          </li>
+          <li class="post-category"> 技术 </li>
         </ol>
       </div>
 
@@ -151,48 +150,12 @@ A/B系统带来的好处是:</p>
  
         <a href="/%E6%8A%80%E6%9C%AF/2017/09/19/android8-partiton-table.html"> Read More ... </a> </br>
       </div>
-
     </li>
-    
-    <li>
-      <div class="post-title">
-        <a href="/%E6%8A%80%E6%9C%AF/2017/08/22/zram.html"> zram 简介</a> </br>
-      </div>
 
-      <div class="post-info">
-        <ol>
-          <li class="post-time">2017-08-22</li> 
-          <li class="post-category"> 
-           技术
-          </li>
-        </ol>
-      </div>
 
-      <div class="post-preview">
-        <h2 id="简介"><font color="blue">简介</font></h2>
-
-<p>在linux内核的mm子系统中, 包含三个支持内存压缩的组件, 分别是zram, zcache 和 zswap.<br />
-<br /><br />
-<strong>zswap</strong>: 前提条件是, 系统中存在swap设备, 内核版本&gt;3.5, 因为依赖了frontswap的接口, 用于管理swap page.<br />
-zswap是一个轻量化的后端架构, 将进程各种交换出的页面进行压缩, 并存储在一个基于RAM的内缓冲池中. 缓冲池不预分配, 有最大值, 且当缓冲池满了, LRU的内存页会被写入swap设备. 依赖swap分区, 不适用hdtv.<br />
-<br /><br />
-<strong>zcache</strong>: 与zswap类似, 依赖frontswap接口和cleacache接口, 内核版本&gt;3.5. 与zswap一样, 将进程交换出的页面和文件系统的缓冲进行压缩并存储在RAM的内存缓冲池中, 在缓冲池满后, 将页面存入swap分区或者 RAMster (一种基于网络的内存池共享技术, 可以共享网络中其余硬件的内存). zswap可以理解为是zcache的子集. 不适用hdtv.<br />
-<br /><br />
-<strong>zram</strong>: 内存中的swap设备, 内核&gt;3.14, 可以理解为zcache的RAM缓冲池. 优先级最高, 不建议与其他swap一起使用.不依赖真实的swap设备(Nand或者网络), 倾向于在低内存的嵌入式设备中使用.<br />
-<br /></p>
-
-<p>综上, zram更适合hdtv这个项目</p>
-
- 
-        <a href="/%E6%8A%80%E6%9C%AF/2017/08/22/zram.html"> Read More ... </a> </br>
-      </div>
-
-    </li>
-    
-</ul>
-
-<!-- Pagination links -->
-
+    </ul>
+  </div>
+</div>
 
 
       </article>

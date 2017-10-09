@@ -87,15 +87,15 @@ module Jekyll
     end
 
     def render(layouts, site_payload)
-      payload = {
+      payload = Utils.deep_merge_hashes({
           'page' => self.to_liquid,
           'paginator' => pager.to_liquid
-      }.deep_merge(site_payload)
+      }, site_payload)
       do_layout(payload, layouts)
     end
 
     def to_liquid(attr = nil)
-      self.data.deep_merge({
+      Utils.deep_merge_hashes(self.data, {
                                'content' => self.content,
                                'date' => @date,
                                'month' => @month,

@@ -103,21 +103,21 @@
 
       <article>
 
-<h2><font color="blue">简介</font></h2>
-
+<h2 id="font-colorbluefont"><font color="blue">简介</font></h2>
 <p>在linux内核的mm子系统中, 包含三个支持内存压缩的组件, 分别是zram, zcache 和 zswap.
-<br>
+<br />
 <strong>zswap</strong>: 前提条件是, 系统中存在swap设备, 内核版本&gt;3.5, 因为依赖了frontswap的接口, 用于管理swap page.
 zswap是一个轻量化的后端架构, 将进程各种交换出的页面进行压缩, 并存储在一个基于RAM的内缓冲池中. 缓冲池不预分配, 有最大值, 且当缓冲池满了, LRU的内存页会被写入swap设备. 依赖swap分区, 不适用hdtv.
-<br>
+<br />
 <strong>zcache</strong>: 与zswap类似, 依赖frontswap接口和cleacache接口, 内核版本&gt;3.5. 与zswap一样, 将进程交换出的页面和文件系统的缓冲进行压缩并存储在RAM的内存缓冲池中, 在缓冲池满后, 将页面存入swap分区或者 RAMster (一种基于网络的内存池共享技术, 可以共享网络中其余硬件的内存). zswap可以理解为是zcache的子集. 不适用hdtv.
-<br>
+<br />
 <strong>zram</strong>: 内存中的swap设备, 内核&gt;3.14, 可以理解为zcache的RAM缓冲池. 优先级最高, 不建议与其他swap一起使用.不依赖真实的swap设备(Nand或者网络), 倾向于在低内存的嵌入式设备中使用.
-<br></p>
+<br /></p>
 
-<p>综上, zram更适合hdtv这个项目</p>
+<p>综上, zram更适合hdtv这个项目
+\n\n\n</p>
 
-<h2><font color="blue"> zram </font></h2>
+<h2 id="font-colorblue-zram-font"><font color="blue"> zram </font></h2>
 
 <p>zram是将系统中的内存的一部分内存隔离成zram设备(swap设备),对于小内存的设备, 在使用上会感内存被扩大了.</p>
 
@@ -129,72 +129,61 @@ bzip2: 60.81 seconds, 8.46 MB, ratio=.176
 xz: 311.65 seconds, 7.33 MB, ratio=.145
 </code></p>
 
-<p><br></p>
+<p><br /></p>
 
 <p>压缩率计算:
-相关数据/sys/block/zram0/{mem<em>used</em>total,orig<em>data</em>size,compr<em>data</em>size}
+相关数据/sys/block/zram0/{mem_used_total,orig_data_size,compr_data_size}
 <code>
 compression radio = orig_data_size / compr_data_size
 real compr. ratio  = orig_data_size / mem_used_total
 </code></p>
 
-<p><br></p>
+<p><br />
+### 优点　###
+* 内存扩大, 平均压缩比为2.0
+* 由于在实现上, 如果某个PAGE的压缩率大于PAGE_SIZE * 4 / 3 (kernel 3.10), 则不进行压缩, 在读取时, 也就省下解压的消耗. 从而提高速度,降低CPU占用,但是会降低压缩率.</p>
 
-<h3>优点　</h3>
-
+<h3 id="section">缺点</h3>
 <ul>
-<li>内存扩大, 平均压缩比为2.0</li>
-<li>由于在实现上, 如果某个PAGE的压缩率大于PAGE_SIZE * 4 / 3 (kernel 3.10), 则不进行压缩, 在读取时, 也就省下解压的消耗. 从而提高速度,降低CPU占用,但是会降低压缩率.</li>
+  <li>CPU占用</li>
+  <li>功耗增加</li>
+  <li>由于占用一部分内存作为zram设备, 则如果zram压缩速度不够快, 反而更容易引发OOM.(github上的一个情况, 无数据信息, 在ZX2000上未出现该情况)</li>
 </ul>
 
-<h3>缺点</h3>
-
-<ul>
-<li>CPU占用</li>
-<li>功耗增加</li>
-<li>由于占用一部分内存作为zram设备, 则如果zram压缩速度不够快, 反而更容易引发OOM.(github上的一个情况, 无数据信息, 在ZX2000上未出现该情况)</li>
-</ul>
-
-<h3>调整方法</h3>
+<h3 id="section-1">调整方法</h3>
 
 <p>CPU占用查看kswapd(kswap)</p>
 
 <p>CPU占用调整:</p>
 
 <ul>
-<li>/sys/block/zram0/max<em>comp</em>streams 设置压缩流个数. 默认为每个CPU分配1个.</li>
-<li>/sys/block/zram0/comp_algorithm  切换压缩算法, 建议使用默认的LZO, 速度快</li>
+  <li>/sys/block/zram0/max_comp_streams 设置压缩流个数. 默认为每个CPU分配1个.</li>
+  <li>/sys/block/zram0/comp_algorithm  切换压缩算法, 建议使用默认的LZO, 速度快</li>
 </ul>
 
-<p><br></p>
-
-<h3>测试</h3>
-
-<p><br>
+<p><br />
+### 测试 ###
+<br />
 以下数据是　在<strong>ZX2000</strong>上, UI切换和启动新应用换, 抓取的数据．
-<br>
+<br />
 压缩率相关的三个值分别为
-```</p>
-
-<h1>busybox free</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
-</code></pre>
-
-<p>Mem:        427400     365136      62264        408        348      72148
+```
+# busybox free                             <br />
+             total       used       free     shared    buffers     cached
+Mem:        427400     365136      62264        408        348      72148
 -/+ buffers/cache:     292640     134760
 Swap:       204796     103784     101012</p>
 
-<p>orig<em>data</em>size:　90275840
-mem<em>used</em>total:  25862144
-compr<em>data</em>size: 21846958
-zero<em>pages:      1903
+<p>orig_data_size:　90275840
+mem_used_total:  25862144
+compr_data_size: 21846958
+zero_pages:      1903
 <code>
 &lt;br&gt;
 压缩率为：
 </code>
-compression radio(orig</em>data<em>size / compr</em>data<em>size) = 90275840 / 21846958 = 4.13
-real compr. ratio (orig</em>data<em>size / mem</em>used_total) = 90275840 / 25862144 = 3.49
+compression radio(orig_data_size / compr_data_size) = 90275840 / 21846958 = 4.13
+real compr. ratio (orig_data_size / mem_used_total) = 90275840 / 25862144 = 3.49
 ```</p>
 
 <p>cpu 占用数据：
@@ -207,28 +196,24 @@ real compr. ratio (orig</em>data<em>size / mem</em>used_total) = 90275840 / 2586
 </code>
 5%是在启动新Activity的时候, 初步结论是, CPU占用不高.</p>
 
-<p><br>
+<p><br />
 以下数据是　在<strong>ZX1800</strong>上, UI切换和启动新应用换, 抓取的数据．
-<br></p>
+<br /></p>
 
-<p>```</p>
-
-<h1>./busybox free</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
-</code></pre>
-
-<p>Mem:        427396     422720       4676       1688          0      42412
+<p>```
+# ./busybox free                                <br />
+             total       used       free     shared    buffers     cached
+Mem:        427396     422720       4676       1688          0      42412
 -/+ buffers/cache:     380308      47088
 Swap:       204796     112748      92048</p>
 
-<p>orig<em>data</em>size:  106278912
-mem<em>used</em>total:  25624576
-compr<em>data</em>size: 23845230
+<p>orig_data_size:  106278912
+mem_used_total:  25624576
+compr_data_size: 23845230
 zero_pages:      3273
 ```</p>
 
-<p><br>
+<p><br />
 压缩率为：
 <code>
 compression radio(orig_data_size / compr_data_size) = 106278912 / 23845230 = 4.45
@@ -253,13 +238,13 @@ real compr. ratio (orig_data_size / mem_used_total) = 106278912 / 25624576 = 4.1
 
 <p>```</p>
 
-<p><br></p>
+<p><br /></p>
 
-<h4>内存申请测试</h4>
+<h4 id="section-2">内存申请测试</h4>
 
 <p>以下是在<strong>zx2000</strong>设备上, 通过每秒分配1M内存的方式, 内存中数据为urandom设备数据, 测试实际申请内存增加的值. 统计的数据如下.</p>
 
-<p><br>
+<p><br />
 在系统停留在主界面后, 小窗口播台, 在内存申请使用了167M后, 触发OOM.
 CPU占用如下, 触发OOM时, CPU占用达到8%
 <code>
@@ -274,107 +259,89 @@ CPU占用如下, 触发OOM时, CPU占用达到8%
 </code></p>
 
 <p>内存占用如下:
-```</p>
-
-<h1>busybox free     #开始时内存</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
-</code></pre>
-
-<p>Mem:        427400     423752       3648       2224       2540     105892
+```
+# busybox free     #开始时内存                                           <br />
+             total       used       free     shared    buffers     cached
+Mem:        427400     423752       3648       2224       2540     105892
 -/+ buffers/cache:     315320     112080
 Swap:       204796          0     204796</p>
 
-<h1>busybox free     # OOM 时内存</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
+<h1 id="busybox-free------oom-">busybox free     # OOM 时内存</h1>
+<pre><code>         total       used       free     shared    buffers     cached Mem:        427400     422908       4492        292        200      11464 -/+ buffers/cache:     411244      16156 Swap:       204796     204796          0 ```
 </code></pre>
 
-<p>Mem:        427400     422908       4492        292        200      11464
--/+ buffers/cache:     411244      16156
-Swap:       204796     204796          0
-```</p>
-
 <p>zram信息如下:
-```</p>
-
-<h1>开始使用zram不久</h1>
-
-<p>==============================================
+```
+# 开始使用zram不久
+==============================================
 status: enabled
 compression: 1
 disksize: 200M
-compr<em>data</em>size: 1175K
-orig<em>data</em>size: 2232K
-mem<em>used</em>total: 2232K
-max<em>comp</em>streams: 1
+compr_data_size: 1175K
+orig_data_size: 2232K
+mem_used_total: 2232K
+max_comp_streams: 1
 comp_algorithm: [lzo]</p>
 
-<h1>一段时间后</h1>
-
+<h1 id="section-3">一段时间后</h1>
 <p>==============================================
 status: enabled
 compression: 2
 disksize: 200M
-compr<em>data</em>size: 3675K
-orig<em>data</em>size: 11800K
-mem<em>used</em>total: 4648K
-max<em>comp</em>streams: 1
+compr_data_size: 3675K
+orig_data_size: 11800K
+mem_used_total: 4648K
+max_comp_streams: 1
 comp_algorithm: [lzo]</p>
 
 <p>==============================================
 status: enabled
 compression: 3
 disksize: 200M
-compr<em>data</em>size: 15230K
-orig<em>data</em>size: 55040K
-mem<em>used</em>total: 16624K
-max<em>comp</em>streams: 1
+compr_data_size: 15230K
+orig_data_size: 55040K
+mem_used_total: 16624K
+max_comp_streams: 1
 comp_algorithm: [lzo] </p>
 
 <p>==============================================
 status: enabled
 compression: 2
 disksize: 200M
-compr<em>data</em>size: 44355K
-orig<em>data</em>size: 120788K
-mem<em>used</em>total: 46196K
-max<em>comp</em>streams: 1
+compr_data_size: 44355K
+orig_data_size: 120788K
+mem_used_total: 46196K
+max_comp_streams: 1
 comp_algorithm: [lzo] </p>
 
 <p>==============================================
 status: enabled
 compression: 1
 disksize: 200M
-compr<em>data</em>size: 137773K
-orig<em>data</em>size: 200280K
-mem<em>used</em>total: 144096K
-max<em>comp</em>streams: 1
+compr_data_size: 137773K
+orig_data_size: 200280K
+mem_used_total: 144096K
+max_comp_streams: 1
 comp_algorithm: [lzo]
 ```
 可以看到, 压缩比, 从1 -&gt; 3 -&gt;１, 也就是说在swap空或者快满是, 压缩比是最低的, 从最后触发OOM看, 通过压缩节省的内存有60M左右. 并且由于1M填充的都是urandom设备的内容, 本身导致压缩比比正常使用时偏低(几乎无0页, 数据随机).</p>
 
-<p><br>
+<p><br />
 在不启用zram的情况下，　内存申请在95 M的时候，　触发了OOM.
 ```
- # busybox free       # 开始内存申请时的内存<br>
+ # busybox free       # 开始内存申请时的内存                                           <br />
              total       used       free     shared    buffers     cached
 Mem:        427400     422932       4468       2224       2524     103748
 -/+ buffers/cache:     316660     110740
 Swap:            0          0          0</p>
 
-<h1>busybox free       # OOM 时的内存</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
+<h1 id="busybox-free--------oom-">busybox free       # OOM 时的内存</h1>
+<pre><code>         total       used       free     shared    buffers     cached Mem:        427400     424052       3348       2224         36      16608 -/+ buffers/cache:     407408      19992 Swap:            0          0          0
 </code></pre>
 
-<p>Mem:        427400     424052       3348       2224         36      16608
--/+ buffers/cache:     407408      19992
-Swap:            0          0          0</p>
-
 <p>```
-<br>
-<br></p>
+<br />
+<br /></p>
 
 <p>以下是在<strong>zx1800</strong>设备上, 通过每秒分配1M内存的方式, 内存中数据为urandom设备数据, 测试实际申请内存增加的值. 统计的数据如下.</p>
 
@@ -401,139 +368,121 @@ CPU 占用
 
 <p>压缩比的数据与zx2000 emmc相同, 特别是在zram剩余大小不多时, 压缩比快速缩小到1.4(从3降到1)左右.
 以下是free的输出.
-```</p>
-
-<h1>./busybox free           #系统启动完成时</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
-</code></pre>
-
-<p>Mem:        427396     422192       5204       2224          4     109536
+```
+# ./busybox free           #系统启动完成时               <br />
+             total       used       free     shared    buffers     cached
+Mem:        427396     422192       5204       2224          4     109536
 -/+ buffers/cache:     312652     114744
 Swap:       204796          0     204796</p>
 
-<h1>./busybox free        # OOM 时</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
+<h1 id="busybox-free---------oom-">./busybox free        # OOM 时</h1>
+<pre><code>         total       used       free     shared    buffers     cached Mem:        427396     423280       4116        264          0      13268 -/+ buffers/cache:     410012      17384 Swap:       204796     204796          0
 </code></pre>
-
-<p>Mem:        427396     423280       4116        264          0      13268
--/+ buffers/cache:     410012      17384
-Swap:       204796     204796          0</p>
 
 <p>```</p>
 
 <p>在不开启zram的情况下, 申请的内存达到96M时触发OOM, 以下是free的输出.
-```</p>
-
-<h1>./busybox free         # 系统启动完成</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
-</code></pre>
-
-<p>Mem:        427396     411928      15468       2224          0     107552
+```
+# ./busybox free         # 系统启动完成                    <br />
+             total       used       free     shared    buffers     cached
+Mem:        427396     411928      15468       2224          0     107552
 -/+ buffers/cache:     304376     123020
 Swap:            0          0          0</p>
 
-<h1>./busybox free         # 触发OOM</h1>
-
-<pre><code>         total       used       free     shared    buffers     cached
+<h1 id="busybox-free----------oom">./busybox free         # 触发OOM</h1>
+<pre><code>         total       used       free     shared    buffers     cached Mem:        427396     419892       7504       2224          0      15372 -/+ buffers/cache:     404520      22876 Swap:            0          0          0
 </code></pre>
-
-<p>Mem:        427396     419892       7504       2224          0      15372
--/+ buffers/cache:     404520      22876
-Swap:            0          0          0</p>
 
 <p>```</p>
 
 <p>综上, 与zx2000相同, 可用内存增加70M左右.</p>
 
-<h4>OOM测试</h4>
+<h4 id="oom">OOM测试</h4>
 
 <p>基于<strong>zx2000</strong> 8月18日的autobuild系统, 在分别不启用和启用zram的情况下, 测试对OOM的影响.</p>
 
 <p>执行操作如下:</p>
 
 <ol>
-<li>重启系统.</li>
-<li>通过UI界面分别启动本地视频, 本地音乐 和本地图片三个应用.</li>
-<li>按遥控器退出键, 回到电视直播界面.</li>
+  <li>重启系统.</li>
+  <li>通过UI界面分别启动本地视频, 本地音乐 和本地图片三个应用.</li>
+  <li>按遥控器退出键, 回到电视直播界面.</li>
 </ol>
 
 <p>在未启用zram的情况下, 执行以上操作, 必定触发OOM. 在启用zram的情况下, 执行以上操作, 未触发OOM.
-<br>
-<br></p>
+<br />
+<br /></p>
 
 <p>基于<strong>zx1800</strong> 8月18日的autobuild系统, 在分别不启用和启用zram的情况下, 测试对OOM的影响.</p>
 
 <p>执行操作如下:</p>
 
 <ol>
-<li>重启系统.</li>
-<li>通过UI界面分别启动本地视频, 本地音乐 和本地图片三个应用.</li>
-<li>按遥控器退出键, 回到电视直播界面.</li>
+  <li>重启系统.</li>
+  <li>通过UI界面分别启动本地视频, 本地音乐 和本地图片三个应用.</li>
+  <li>按遥控器退出键, 回到电视直播界面.</li>
 </ol>
 
 <p>在未启用zram的情况下, 执行以上操作, 必定触发OOM. 并且在以上步骤之后, 重复按导视键和退出键, 非常卡, 甚至黑屏几秒钟.
 在启用zram的情况下, 执行以上操作, 不会触发OOM. 并且在以上步骤之后, 重复按导视键和退出键, 只有第一次导视键卡顿, 之后都不卡.</p>
 
-<h2><font color="blue"> 在Android启用方法 </font></h2>
+<h2 id="font-colorblue-android-font"><font color="blue"> 在Android启用方法 </font></h2>
 
 <p>https://source.android.com/devices/tech/perf/low-ram
-<br>
+<br />
 上面这个链接是Android官网给出来的对于低内存设备(512M)的内存优化建议(内核/系统/应用等), 其中有在Android上启用zram的整个配置流程.
-<br>
+<br />
 在hisi提供的TVOS2.0代码中, 已经实现Android官方提供的内存优化建议, 进行了优化, 其中包括zram的配置, 可以直接参考也使用.
-<br>
-官方建议, 使用总内存的 30%-50% 作为zram, 按照压缩率为50%计算, 则内存增加30%-50%左右.
+<br />
+官方建议, 使用总内存的 30%-50% 作为zram, 按照压缩率为50%计算, 则内存增加30%-50%左右.</p>
 <pre>
-Swap to zRAM</p>
+Swap to zRAM
 
-<p>zRAM swap can increase the amount of memory available in the system by compressing memory pages and putting them in a dynamically allocated swap area of memory.</p>
+zRAM swap can increase the amount of memory available in the system by compressing memory pages and putting them in a dynamically allocated swap area of memory.
 
-<p>Again, since this is trading off CPU time for a small increase in memory, you should be careful about measuring the performance impact zRAM swap has on your system.</p>
+Again, since this is trading off CPU time for a small increase in memory, you should be careful about measuring the performance impact zRAM swap has on your system.
 
-<p>Android handles swap to zRAM at several levels:</p>
+Android handles swap to zRAM at several levels:
 
-<pre><code>First, the following kernel options must be enabled to use zRAM swap effectively:
-    CONFIG_SWAP
-    CONFIG_CGROUP_MEM_RES_CTLR
-    CONFIG_CGROUP_MEM_RES_CTLR_SWAP
-    CONFIG_ZRAM
-Then, you should add a line that looks like this to your fstab:
+    First, the following kernel options must be enabled to use zRAM swap effectively:
+        CONFIG_SWAP
+        CONFIG_CGROUP_MEM_RES_CTLR
+        CONFIG_CGROUP_MEM_RES_CTLR_SWAP
+        CONFIG_ZRAM
+    Then, you should add a line that looks like this to your fstab:
 
-/dev/block/zram0 none swap defaults zramsize=&lt;size in bytes&gt;,swapprio=&lt;swap partition priority&gt;
+    /dev/block/zram0 none swap defaults zramsize=<size in="" bytes="">,swapprio=<swap partition="" priority="">
 
-    zramsize is mandatory and indicates how much uncompressed memory you want the zram area to hold. Compression ratios in the 30-50% range are usually observed.
-    swapprio is optional and not needed if you don&#39;t have more than one swap area.
+        zramsize is mandatory and indicates how much uncompressed memory you want the zram area to hold. Compression ratios in the 30-50% range are usually observed.
+        swapprio is optional and not needed if you don't have more than one swap area.
 
-You should also be sure to label the associated block device as a swap_block_device in the device-specific sepolicy/file_contexts so that it is treated properly by SELinux.
+    You should also be sure to label the associated block device as a swap_block_device in the device-specific sepolicy/file_contexts so that it is treated properly by SELinux.
 
-/dev/block/zram0 u:object_r:swap_block_device:s0
+    /dev/block/zram0 u:object_r:swap_block_device:s0
 
-By default, the Linux kernel swaps in 8 pages of memory at a time. When using ZRAM, the incremental cost of reading 1 page at a time is negligible and may help in case the device is under extreme memory pressure. To read only 1 page at a time, add the following to your init.rc:
+    By default, the Linux kernel swaps in 8 pages of memory at a time. When using ZRAM, the incremental cost of reading 1 page at a time is negligible and may help in case the device is under extreme memory pressure. To read only 1 page at a time, add the following to your init.rc:
 
-write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/page-cluster 0
 
-In your init.rc after the mount_all /fstab.X line, add:
+    In your init.rc after the mount_all /fstab.X line, add:
 
-swapon_all /fstab.X
+    swapon_all /fstab.X
 
-The memory cgroups are automatically configured at boot time if the feature is enabled in kernel.
-If memory cgroups are available, the ActivityManager will mark lower priority threads as being more swappable than other threads. If memory is needed, the Android kernel will start migrating memory pages to zRAM swap, giving a higher priority to those memory pages that have been marked by ActivityManager.
-</code></pre>
+    The memory cgroups are automatically configured at boot time if the feature is enabled in kernel.
+    If memory cgroups are available, the ActivityManager will mark lower priority threads as being more swappable than other threads. If memory is needed, the Android kernel will start migrating memory pages to zRAM swap, giving a higher priority to those memory pages that have been marked by ActivityManager.
 
-<p></pre></p>
 
-<p><br></p>
 
-<h2><font color="blue"> 成功例子 </font></h2>
 
-<ul>
-<li>chrome os</li>
-<li>debian/ubuntu</li>
-<li>第三方Android ROM 和 TV</li>
-</ul>
+<br />
+
+
+## <font color="blue"> 成功例子 </font> ##
+* chrome os
+* debian/ubuntu
+* 第三方Android ROM 和 TV
+
+</swap></size></pre>
 
 
       </article>

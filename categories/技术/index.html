@@ -52,14 +52,7 @@
         <div class="container">
           <h1>
               <a href="/" title="Home Page"> 静待岁月 </a>
-          <span class="github-src">
-            <a href ="https://github.com/minixalpha/minixalpha.github.io"
-               target="_blank"
-               title="Fork me on GitHub">
-              <img src="/assets/images/GitHub-Mark-Light-32px.png" alt="">
-            </a>
-          </span>
-          </h1>
+                    </h1>
         </div>
       </header>
 
@@ -69,7 +62,7 @@
       
             
                 <li style="background-color: #444">
-                <a href="/categories/技术"> 技术 (1) </a>
+                <a href="/categories/技术"> 技术 (2) </a>
                 </li>
             
       
@@ -82,6 +75,20 @@
   <ul class="archive-list">
     
     
+    
+        
+        
+        
+        
+            
+            <li>
+                <a href="/2017/09">
+                    2017-09 (1)
+                </a>
+            </li>
+
+        
+        
     
         
         
@@ -107,7 +114,47 @@
   
     <li>
       <div class="post-title">
-        <a href="/技术/2017/08/22/zram.html"> zram 简介</a> </br>
+        <a href="/%E6%8A%80%E6%9C%AF/2017/09/19/android8-partiton-table.html"> Android8 分区表变化和相关信息</a> </br>
+      </div>
+
+      <div class="post-info">
+        <ol>
+          <li class="post-time">2017-09-19</li> 
+          <li class="post-category"> 技术 </li>
+        </ol>
+      </div>
+
+      <div class="post-preview">
+        <h2 id="差异简述-"><font color="blue">差异简述 </font></h2>
+
+<p>在Android8.0之后, 就存在两套分区表, 分别对应的是A/B系统和非A/B系统.</p>
+
+<ul>
+  <li>非A/B系统的分区表与之前分区表一样, 没有变化.</li>
+  <li>A/B系统的分区表, 是本文的主要描述点.</li>
+</ul>
+
+<p>所谓的A/B系统, 是指设备上存在两套系统, 其分区名也是存在<code>_a</code> 和 <code>_b</code> 的区别.两套系统中, 只有一套为active, 运行状态, 而升级则执行在另一套系统的分区中. 从而达到, 不管升级成功与否, 总有一套系统保证能使用.</p>
+
+<p>而刷机, 包括挂时的分区表中, 都不会添加后缀(<code>_a</code>或<code>_b</code>). 只有在fastboot刷机时, 或者在init挂载时, 找到active的slot, 在指定分区名字后面添加后缀并挂载. 所以, 单纯从源码或者刷机包是无法指定哪些分区被指定为A/B了.</p>
+
+<p><br /><br />
+A/B系统带来的好处是:</p>
+
+<ol>
+  <li>无缝升级, 不需要再进入recovery进行升级.</li>
+  <li>双系统备份, 不管是系统升级失败, 还是被破坏, 都可以切换到另一个系统, 确保用户设备的正常使用.</li>
+</ol>
+
+ 
+        <a href="/%E6%8A%80%E6%9C%AF/2017/09/19/android8-partiton-table.html"> Read More ... </a> </br>
+      </div>
+
+    </li>
+  
+    <li>
+      <div class="post-title">
+        <a href="/%E6%8A%80%E6%9C%AF/2017/08/22/zram.html"> zram 简介</a> </br>
       </div>
 
       <div class="post-info">
@@ -118,8 +165,22 @@
       </div>
 
       <div class="post-preview">
-         
-        <a href="/技术/2017/08/22/zram.html"> Read More ... </a> </br>
+        <h2 id="简介"><font color="blue">简介</font></h2>
+
+<p>在linux内核的mm子系统中, 包含三个支持内存压缩的组件, 分别是zram, zcache 和 zswap.<br />
+<br /><br />
+<strong>zswap</strong>: 前提条件是, 系统中存在swap设备, 内核版本&gt;3.5, 因为依赖了frontswap的接口, 用于管理swap page.<br />
+zswap是一个轻量化的后端架构, 将进程各种交换出的页面进行压缩, 并存储在一个基于RAM的内缓冲池中. 缓冲池不预分配, 有最大值, 且当缓冲池满了, LRU的内存页会被写入swap设备. 依赖swap分区, 不适用hdtv.<br />
+<br /><br />
+<strong>zcache</strong>: 与zswap类似, 依赖frontswap接口和cleacache接口, 内核版本&gt;3.5. 与zswap一样, 将进程交换出的页面和文件系统的缓冲进行压缩并存储在RAM的内存缓冲池中, 在缓冲池满后, 将页面存入swap分区或者 RAMster (一种基于网络的内存池共享技术, 可以共享网络中其余硬件的内存). zswap可以理解为是zcache的子集. 不适用hdtv.<br />
+<br /><br />
+<strong>zram</strong>: 内存中的swap设备, 内核&gt;3.14, 可以理解为zcache的RAM缓冲池. 优先级最高, 不建议与其他swap一起使用.不依赖真实的swap设备(Nand或者网络), 倾向于在低内存的嵌入式设备中使用.<br />
+<br /></p>
+
+<p>综上, zram更适合hdtv这个项目</p>
+
+ 
+        <a href="/%E6%8A%80%E6%9C%AF/2017/08/22/zram.html"> Read More ... </a> </br>
       </div>
 
     </li>

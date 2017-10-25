@@ -43,7 +43,7 @@
 
     <!-- Google Analytics End -->
 
-    <title>首页</title>
+    <title>Android A/B 系统升级简介</title>
   </head>
 
   <body>
@@ -61,7 +61,7 @@
   <ul class="category-list">
       
             
-                <li>
+                <li style="background-color: #444">
                 <a href="/categories/技术"> 技术 (3) </a>
                 </li>
             
@@ -115,24 +115,7 @@
 
       <article>
 
-<ul class="post-list">
-    
-    <li>
-      <div class="post-title">
-        <a href="/%E6%8A%80%E6%9C%AF/2017/09/20/Android-AB-system-update.html"> Android A/B 系统升级简介</a> </br>
-      </div>
-
-      <div class="post-info">
-        <ol>
-          <li class="post-time">2017-09-20</li> 
-          <li class="post-category"> 
-           技术
-          </li>
-        </ol>
-      </div>
-
-      <div class="post-preview">
-        <p>history:</p>
+<p>history:</p>
 
 <ul>
   <li>version 1 by Werther Zhang @ 20170920
@@ -492,92 +475,167 @@ delta_generator (EXECUTABLES)
   --&gt; payload_generator/generate_delta_main.cc
 </code></pre>
 
- 
-        <a href="/%E6%8A%80%E6%9C%AF/2017/09/20/Android-AB-system-update.html"> Read More ... </a> </br>
-      </div>
+<h2 id="-下载-"><font color="green"> 下载 </font></h2>
 
-    </li>
-    
-    <li>
-      <div class="post-title">
-        <a href="/%E6%8A%80%E6%9C%AF/2017/09/19/android8-partiton-table.html"> Android8 分区表变化和相关信息</a> </br>
-      </div>
+<p>下载相关与服务器交互的逻辑: <code>delta_performer.cc</code></p>
 
-      <div class="post-info">
-        <ol>
-          <li class="post-time">2017-09-19</li> 
-          <li class="post-category"> 
-           技术
-          </li>
-        </ol>
-      </div>
-
-      <div class="post-preview">
-        <h2 id="差异简述-"><font color="blue">差异简述 </font></h2>
-
-<p>在Android8.0之后, 就存在两套分区表, 分别对应的是A/B系统和非A/B系统.</p>
+<p>升级流(包)的下载, 分为两个模式:</p>
 
 <ul>
-  <li>非A/B系统的分区表与之前分区表一样, 没有变化.</li>
-  <li>A/B系统的分区表, 是本文的主要描述点.</li>
+  <li>下载zip包到data分区.</li>
+  <li>下载升级流, 边下边升级.</li>
 </ul>
 
-<p>所谓的A/B系统, 是指设备上存在两套系统, 其分区名也是存在<code>_a</code> 和 <code>_b</code> 的区别.两套系统中, 只有一套为active, 运行状态, 而升级则执行在另一套系统的分区中. 从而达到, 不管升级成功与否, 总有一套系统保证能使用.</p>
+<p>( 从chrome os代码看, 其升级服务器是omaha server, 可以参考看下对于我们的升级服务器是否有帮助.<br />
+https://github.com/Crystalnix/omaha-server<br />
+https://github.com/Crystalnix/omaha-server/wiki<br />
+)</p>
 
-<p>而刷机, 包括挂时的分区表中, 都不会添加后缀(<code>_a</code>或<code>_b</code>). 只有在fastboot刷机时, 或者在init挂载时, 找到active的slot, 在指定分区名字后面添加后缀并挂载. 所以, 单纯从源码或者刷机包是无法指定哪些分区被指定为A/B了.</p>
+<p>payload 数据结构:</p>
 
-<p><br /><br />
-A/B系统带来的好处是:</p>
+<pre><code>version 1:
+| 'C''r''A''U' | version(8) | manifestSize(8) | manifest(manifestSize) | rawData | payloadSignatureMessageSize | payloadSignatureMessage(payloadSignatureMessageSize) |
 
+version 2:
+| 'C''r''A''U' | version(8) | manifestSize(8) | MetadataSignatureSize(4) | manifest(manifestSize) | medatadataSignatureMessage(MetadataSignatureSize) | rawData | payloadSignatureMessageSize | payloadSignatureMessage(payloadSignatureMessageSize) |
+</code></pre>
+
+<p>其中 medatadataSignatureMessage 校验的是其之前的所有数据, 而 payloadSignatureMessage 校验的是 payloadSignatureMessageSize 之前的所有数据.</p>
+
+<p>而 manifest 是protobuff, 其中包含一组指令集, 也就是以前recovery 块升级的一系列指令. rawData是被更新数据, 指令会从rawData指定位置读取数据并应用到目标分区的指定位置.</p>
+
+<p>metadata的数据是protobuf, 数据结构为 update_metadata.proto</p>
+
+<p>下载存在两种模式, p2p和普通下载.</p>
+
+<p>下载到data分区的逻辑与之前ota升级下载升级包的逻辑一致. <code>update_engine</code>将升级包下载到本地.  下面先介绍边下边升级的逻辑.</p>
+
+<h3 id="下载到data分区">下载到data分区</h3>
+
+<p>下载到data分区的实现不再<code>update_engine</code>中, 而如果是预先下载完成的payload, 通过<code>file://</code>的url传递给<code>update_engine</code>, 后续逻辑与边下边升级一样.</p>
+
+<p>而java层的UpdateEngine.java的API, 暴露到了系统的jar包中, 并未找到调用者, 也就是说, 这块逻辑是非开源的, 我们无法获得.</p>
+
+<h3 id="边下边升">边下边升</h3>
+<p>所谓边下边升, 就是将升级数据下载到内存中, 并在内存中完成相应处理, 最后写入目标分区.<br />
+<br /><br />
+下面是边下边升的客户端执行命令.</p>
+
+<pre><code># update_engine_client \
+--payload=http://xxx/android/full-ota/payload.bin \
+--update \
+--headers="\
+  FILE_HASH=ozGgyQEddkI5Zax+Wbjo6I/PCR8PEZka9gGd0nWa+oY= \
+  FILE_SIZE=282344983
+  METADATA_HASH=GLIKfE6KRwylWMHsNadG/Q8iy5f786WTatvMdBlpOPg= \
+  METADATA_SIZE=26723 \
+"
+</code></pre>
+
+<p>其中header后面的内容, 跟升级包中的<code>payload_properties.txt</code> 文件内容一样. 各字段的作用可以参考前文payload的头数据格式来理解具体校验的数据位.</p>
+
+<p><code>update_engine</code> 首先定义一系列的action:</p>
+
+<ul>
+  <li><code>download_action</code>: 下载模块, 负责边下边升级.</li>
+  <li><code>filesystem_verifier_action</code>: 文件系统校验模块, 负责升级完成后校验数据的完整性</li>
+  <li><code>postinstall_runner_action</code>: 后升级模块, 一些脚本或可执行程序在系统升级完成后执行.</li>
+</ul>
+
+<p>以上action通过类似pipeline的形式组织, 前一个action的输出作为后一个action的输入. 而在其中传递的数据是<code>install_plan_</code>, 该数据包含了payload(升级数据)的所有信息(操作分区, url, 校验信息等), 部分信息由后面的action执行后提供.<br />
+所有的action, 其执行入口函数是<code>PerformAction()</code>, 通过这个函数, 可以更细致地了解输入输出数据和该action的具体功能.</p>
+
+<p>本段内容着重介绍<code>download_action</code>, 其余模块在后面介绍.<br />
+<br /><br />
+<img src="assets/blog-images/Android-AB-system-update-3.png" alt="" /><br />
+<br /></p>
 <ol>
-  <li>无缝升级, 不需要再进入recovery进行升级.</li>
-  <li>双系统备份, 不管是系统升级失败, 还是被破坏, 都可以切换到另一个系统, 确保用户设备的正常使用.</li>
+  <li>读取数据. 这里并不是正常的read, 该函数是个下载的Write回调, 而读取数据在代码上的真实行为是, 返回错误表示数据不够, 继续读取, 而已经读取的数据存放在buffer中.</li>
+  <li>解析manifest. 就是上文中payload的头, 包含校验信息和执行的指令集, 还有所有操作的分区校验值等.</li>
+  <li>打开分区设备. 根据升级类型, 如果是全量升级(manifest中包含该信息), 则打开被升级设备分区, 如果是增量升级, 打开当前运行设备分区和被升级目标分区.</li>
+  <li>获取指令列表. 是从manifest中获取. 不同指令, 格式不同, 但基本格式是 <code>src:offset:size</code>, 指定操作源/目标, 偏移和大小.</li>
+  <li>由于1提到的, 在数据不够时会退出, 所以, 会保存当前已经执行到的指令, 并获取下一个指令信息, 这里信息重点是, 需要读取的payload中offset和size. 由于payload中的升级数据是跟指令一起生成的, 所以, 其数据的偏移完全可以跟指令的顺序一致, 保证不会出现读指针跳动, 也就不需要p2p支持.</li>
+  <li>执行指令. 基本指令可以查看代码, 与块升级指令一样.<br />
+<br /><br />
+下面是升级时数据的合成图.<br />
+<br /><br />
+<img src="assets/blog-images/Android-AB-system-update-4.png" alt="" /></li>
 </ol>
 
- 
-        <a href="/%E6%8A%80%E6%9C%AF/2017/09/19/android8-partiton-table.html"> Read More ... </a> </br>
-      </div>
+<p>这幅图展示的是升级数据的合成. 如果是全量升级, source为空, 则payload直接写入target. 但与一般分区烧写还是有些差异, 并不会擦除target, 而是按照偏移和大小直接写入.而如果是增量升级, 则是基于当前运行系统为source, 与payload的数据合并写入target.</p>
 
-    </li>
-    
-    <li>
-      <div class="post-title">
-        <a href="/%E6%8A%80%E6%9C%AF/2017/08/22/zram.html"> zram 简介</a> </br>
-      </div>
+<p>所以, 不管是全量升级还是增量升级, 断电后都可以从头开始再升级.</p>
 
-      <div class="post-info">
-        <ol>
-          <li class="post-time">2017-08-22</li> 
-          <li class="post-category"> 
-           技术
-          </li>
-        </ol>
-      </div>
-
-      <div class="post-preview">
-        <h2 id="简介"><font color="blue">简介</font></h2>
-
-<p>在linux内核的mm子系统中, 包含三个支持内存压缩的组件, 分别是zram, zcache 和 zswap.<br />
-<br /><br />
-<strong>zswap</strong>: 前提条件是, 系统中存在swap设备, 内核版本&gt;3.5, 因为依赖了frontswap的接口, 用于管理swap page.<br />
-zswap是一个轻量化的后端架构, 将进程各种交换出的页面进行压缩, 并存储在一个基于RAM的内缓冲池中. 缓冲池不预分配, 有最大值, 且当缓冲池满了, LRU的内存页会被写入swap设备. 依赖swap分区, 不适用hdtv.<br />
-<br /><br />
-<strong>zcache</strong>: 与zswap类似, 依赖frontswap接口和cleacache接口, 内核版本&gt;3.5. 与zswap一样, 将进程交换出的页面和文件系统的缓冲进行压缩并存储在RAM的内存缓冲池中, 在缓冲池满后, 将页面存入swap分区或者 RAMster (一种基于网络的内存池共享技术, 可以共享网络中其余硬件的内存). zswap可以理解为是zcache的子集. 不适用hdtv.<br />
-<br /><br />
-<strong>zram</strong>: 内存中的swap设备, 内核&gt;3.14, 可以理解为zcache的RAM缓冲池. 优先级最高, 不建议与其他swap一起使用.不依赖真实的swap设备(Nand或者网络), 倾向于在低内存的嵌入式设备中使用.<br />
+<h2 id="-校验-"><font colo="green"> 校验 </font></h2>
+<p><br /><br />
+<img src="assets/blog-images/Android-AB-system-update-5.png" alt="" /><br />
 <br /></p>
 
-<p>综上, zram更适合hdtv这个项目</p>
+<ol>
+  <li>获取输入数据. 是指获取从<code>download_action</code>完成后的数据, 包含被升级分区及其哈希值等.</li>
+  <li>开始校验被升级分区. 单纯从分区读取块数据并与payload中存放的进行比对校验.</li>
+  <li>开始校验当前slot源分区. 这个是针对增量升级的. 在校验目标分区失败后, 校验源分区.此处校验的目的不是判断当前运行的分区是否合法(启动时, 由其他模块校验), 而是判断下载的payload是否与当前系统匹配(服务器端放错升级文件).</li>
+  <li>标记传输失败. 这里是在3的基础上, 将当前payload的下载url标记失败, 并增加失败次数. 在达到一定次数后(服务端配置), 不再从该url获取升级数据, 跳往下一个url.</li>
+</ol>
 
- 
-        <a href="/%E6%8A%80%E6%9C%AF/2017/08/22/zram.html"> Read More ... </a> </br>
-      </div>
+<h2 id="-post-install-"><font colo="green"> post install </font></h2>
 
-    </li>
-    
+<p>各个分区都可以指定postinstall, 而postinstall脚本是在<code>download_action</code>解析mainifest时解析并获得. 在定义执行postinstall但又无脚本指定时, 默认postinstall脚本是分区根目录下的<code>postinst</code></p>
+
+<p>在Chrome OS中, postinstall 是允许对分区执行块写入操作的,但是在Android, 挂载分区被执行标记为只读, 并且也挂载成只读, 也就是说, 不允许对被升级分区做修改(就算修改了, 之后校验依然可能出错). postinstall的脚本是直接基于当前被升级系统执行, 并未chroot, 所以, postinstall脚本必须能够被保证运行在被升级系统中. 所以, 一般是纯静态的可执行程序, 而且其功能在android上也被弱化了.</p>
+
+<h2 id="-odex优化未完成-"><font colo="green"> odex优化(未完成) </font></h2>
+
+<p>在以上全部完成后, 系统将标记slot为被升级系统, 并在下次重启后, 进入升级后的系统, 校验并优化.</p>
+
+<h1 id="bootloader交互"><font color="blue">bootloader交互</font></h1>
+<p><br /></p>
+
+<p>传统的Android与bootloader通信是通过misc分区. 然而在A/B系统中, 数据并不是存在misc分区, 而且存放位置由厂商定义, 接口在<code>hardware/libhardware/include/hardware/boot_control.h</code>. 其结构体是 <code>boot_control_module_t</code>, 包含了所有设置以上slot状态的接口.</p>
+
+<p>下面介绍下不同厂商<code>boot_control</code>的实现.<br />
+<br /></p>
+<h2 id="qcom的实现">qcom的实现</h2>
+<p><br /><br />
+代码位置:  <code>hardware/qcom/bootctrl/boot_control.cpp</code><br />
+qcom的实现是, 直接将A/B分区的属性, 写入的gpt分区表的boot分区(<code>boot_a</code>和<code>boot_b</code>).qcom机顶盒gpt表的分析:http://blog.csdn.net/guyongqiangx/article/details/68924436<br />
+<br /><br />
+<img src="assets/blog-images/Android-AB-system-update-6.png" alt="" /><br />
+<br /><br />
+上图是qcom机顶盒gpt分区表的信息, 在Entry中查找到分区<code>boot_a</code>和<code>boot_b</code>, 提取其属性.<br />
+从 LAB 2 开始存放的是GPT分区的详细信息<code>Partition Entry</code>, 单个<code>Partition Entry</code>占128个字节, 从第48个字节开始存放的是分区属性, 而A/B系统的分区属性也是存放在这个位置.</p>
+
+<p>从上图可以看到, qcom的实现, 没有bootable的标记位, 取而代之的是unbootable.<br />
+<br /></p>
+<h2 id="google的参考实现">google的参考实现</h2>
+<p><br /><br />
+代码位置<code>system/extras/boot_control_copy/boot_control_copy.c</code></p>
+
+<p>google的参考实现复用了misc分区的<code>bootloader_message</code>(recovery与bootloader通信的分区). 整个misc分区的数据结构图如下.<br />
+<br /><br />
+<img src="assets/blog-images/Android-AB-system-update-7.png" alt="" /><br />
+<br /></p>
+
+<ol>
+  <li>fsmgr使用, 在设置指定slot为active时, 同时将对应后缀设置到该字段. fsmgr在挂载分区时,通过该字段拼成完成的分区路径.</li>
+  <li>Magic Numbe. 用来确定该数据端的合法, 必须是 ‘B’, ‘C’ , ‘c’ (“<code>boot_control</code> copy” 的缩写)</li>
+  <li>接口版本号</li>
+  <li>active状态的slot号, 在该实现中只有 0 或 1.</li>
+  <li>0 为 第一个slot, 1 为第二个slot, 设置slot的bootable/unbootable状态.</li>
+</ol>
+
+<p>从上图可以看出, 并没有可以标记为successful的位, 通过代码也发现, 其实现为空, 也就是说, 并没有实现该状态.</p>
+
+<p>如果注意到代码, 在<code>module_setActiveBootSlot</code>后半段, 会将active状态的<code>boot_X</code>分区内容拷贝到boot分区. 也就是说, 系统存在三个分区(boot, <code>boot_a</code>, <code>boot_b</code>), 被设置为active的分区会被拷贝到boot分区, 再结合<code>module_getCurrentSlot</code>的实现(从/system分区获取挂载信息) ,从这两段代码可以推测出两个结论:</p>
+
+<ul>
+  <li>A/B系统可以不升级firmware(bootloader), 或者说google的该实现最初是为了兼容老的bootloader.</li>
+  <li>boot.img中的ramdisk可以还是boot的ramdisk.</li>
 </ul>
 
-<!-- Pagination links -->
+<p>但是, 不确定参考代码是否能正常运行. 但是单纯从以上代码看, 除了分区, A/B系统的启动, 挂载, 都可以在用户层搞定. 但是带来的后果就是, 如果bootloader启动boot失败, 则无法切换到另一个slot.</p>
+
+<h1 id="升级包生成"><font color="blue">升级包生成</font></h1>
 
 
 

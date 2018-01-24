@@ -22,4 +22,15 @@ echo "Enter the contents below, finish with Ctrl+D"
 cat >> $new_post
 sed -i "s/leanote:\/\/file\//http:\/\/pengzhangdev.tk:31119\/api\/file\//g" $new_post
 
+index=0
+for f in `grep "http://pengzhangdev.tk" $new_post -rnH `
+do
+    index=$(($index+1))
+    png=`echo $f |  cut -d \( -f 2 | cut -d \) -f 1 `
+    destname=`basename $png | cut -d = -f 2`
+    echo "downloand $png to assets/blog-images/$destname"
+    wget $png -O assets/blog-images/$destname
+done
+
+sed -i "s/http:\/\/pengzhangdev.tk:31119\/api\/file\/getImage?fileId=/assets\/blog-images\//g" $new_post
 

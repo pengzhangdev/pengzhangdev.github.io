@@ -82,8 +82,8 @@
         
             
             <li>
-                <a href="/2018/01">
-                    2018-01 (1)
+                <a href="/2017/11">
+                    2017-11 (1)
                 </a>
             </li>
 
@@ -181,10 +181,10 @@ PSS - Proportional Set Size 实际使用的物理内存, USS + 比例分配共�
 USS - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）
 </code></pre>
 
-<p><img src="assets/blog-images/5a151f0032acd20ed400001e" alt="" /><br />
-<img src="assets/blog-images/5a151f0032acd20ed400001f" alt="" /><br />
-<img src="assets/blog-images/5a151f0032acd20ed4000021" alt="" /><br />
-<img src="assets/blog-images/5a151f0032acd20ed4000020" alt="" /></p>
+<p><img src="/assets/blog-images/5a151f0032acd20ed400001e" alt="" /><br />
+<img src="/assets/blog-images/5a151f0032acd20ed400001f" alt="" /><br />
+<img src="/assets/blog-images/5a151f0032acd20ed4000021" alt="" /><br />
+<img src="/assets/blog-images/5a151f0032acd20ed4000020" alt="" /></p>
 
 <p><br /><br />
 如果看进程独占内存，　则使用USS. 但是一般考虑到共享内存的情况, 大部分都是依据PSS查看对应进程的内存占用.<br />
@@ -643,9 +643,9 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
 
 <p>数据来源与procmem一样, 但是procmem针对的是单个进程的内存占用情况. 而librank是显示某个库或者文件被哪些进程共享, 并显示占用大小. 如下图所示.</p>
 
-<p><img src="assets/blog-images/5a13da0a32acd20ed400001b" alt="" /><br />
-<img src="assets/blog-images/5a13da0a32acd20ed400001c" alt="" /><br />
-<img src="assets/blog-images/5a13da0a32acd20ed400001d" alt="" /></p>
+<p><img src="/assets/blog-images/5a13da0a32acd20ed400001b" alt="" /><br />
+<img src="/assets/blog-images/5a13da0a32acd20ed400001c" alt="" /><br />
+<img src="/assets/blog-images/5a13da0a32acd20ed400001d" alt="" /></p>
 
 <h3 id="dumpcache-">dumpcache <span id="dumpcache"></span></h3>
 
@@ -653,16 +653,16 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
 
 <p>在Launcher界面时的输出如下:</p>
 
-<p><img src="assets/blog-images/5a1be67932acd20ed4000034" alt="" /></p>
+<p><img src="/assets/blog-images/5a1be67932acd20ed4000034" alt="" /></p>
 
 <p>稳定播放1080P视频时:<br />
-<img src="assets/blog-images/5a1be67932acd20ed4000033" alt="" /></p>
+<img src="/assets/blog-images/5a1be67932acd20ed4000033" alt="" /></p>
 
 <p>按下遥控器确定键显示UI时:<br />
-<img src="assets/blog-images/5a1be67932acd20ed4000036" alt="" /></p>
+<img src="/assets/blog-images/5a1be67932acd20ed4000036" alt="" /></p>
 
 <p>对比, 可以知道在播放过程中, 显示UI时主要加载的文件是:<br />
-<img src="assets/blog-images/5a1be67932acd20ed4000035" alt="" /></p>
+<img src="/assets/blog-images/5a1be67932acd20ed4000035" alt="" /></p>
 
 <h3 id="bugreport-信息分析-">bugreport 信息分析 <span id="bugreport"></span></h3>
 
@@ -773,7 +773,7 @@ Uptime: 2612261 Realtime: 2612261
 数据来源: <code>/proc/&lt;pid&gt;/maps</code> 和 <code>/proc/&lt;pid&gt;/pagemap</code></p>
 
 <p><code> Vss      Rss      Pss      Uss     ShCl     ShDi     PrCl     PrDi  Name </code><br />
-<img src="assets/blog-images/5a0d649a32acd20ed4000014" alt="" /></p>
+<img src="/assets/blog-images/5a0d649a32acd20ed4000014" alt="" /></p>
 
 <p>各字段含义:</p>
 
@@ -793,7 +793,7 @@ PrDi  --  private dirty
 例子: <code>showmap -a 884</code><br />
 输出单位: KB</p>
 
-<p><img src="assets/blog-images/5a0c188b32acd20ed4000002" alt="" /></p>
+<p><img src="/assets/blog-images/5a0c188b32acd20ed4000002" alt="" /></p>
 
 <p>由于现在内核都使用了动态内存分配的机制, 在大量申请小内存的情况下, 从系统看内存有剩余, 但是进程却无法分配出需要的内存, 这就有可能是由于虚拟地址的内存碎片引起, 无法找到一段大于所请求内存大小的地址空间.</p>
 
@@ -818,11 +818,11 @@ PrDi  --  private dirty
 
 <p>代码复用下面内存泄露的代码,在asynctask中执行文件打开操作.</p>
 
-<p><img src="assets/blog-images/5a27b93c32acd20ed4000059" alt="" /></p>
+<p><img src="/assets/blog-images/5a27b93c32acd20ed4000059" alt="" /></p>
 
 <p>logcat中输出如下, 并没有OOM输出:</p>
 
-<p><img src="assets/blog-images/5a27b93c32acd20ed4000058" alt="" /></p>
+<p><img src="/assets/blog-images/5a27b93c32acd20ed4000058" alt="" /></p>
 
 <p>但是这段代码的确证明了打开文件太多会导致shmem创建失败.</p>
 
@@ -833,31 +833,31 @@ PrDi  --  private dirty
 <p>activity 的泄露基于android自带工具, 可以快速确定, 但是具体泄露的activity, 需要依赖工具 LeakCanary.</p>
 
 <p>代码:<br />
-<img src="assets/blog-images/5a1cfdb032acd20ed4000039" alt="" /></p>
+<img src="/assets/blog-images/5a1cfdb032acd20ed4000039" alt="" /></p>
 
 <p>界面:</p>
 
-<p><img src="assets/blog-images/5a1cfdb032acd20ed4000038" alt="" /></p>
+<p><img src="/assets/blog-images/5a1cfdb032acd20ed4000038" alt="" /></p>
 
 <p>在第一次进入该应用时:</p>
 
-<p><img src="assets/blog-images/5a1cfdb032acd20ed400003d" alt="" /></p>
+<p><img src="/assets/blog-images/5a1cfdb032acd20ed400003d" alt="" /></p>
 
 <p>按下BUTTON, 然后退出应用:</p>
 
-<p><img src="assets/blog-images/5a1cfdb032acd20ed400003b" alt="" /></p>
+<p><img src="/assets/blog-images/5a1cfdb032acd20ed400003b" alt="" /></p>
 
 <p>第二次进入该应用:</p>
 
-<p><img src="assets/blog-images/5a1cfdb032acd20ed4000037" alt="" /></p>
+<p><img src="/assets/blog-images/5a1cfdb032acd20ed4000037" alt="" /></p>
 
 <p>第二次按下BUTTON:</p>
 
-<p><img src="assets/blog-images/5a1cfdb032acd20ed400003a" alt="" /></p>
+<p><img src="/assets/blog-images/5a1cfdb032acd20ed400003a" alt="" /></p>
 
 <p>第二次退出应用:</p>
 
-<p><img src="assets/blog-images/5a1cfdb032acd20ed400003c" alt="" /></p>
+<p><img src="/assets/blog-images/5a1cfdb032acd20ed400003c" alt="" /></p>
 
 <p>基于 <code>dumpsys meminfo</code> 确认应用有activity泄露后, 单纯通过UI操作基本也可以判断出来哪个activity泄露, 更准确的泄露检测工具是 LeakCanary, 该工具为第三方工具. <span id="LeakCanary"></span><br />
 具体用法: https://www.liaohuqiu.net/cn/posts/leak-canary-read-me/</p>
@@ -877,29 +877,29 @@ PrDi  --  private dirty
 </code></pre>
 
 <p>增加application, 如下:<br />
-<img src="assets/blog-images/5a2653ee32acd20ed4000053" alt="" /></p>
+<img src="/assets/blog-images/5a2653ee32acd20ed4000053" alt="" /></p>
 
 <p>编译运行, 执行上面同样的操作. 在通知中心有如下显示:</p>
 
-<p><img src="assets/blog-images/5a2653ee32acd20ed4000054" alt="" /></p>
+<p><img src="/assets/blog-images/5a2653ee32acd20ed4000054" alt="" /></p>
 
 <p>点击后可以查看详细的堆栈:</p>
 
-<p><img src="assets/blog-images/5a2653ee32acd20ed4000052" alt="" /></p>
+<p><img src="/assets/blog-images/5a2653ee32acd20ed4000052" alt="" /></p>
 
 <p>同样在logcat中有如下输出:</p>
 
-<p><img src="assets/blog-images/5a26576232acd20ed4000055" alt="" /></p>
+<p><img src="/assets/blog-images/5a26576232acd20ed4000055" alt="" /></p>
 
 <h3 id="strictmode检测应用内存泄露-">StrictMode检测应用内存泄露 <span id="strictmode"></span></h3>
 
 <p>同样是上面的例子, 修改代码如下, 增加strickmode的调用:</p>
 
-<p><img src="assets/blog-images/5a279b4832acd20ed4000057" alt="" /></p>
+<p><img src="/assets/blog-images/5a279b4832acd20ed4000057" alt="" /></p>
 
 <p>同样的上面操作方法, logcat中有如下输出:</p>
 
-<p><img src="assets/blog-images/5a279b4832acd20ed4000056" alt="" /></p>
+<p><img src="/assets/blog-images/5a279b4832acd20ed4000056" alt="" /></p>
 
 <h3 id="基于libc调试内存泄露-">基于libc调试内存泄露 <span id="mem_leak"></span></h3>
 <p>内存泄露的检测依据是, 进程退出时, 还有未释放的内存. 所以, valgrind包括bionic libc中, 能精确检测到泄露的前提条件就是进程退出. 但是这个对于系统级别的进程是无用的, 因为系统级进程并不会退出. 从RD角度, 判断系统级进程是否泄露的依据是内存是否持续增长, 特别是在压力测试的情况下. 所以, 这个部分介绍的工具, 实际上是抓取了持续增长的内存信息, 这些信息, 可能是内存泄露, 也可能是进程正常申请的内存, 需要RD介入判断.</p>
@@ -946,7 +946,7 @@ PrDi  --  private dirty
 
 <p>例子:</p>
 
-<p><img src="assets/blog-images/5a1fb72332acd20ed4000050" alt="" /></p>
+<p><img src="/assets/blog-images/5a1fb72332acd20ed4000050" alt="" /></p>
 
 <p>运行一会儿后, 在 /data/local/tmp/目录下存在文件:</p>
 

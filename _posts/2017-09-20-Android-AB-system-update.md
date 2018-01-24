@@ -5,21 +5,6 @@ category: 技术
 comments: false
 ---
 
-history:
-
-* version 1 by Werther Zhang @ 20170920
-    *  完成简介和分区表, 分区表的具体内容见另一篇.
-* version 1.1 by Werther Zhang @ 20170921
-    *  完成bootloader交互, 开始review `update_engine`代码框架
-
-* version 1.2 by Werther Zhang @ 20171010
-    *  整理边下边升级, 校验和postinstall代码逻辑. 
-    
-TDDO:
-
-*  升级过程, 包括下载(缺单独下载升级包), 刷机(完成)和post-install(完成), 包括最后进新系统的odex生成(两份)
-*  升级包制作
-
 # <font color="blue"> A/B系统简介 </font> #
 <br>
 顾名思义, `A/B`系统就是指终端设备上存在两套系统,(userdata只有一份, 被两套系统共用). 简单来讲, 可以理解为, 存在一套系统分区, 一套备份分区, 两套系统都可以被启动, 两套系统的版本号可以一样, 也可以一套旧, 一套新. 而升级就是将旧的系统升级到新版本.
@@ -82,7 +67,7 @@ bootloader为了判断一个系统(slot)是否为可以启动的状态, 需要�
 * unbootable. 代表该分区损坏的, 无法启动, 在升级过程总被标记, 该标记等效于以上标记被清空. 而active标记会将该标记清空.
 
 `slot a` 和 `slot b`, 只有一个是active, 它们可以同时有 bootable 和 successful 属性.
-![](assets/blog-images/Android-AB-system-update-1.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed4000082)
 
 1. bootloader检测到1个或者2个slot都是bootable的状态.
 2. 选择active的slot或者选择successful的slot进行尝试启动.
@@ -90,7 +75,7 @@ bootloader为了判断一个系统(slot)是否为可以启动的状态, 需要�
 4. 由于启动成功, 则该slot被标记为successful和active
 5. 由于启动失败, 则设置该slot为unbootable, 并设置另一个slot为active, 进行下一次尝试.
 
-![](assets/blog-images/Android-AB-system-update-2.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007a)
 <br>
 
 # <font color="blue">升级流下载和升级</font> #
@@ -346,6 +331,8 @@ metadata的数据是protobuf, 数据结构为 update_metadata.proto
 "
 ```
 
+在Pixel手机上升级的输出log如附件[update_engine.log](/api/file/getAttach?fileId=5a32434732acd20ed4000079), 感兴趣的童鞋可以看下, 其中包含了各个阶段的行为.
+
 其中header后面的内容, 跟升级包中的`payload_properties.txt` 文件内容一样. 各字段的作用可以参考前文payload的头数据格式来理解具体校验的数据位.
 
 
@@ -360,7 +347,7 @@ metadata的数据是protobuf, 数据结构为 update_metadata.proto
 
 本段内容着重介绍`download_action`, 其余模块在后面介绍.
 <br>
-![](assets/blog-images/Android-AB-system-update-3.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007b)
 <br>
 1. 读取数据. 这里并不是正常的read, 该函数是个下载的Write回调, 而读取数据在代码上的真实行为是, 返回错误表示数据不够, 继续读取, 而已经读取的数据存放在buffer中.
 2. 解析manifest. 就是上文中payload的头, 包含校验信息和执行的指令集, 还有所有操作的分区校验值等.
@@ -371,7 +358,7 @@ metadata的数据是protobuf, 数据结构为 update_metadata.proto
 <br>
 下面是升级时数据的合成图.
 <br>
-![](assets/blog-images/Android-AB-system-update-4.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007e)
 
 这幅图展示的是升级数据的合成. 如果是全量升级, source为空, 则payload直接写入target. 但与一般分区烧写还是有些差异, 并不会擦除target, 而是按照偏移和大小直接写入.而如果是增量升级, 则是基于当前运行系统为source, 与payload的数据合并写入target.
 
@@ -380,7 +367,7 @@ metadata的数据是protobuf, 数据结构为 update_metadata.proto
 
 ## <font colo="green"> 校验 </font> ##
 <br>
-![](assets/blog-images/Android-AB-system-update-5.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007f)
 <br>
 
 1. 获取输入数据. 是指获取从`download_action`完成后的数据, 包含被升级分区及其哈希值等.
@@ -395,10 +382,17 @@ metadata的数据是protobuf, 数据结构为 update_metadata.proto
 
 在Chrome OS中, postinstall 是允许对分区执行块写入操作的,但是在Android, 挂载分区被执行标记为只读, 并且也挂载成只读, 也就是说, 不允许对被升级分区做修改(就算修改了, 之后校验依然可能出错). postinstall的脚本是直接基于当前被升级系统执行, 并未chroot, 所以, postinstall脚本必须能够被保证运行在被升级系统中. 所以, 一般是纯静态的可执行程序, 而且其功能在android上也被弱化了.
 
-## <font colo="green"> odex优化(未完成) </font> ##
+## <font colo="green"> odex优化 </font> ##
 
-在以上全部完成后, 系统将标记slot为被升级系统, 并在下次重启后, 进入升级后的系统, 校验并优化.
+在以上全部完成后, 系统将标记slot为被升级系统, 并在下次重启后, 进入升级后的系统, 校验并优化. 这时候如果校验失败, 则还会回到原先系统. 则该情况存在data下应用数据已经被优化为新版本或者优化到一半的问题. 跟了下相关代码和网上的资料, 结论如下.
+<br>
+在A/B升级完成进入新系统后, dexopt的参数是speed-profile, 而该参数的含义就是根据“热代码”的profile配置来编译. 那么问题就是这个profile的生成,和什么时候执行增量编译.
 
+ 1. profile在达到一定条件后写入/data/, 目前从代码看, 已知的一个条件是大小>50K时, 写入文件. 而在已经存在该文件的情况下, 会优先加载, 如果加载失败, 则删除并重新生成.
+ 2. 执行增量编译的时间是, 机在充电＋空闲＋四个小时间隔等多个条件下, 在后台完成.
+<br>
+
+也就是说, 在AB系统升级完成时, 不会执行编译, 只会执行profile的生成. 而在这个时候如果被检测到系统校验失败, 则会回到上一版本系统.
 
 # <font color="blue">bootloader交互</font> #
 <br>
@@ -412,7 +406,7 @@ metadata的数据是protobuf, 数据结构为 update_metadata.proto
 代码位置:  `hardware/qcom/bootctrl/boot_control.cpp`
 qcom的实现是, 直接将A/B分区的属性, 写入的gpt分区表的boot分区(`boot_a`和`boot_b`).qcom机顶盒gpt表的分析:http://blog.csdn.net/guyongqiangx/article/details/68924436
 <br>
-![](assets/blog-images/Android-AB-system-update-6.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed4000080)
 <br>
 上图是qcom机顶盒gpt分区表的信息, 在Entry中查找到分区`boot_a`和`boot_b`, 提取其属性.
 从 LAB 2 开始存放的是GPT分区的详细信息`Partition Entry`, 单个`Partition Entry`占128个字节, 从第48个字节开始存放的是分区属性, 而A/B系统的分区属性也是存放在这个位置.
@@ -425,7 +419,7 @@ qcom的实现是, 直接将A/B分区的属性, 写入的gpt分区表的boot分�
 
 google的参考实现复用了misc分区的`bootloader_message`(recovery与bootloader通信的分区). 整个misc分区的数据结构图如下.
 <br>
-![](assets/blog-images/Android-AB-system-update-7.png)
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007c)
 <br>
 
 1. fsmgr使用, 在设置指定slot为active时, 同时将对应后缀设置到该字段. fsmgr在挂载分区时,通过该字段拼成完成的分区路径.
@@ -445,8 +439,21 @@ google的参考实现复用了misc分区的`bootloader_message`(recovery与bootl
 但是, 不确定参考代码是否能正常运行. 但是单纯从以上代码看, 除了分区, A/B系统的启动, 挂载, 都可以在用户层搞定. 但是带来的后果就是, 如果bootloader启动boot失败, 则无法切换到另一个slot.
 
 
-
 # <font color="blue">升级包生成</font> #
+
+升级包制作工具不再支持 基于文件的升级, 当前只支持ab升级和块升级.
+
+块升级和ab升级在生成数据文件和脚本上原理是一样的, 只是在生成升级数据时存在差异.
+
+AB升级payload制作逻辑在升级包制作脚本的`WriteABOTAPackageWithBrilloScript`, 而真正payload生成的逻辑在函数`GenerateUpdatePayloadFile`.
+
+流程如下:
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed4000081)
+
+生成payload指令规则:
+![](http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007d)
+
+# <font color="blue">AB升级总流程图</font> #
 
 
 

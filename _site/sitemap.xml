@@ -2,6 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://pengzhangdev.github.io/%E6%8A%80%E6%9C%AF/2018/01/24/%E5%86%85%E5%AD%98%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E6%80%BB%E7%BB%93.html</loc>
+    
+    <lastmod>2018-01-24T00:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://pengzhangdev.github.io/%E6%8A%80%E6%9C%AF/2017/09/20/Android-AB-system-update.html</loc>
     
     <lastmod>2017-09-20T00:00:00+08:00</lastmod>
@@ -27,6 +36,8 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  
   
   
   

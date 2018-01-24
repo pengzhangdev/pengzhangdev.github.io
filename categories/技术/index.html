@@ -62,7 +62,7 @@
       
             
                 <li style="background-color: #444">
-                <a href="/categories/技术"> 技术 (3) </a>
+                <a href="/categories/技术"> 技术 (4) </a>
                 </li>
             
       
@@ -75,6 +75,20 @@
   <ul class="archive-list">
     
     
+    
+        
+        
+        
+        
+            
+            <li>
+                <a href="/2018/01">
+                    2018-01 (1)
+                </a>
+            </li>
+
+        
+        
     
         
         
@@ -116,6 +130,82 @@
       <article>
 
 <ul class="post-list">
+  
+    <li>
+      <div class="post-title">
+        <a href="/%E6%8A%80%E6%9C%AF/2018/01/24/%E5%86%85%E5%AD%98%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E6%80%BB%E7%BB%93.html"> 内存调试工具总结</a> </br>
+      </div>
+
+      <div class="post-info">
+        <ol>
+          <li class="post-time">2018-01-24</li> 
+          <li class="post-category"> 技术 </li>
+        </ol>
+      </div>
+
+      <div class="post-preview">
+        <h1 id="索引">索引</h1>
+
+<ul>
+  <li>系统内存分析, 所有进程内存分析
+    <ul>
+      <li>基本的<a href="#logcat">logcat</a>输出中可能包含的GC相关信息, 可以作为系统或某些应用内存状况的参考依据.</li>
+      <li>在SystemServer启动的情况下, 还可以通过 <a href="#meminfo_sys">dumpsys meminfo</a> 从framework层角度查看系统内存的状况, 该部分信息与从系统角度获取的信息存在差异.</li>
+      <li>对于需要排序并查找内存占用最多的进程, 推荐使用命令 <a href="#procrank">procrank</a></li>
+      <li>在实在缺少工具, 或者RD知道需要什么信息的情况下, 可以查看<a href="#meminfo">/proc/meminfo</a></li>
+      <li>如果需要连续监控系统的状态(内存/CPU等), 可以考虑工具<a href="#vmstat">vmstat</a></li>
+      <li>如果需要从共享库或者共享内存的角度分析其内存占用的情况, 可以考虑用 <a href="#librank">librank</a>, 当然, 如果存在host端的分析工具, 则该工具的输出可以顶替<a href="#procrank">procrank</a>和<a href="#procmem">procmem</a>.</li>
+      <li>如果需要查看系统中哪些共享文件别通过缺页错误的方式读到内存, 可以使用工具<a href="#dumpcache">dumpcache</a></li>
+      <li>如果实在不知道bug原因或者问题可能跟自己无关, 建议使用 <a href="#bugreport">bugreport</a>, 供其他RD协助分析问题.</li>
+    </ul>
+  </li>
+  <li>指定应用(dalvik进程)内存分析
+    <ul>
+      <li><a href="#meminfo_app">dumpsys meminfo 应用内存</a> 输出当前进程/应用的所有内存占用情况. 建议只针对dalvik层的进程.</li>
+    </ul>
+  </li>
+  <li>指定native进程内存分析
+    <ul>
+      <li>native的单个进程内存分析建议使用 <a href="#procmem">procmem</a>和 <a href="#showmap">showmap</a>. <a href="#showmap">showmap</a> 额外输出了进程的虚拟地址空间, 可以辅助查看由于虚拟地址空间引起的内存问题.</li>
+    </ul>
+  </li>
+  <li>应用内存泄露
+    <ul>
+      <li>少部分的泄露, 比如数据库/activity等, 通过<a href="#meminfo_app">dumpsys meminfo 应用内存</a>, 但只能知道存在泄露.</li>
+      <li>应用在开启 <a href="#strictmode">strictmode</a> 的情况下, 可以发现更多的资源泄露情况. 但仅限于发现.</li>
+      <li>一个比较推荐的用于定义应用内存泄露的工具是 <a href="#LeakCanary">LeakCanary</a></li>
+    </ul>
+  </li>
+  <li>native进程内存泄露
+    <ul>
+      <li><a href="#mem_leak">基于bionic的内存泄露分析工具</a>, 该工具对于RD使用要求偏高.</li>
+    </ul>
+  </li>
+  <li>bugreport 信息分析
+    <ul>
+      <li>见外部文档.</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="基础概念">基础概念</h1>
+
+<pre><code>VSS - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）
+RSS - Resident Set Size 实际使用物理内存（包含共享库占用的内存）
+PSS - Proportional Set Size 实际使用的物理内存, USS + 比例分配共享库占用的内存（[与其他进程共享的内存(RSS - USS)] / [分享共享内存的进程数量]）.
+USS - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）
+</code></pre>
+
+<p><img src="http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a151f0032acd20ed400001e" alt="" /><br />
+<img src="http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a151f0032acd20ed400001f" alt="" /><br />
+<img src="http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a151f0032acd20ed4000021" alt="" /><br />
+<img src="http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a151f0032acd20ed4000020" alt="" /></p>
+
+ 
+        <a href="/%E6%8A%80%E6%9C%AF/2018/01/24/%E5%86%85%E5%AD%98%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E6%80%BB%E7%BB%93.html"> Read More ... </a> </br>
+      </div>
+
+    </li>
   
     <li>
       <div class="post-title">

@@ -32,5 +32,5 @@ do
     wget $png -O assets/blog-images/$destname
 done
 
-sed -i "s/http:\/\/pengzhangdev.tk:31119\/api\/file\/getImage?fileId=/assets\/blog-images\//g" $new_post
+sed -i "s/http:\/\/pengzhangdev.tk:31119\/api\/file\/getImage?fileId=/\/assets\/blog-images\//g" $new_post
 

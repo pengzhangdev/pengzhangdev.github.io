@@ -130,34 +130,7 @@
       </div>
 
       <div class="post-preview">
-        <p>history:</p>
-
-<ul>
-  <li>version 1 by Werther Zhang @ 20170920
-    <ul>
-      <li>完成简介和分区表, 分区表的具体内容见另一篇.</li>
-    </ul>
-  </li>
-  <li>version 1.1 by Werther Zhang @ 20170921
-    <ul>
-      <li>完成bootloader交互, 开始review <code>update_engine</code>代码框架</li>
-    </ul>
-  </li>
-  <li>version 1.2 by Werther Zhang @ 20171010
-    <ul>
-      <li>整理边下边升级, 校验和postinstall代码逻辑.</li>
-    </ul>
-  </li>
-</ul>
-
-<p>TDDO:</p>
-
-<ul>
-  <li>升级过程, 包括下载(缺单独下载升级包), 刷机(完成)和post-install(完成), 包括最后进新系统的odex生成(两份)</li>
-  <li>升级包制作</li>
-</ul>
-
-<h1 id="-ab系统简介-"><font color="blue"> A/B系统简介 </font></h1>
+        <h1 id="-ab系统简介-"><font color="blue"> A/B系统简介 </font></h1>
 <p><br /><br />
 顾名思义, <code>A/B</code>系统就是指终端设备上存在两套系统,(userdata只有一份, 被两套系统共用). 简单来讲, 可以理解为, 存在一套系统分区, 一套备份分区, 两套系统都可以被启动, 两套系统的版本号可以一样, 也可以一套旧, 一套新. 而升级就是将旧的系统升级到新版本.</p>
 
@@ -286,7 +259,7 @@ bootloader为了判断一个系统(slot)是否为可以启动的状态, 需要�
 </ul>
 
 <p><code>slot a</code> 和 <code>slot b</code>, 只有一个是active, 它们可以同时有 bootable 和 successful 属性.<br />
-<img src="assets/blog-images/Android-AB-system-update-1.png" alt="" /></p>
+<img src="http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed4000082" alt="" /></p>
 
 <ol>
   <li>bootloader检测到1个或者2个slot都是bootable的状态.</li>
@@ -296,7 +269,7 @@ bootloader为了判断一个系统(slot)是否为可以启动的状态, 需要�
   <li>由于启动失败, 则设置该slot为unbootable, 并设置另一个slot为active, 进行下一次尝试.</li>
 </ol>
 
-<p><img src="assets/blog-images/Android-AB-system-update-2.png" alt="" /><br />
+<p><img src="http://pengzhangdev.tk:31119/api/file/getImage?fileId=5a32434732acd20ed400007a" alt="" /><br />
 <br /></p>
 
 <h1 id="升级流下载和升级"><font color="blue">升级流下载和升级</font></h1>

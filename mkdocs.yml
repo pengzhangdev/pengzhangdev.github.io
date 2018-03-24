@@ -1,0 +1,37 @@
+site_name: 'Docs of Werther Zhang'
+site_description: 'The documents of Werther Zhang (张鹏)'
+copyright: 'Copyright &copy; 2018 Werther Zhang'
+site_author: 'Werther Zhang'
+site_url: 'https://pengzhangdev.github.io'
+
+theme:
+    name: 'material'
+    palette:
+        primary: 'blue'
+        accent: 'light blue'
+    font:
+        text: 'Ubuntu'
+        code: 'Ubuntu Mono'
+    logo: 'whatshot'
+    language: 'zh'
+    feature:
+        tabs: true
+
+extra:
+    search:
+        language: 'en, zh'
+    social:
+        - type: 'coding'
+          link: 'http://wertherzhang.coding.me/'
+
+google_analytics:
+    - 'UA-XXXXXXXX-X'
+    - 'auto'
+
+# Extensions
+markdown_extensions:
+    - admonition
+    - codehilite:
+        guess_lang: true
+    - toc:
+        permalink: true

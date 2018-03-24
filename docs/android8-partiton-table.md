@@ -5,6 +5,8 @@ category: 技术
 comments: false
 ---
 
+来源: https://pengzhangdev.github.io/android8-partiton-table/
+
 ## <font color="blue">差异简述 </font> ##
 
 在Android8.0之后, 就存在两套分区表, 分别对应的是A/B系统和非A/B系统.

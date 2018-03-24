@@ -5,6 +5,8 @@ category: 技术
 comments: false
 ---
 
+来源: https://pengzhangdev.github.io/zram/
+
 ## <font color="blue">简介</font> ##
 
 在linux内核的mm子系统中, 包含三个支持内存压缩的组件, 分别是zram, zcache 和 zswap.

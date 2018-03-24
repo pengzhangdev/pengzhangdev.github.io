@@ -5,6 +5,8 @@ category: 技术
 comments: false
 ---
 
+来源:https://pengzhangdev.github.io/Android-AB-system-update/
+
 # <font color="blue"> A/B系统简介 </font> #
 <br>
 顾名思义, `A/B`系统就是指终端设备上存在两套系统,(userdata只有一份, 被两套系统共用). 简单来讲, 可以理解为, 存在一套系统分区, 一套备份分区, 两套系统都可以被启动, 两套系统的版本号可以一样, 也可以一套旧, 一套新. 而升级就是将旧的系统升级到新版本.

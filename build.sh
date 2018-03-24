@@ -10,7 +10,7 @@ if [ -d /tmp/_site ]; then
     rm -rf /tmp/_site
 fi
 
-mv site /tmp_site
+mv site /tmp/_site
 
 coding=`git remote show  | grep coding | wc -l`
 

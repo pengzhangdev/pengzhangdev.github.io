@@ -1,5 +1,5 @@
-site_name: 'Docs of Werther Zhang'
-site_description: 'The documents of Werther Zhang (张鹏)'
+site_name: '万卷茅屋'
+site_description: 'The documents of Werther Zhang'
 copyright: 'Copyright &copy; 2018 Werther Zhang'
 site_author: 'Werther Zhang'
 site_url: 'https://pengzhangdev.github.io'
@@ -12,7 +12,6 @@ theme:
     font:
         text: 'Ubuntu'
         code: 'Ubuntu Mono'
-    logo: 'whatshot'
     language: 'zh'
     feature:
         tabs: true
@@ -35,3 +34,18 @@ markdown_extensions:
         guess_lang: true
     - toc:
         permalink: true
+
+pages:
+    - 万卷茅屋: index.md
+    - 关于: about.md
+
+    - Android:
+        - zram: zram.md
+        - Android8分区表分析: android8-partiton-table.md
+        - AB系统升级: Android-AB-system-update.md
+
+    - 存档:
+        - AB系统升级: 2017-09-20-Android-AB-system-update.md
+        - Android8分区表分析: 2017-09-19-android8-partiton-table.md
+        - zram: 2017-08-22-zram.md
+

@@ -32,7 +32,7 @@ else
     exit
 fi
 
-rm -rf ./
+rm -rf ./*
 
 mv /tmp/_site/* ./
 

@@ -42,3 +42,5 @@ git commit -m "update sites"
 
 git push coding master
 git push origin master
+
+git checkout mkdocs

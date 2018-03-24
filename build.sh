@@ -32,5 +32,13 @@ else
     exit
 fi
 
+rm -rf ./
+
+mv /tmp/_site/* ./
+
+git add ./
+
+git commit -m "update sites"
+
 git push coding master
 git push origin master

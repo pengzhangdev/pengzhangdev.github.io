@@ -1,5 +1,7 @@
 # slackbot 框架
 
+来源: https://pengzhangdev.github.io/slackbot/
+
 slackbot, 顾名思义, 是基于slack的bot程序, 使用python实现. 个人在[lins05/slackbot](https://github.com/lins05/slackbot)的基础上, 进行了二次开发,用于树莓派的控制中心和智能家居的控制中心. 最初选中它的原因是, 在网上看到大量的例子基于slack做远程运维的例子.
 
 下文介绍的slackbot框架, 是包含[lins05/slackbot](https://github.com/lins05/slackbot)和个人二次开发之后的内容.二次开发的核心在于插件和组件扩充.

@@ -722,6 +722,7 @@ logcat中输出如下, 并没有OOM输出:
 activity 的泄露基于android自带工具, 可以快速确定, 但是具体泄露的activity, 需要依赖工具 LeakCanary.
 
 代码:
+
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-18.png)
 
 界面:

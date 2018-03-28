@@ -17,12 +17,17 @@ import os
 import sys
 import requests
 import logging
+import time
 
 _LOGGER = logging.getLogger(__name__)
 
 def download_image(url, filename):
     _LOGGER.info("download {} to {}".format(url, filename))
-    r = requests.get(url)
+    try:
+        r = requests.get(url)
+    except Exception:
+        time.sleep(60)
+        r = requests.get(url)
     with open(filename, 'w') as f:
         f.write(r.content)
 
@@ -38,10 +43,8 @@ def main(argc, argv):
     _LOGGER.info('basename {}'.format(basename))
     index = 0
     for line in buffer.split('\n'):
-        if line.find('leanote://file/getImage') == -1:
-            with open(argv[2], 'w') as f:
-                f.write(line + '\n')
-        else:
+
+        if line.find('leanote://') != -1:
             # replace leanote://file/ with http://pengzhangdev.tk:31119/api/file/ to download
             # replace http://pengzhangdev.tk:31119/api/file/getImage?fileId=xxx with https://pengzhangdev.github.io/assets/images/xxx.png to link to github
             start_pos = line.find("leanote://")
@@ -51,9 +54,29 @@ def main(argc, argv):
             targetfname = 'https://pengzhangdev.github.io/assets/images/' + basename + '-{}'.format(index) + '.png'
             downfname = os.path.join('docs/assets/images/', basename + '-{}'.format(index) + '.png')
             download_image(url, downfname)
-            with open(argv[2], 'w+') as f:
+            with open(argv[2], 'a+') as f:
                 f.write(line.replace(originfname, targetfname) + '\n')
             index = index+1
+            continue
+
+        if line.find('/api/') != -1:
+            # replace leanote://file/ with http://pengzhangdev.tk:31119/api/file/ to download
+            # replace http://pengzhangdev.tk:31119/api/file/getImage?fileId=xxx with https://pengzhangdev.github.io/assets/images/xxx.png to link to github
+            start_pos = line.find("/api/")
+            end_pos = line.find(")")
+            url = line[start_pos:end_pos].replace('/api/', 'http://pengzhangdev.tk:31119/api/')
+            originfname = line[start_pos:end_pos]
+            targetfname = 'https://pengzhangdev.github.io/assets/images/' + basename + '-{}'.format(index) + '.png'
+            downfname = os.path.join('docs/assets/images/', basename + '-{}'.format(index) + '.png')
+            download_image(url, downfname)
+            with open(argv[2], 'a+') as f:
+                f.write(line.replace(originfname, targetfname) + '\n')
+            index = index+1
+            continue
+
+        with open(argv[2], 'a+') as f:
+            f.write(line + '\n')
+
 
 
 if __name__ == '__main__':

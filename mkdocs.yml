@@ -43,11 +43,13 @@ pages:
         - zram: zram.md
         - Android8分区表分析: android8-partiton-table.md
         - AB系统升级: Android-AB-system-update.md
+        - Android内存调试总结: Android-memory-debug.md
 
     - Python:
         - slackbot详细说明: slackbot.md
 
     - 存档:
+        - Android内存调试总结: 2017-11-14-Android-memory-debug.md
         - slackbot详细说明: 2017-10-01-slackbot.md
         - AB系统升级: 2017-09-20-Android-AB-system-update.md
         - Android8分区表分析: 2017-09-19-android8-partiton-table.md

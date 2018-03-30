@@ -450,10 +450,10 @@ google的参考实现复用了misc分区的`bootloader_message`(recovery与bootl
 AB升级payload制作逻辑在升级包制作脚本的`WriteABOTAPackageWithBrilloScript`, 而真正payload生成的逻辑在函数`GenerateUpdatePayloadFile`.
 
 流程如下:
-![](assets/images/Android-AB-system-update-7.png)
+![](assets/images/Android-AB-system-update-8.png)
 
 生成payload指令规则:
-![](assets/images/Android-AB-system-update-7.png)
+![](assets/images/Android-AB-system-update-9.png)
 
 # <font color="blue">AB升级总流程图</font> #
 

@@ -91,7 +91,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://pengzhangdev.github.io" title="万卷茅屋" class="md-header-nav__button md-logo">
           
-            <i class="md-icon"></i>
+            <i class="md-icon">whatshot</i>
           
         </a>
       </div>
@@ -226,7 +226,7 @@
   <label class="md-nav__title md-nav__title--site" for="drawer">
     <span class="md-nav__button md-logo">
       
-        <i class="md-icon"></i>
+        <i class="md-icon">whatshot</i>
       
     </span>
     万卷茅屋
@@ -1411,12 +1411,12 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
 <p>该工具是android7.0之后才有的工具,用于查看文件系统中有每个文件被cache到内存的大小. 该文件可以用来判断缺页错误时加载的文件.</p>
 <p>在Launcher界面时的输出如下:</p>
 <p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-7.png" /></p>
-<p>稳定播放1080P视频时:
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-8.png" /></p>
-<p>按下遥控器确定键显示UI时:
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-9.png" /></p>
-<p>对比, 可以知道在播放过程中, 显示UI时主要加载的文件是:
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-10.png" /></p>
+<p>稳定播放1080P视频时:</p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-8.png" /></p>
+<p>按下遥控器确定键显示UI时:</p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-9.png" /></p>
+<p>对比, 可以知道在播放过程中, 显示UI时主要加载的文件是:</p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-10.png" /></p>
 <h4 id="bugreport">bugreport 信息分析 <span id="bugreport"></span><a class="headerlink" href="#bugreport" title="Permanent link">&para;</a></h4>
 <p>Android系统想要成为一个功能完备，生态繁荣的操作系统，那就必须提供完整的应用开发环境。而在应用开发中，app程序的调试分析是日常生产中进程会进行的工作。Android为了方便开发人员分析整个系统平台和某个app在运行一段时间之内的所有信息，专门开发了bugreport工具。</p>
 <p><br>
@@ -1433,12 +1433,12 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
 </li>
 <li>
 <p>将上面命令抓取的bugreport.txt文本文件拷贝出来，上传到bugreport分析服务器上面，服务器会自动生成系统当前状态快照，上传方法如下：
-  a. 通过浏览器进入服务器地址：http://10.27.254.108:8080/,如下图：
-  <img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-11.png" /></p>
+  a. 通过浏览器进入服务器地址：http://10.27.254.108:8080/,如下图：</p>
 </li>
 </ol>
-<p>b. 点击broswer浏览report.txt文本文件，然后点击upload按钮上传文件，上传后，系统会自动生成系统状态快照，快照名称对应到上传时间，点击快照名称进入系统分析页面，如下：
-  <img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-12.png" /></p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-11.png" /></p>
+<p>b. 点击broswer浏览report.txt文本文件，然后点击upload按钮上传文件，上传后，系统会自动生成系统状态快照，快照名称对应到上传时间，点击快照名称进入系统分析页面，如下：</p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-12.png" /></p>
 <p><strong>该网页服务器的dockerfile如下:</strong></p>
 <div class="codehilite"><pre><span></span>FROM ubuntu:14.04
  MAINTAINER wertherzhang &lt;werther0331@gmail.com&gt;
@@ -1529,8 +1529,8 @@ Uptime: <span class="m">2612261</span> Realtime: <span class="m">2612261</span>
 命令: <code>procmem &lt;pid&gt;</code>
 例子: <code>procmem 2509</code>
 数据来源: <code>/proc/&lt;pid&gt;/maps</code> 和 <code>/proc/&lt;pid&gt;/pagemap</code></p>
-<p><code>Vss      Rss      Pss      Uss     ShCl     ShDi     PrCl     PrDi  Name</code>
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-14.png" /></p>
+<p><code>Vss      Rss      Pss      Uss     ShCl     ShDi     PrCl     PrDi  Name</code></p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-14.png" /></p>
 <p>各字段含义:</p>
 <div class="codehilite"><pre><span></span>ShCl  --  shared clean
 ShDi  --  shared dirty
@@ -1594,8 +1594,8 @@ PrDi  --  private dirty
 </pre></div>
 
 
-<p>增加application, 如下:
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-25.png" /></p>
+<p>增加application, 如下:</p>
+<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-25.png" /></p>
 <p>编译运行, 执行上面同样的操作. 在通知中心有如下显示:</p>
 <p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-26.png" /></p>
 <p>点击后可以查看详细的堆栈:</p>

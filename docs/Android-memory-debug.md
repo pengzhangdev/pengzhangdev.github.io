@@ -510,12 +510,15 @@ http://blog.csdn.net/macky0668/article/details/6839498
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-7.png)
 
 稳定播放1080P视频时:
+
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-8.png)
 
 按下遥控器确定键显示UI时:
+
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-9.png)
 
 对比, 可以知道在播放过程中, 显示UI时主要加载的文件是:
+
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-10.png)
 
 
@@ -540,9 +543,11 @@ Android系统想要成为一个功能完备，生态繁荣的操作系统，那�
  
 2. 将上面命令抓取的bugreport.txt文本文件拷贝出来，上传到bugreport分析服务器上面，服务器会自动生成系统当前状态快照，上传方法如下：
   a. 通过浏览器进入服务器地址：http://10.27.254.108:8080/,如下图：
+
   ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-11.png)
  
   b. 点击broswer浏览report.txt文本文件，然后点击upload按钮上传文件，上传后，系统会自动生成系统状态快照，快照名称对应到上传时间，点击快照名称进入系统分析页面，如下：
+
   ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-12.png)
 
 
@@ -660,6 +665,7 @@ Uptime: 2612261 Realtime: 2612261
 数据来源: `/proc/<pid>/maps` 和 `/proc/<pid>/pagemap`
 
 ` Vss      Rss      Pss      Uss     ShCl     ShDi     PrCl     PrDi  Name `
+
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-14.png)
 
 各字段含义:
@@ -769,6 +775,7 @@ activity 的泄露基于android自带工具, 可以快速确定, 但是具体泄
 ```
 
 增加application, 如下:
+
 ![](https://pengzhangdev.github.io/assets/images/Android-memory-debug-25.png)
 
 编译运行, 执行上面同样的操作. 在通知中心有如下显示:

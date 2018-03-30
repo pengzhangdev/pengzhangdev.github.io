@@ -23,6 +23,8 @@ git push origin mkdocs
 
 git checkout master
 
+git pull origin master
+
 branch=`git branch | grep "*"`
 
 if [[ $branch == *"master" ]]; then

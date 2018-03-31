@@ -1,4 +1,4 @@
-# 重要重要!!
+# 重要通知!!
 
 由于[coding](http://wertherzhang.coding.me/)上的Pages动不动就部署失败(还没地方吐槽和解决), 所以该网站的数据可能不是最新甚至一直无法更新成功.需要最新的数据请访问[github](https://pengzhangdev.github.io), 在某些网络环境下速度会偏慢, 见谅.
 

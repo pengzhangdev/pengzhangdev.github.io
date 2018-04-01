@@ -46,6 +46,7 @@ pages:
         - Android8分区表分析: android8-partiton-table.md
         - AB系统升级: Android-AB-system-update.md
         - Android内存调试总结: Android-memory-debug.md
+        - Android SELinux 规则介绍: SEAndroid规则介绍.md
 
     - Python:
         - slackbot详细说明: slackbot.md
@@ -56,4 +57,5 @@ pages:
         - AB系统升级: 2017-09-20-Android-AB-system-update.md
         - Android8分区表分析: 2017-09-19-android8-partiton-table.md
         - zram: 2017-08-22-zram.md
+        - Android SELinux 规则介绍: 2016-12-12-SEAndroid规则介绍.md
 

@@ -4,7 +4,7 @@
     
     <url>
      <loc>https://pengzhangdev.github.io/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>https://pengzhangdev.github.io/about/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -21,25 +21,31 @@
         
     <url>
      <loc>https://pengzhangdev.github.io/zram/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/android8-partiton-table/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/Android-AB-system-update/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/Android-memory-debug/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://pengzhangdev.github.io/SEAndroid规则介绍/</loc>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -49,7 +55,7 @@
         
     <url>
      <loc>https://pengzhangdev.github.io/slackbot/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -59,31 +65,37 @@
         
     <url>
      <loc>https://pengzhangdev.github.io/2017-11-14-Android-memory-debug/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/2017-10-01-slackbot/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/2017-09-20-Android-AB-system-update/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/2017-09-19-android8-partiton-table/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://pengzhangdev.github.io/2017-08-22-zram/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://pengzhangdev.github.io/2016-12-12-SEAndroid规则介绍/</loc>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

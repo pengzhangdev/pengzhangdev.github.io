@@ -16,4 +16,6 @@
 
 在这个站之前, 林林总总已经存在好几个了, 这是第一个真真正正决定持续不断地做下去, 做一辈子. 可能域名会改变(如果coding或者github倒了), 但是内容会一直持续. 目前的地址为 [github](https://pengzhangdev.github.io) 和 [coding](http://wertherzhang.coding.me/), 未来可能会增加.可能有人会问, 为什么不自己买一个. 会买的, 但是这个就体现个人性格了, 鸡蛋不放在一个篮子里, 不管是vps还是什么, 都不知道是否能存在一辈子, 既然我是认真在做这件事, 那么就得考虑未来它们倒闭的情况.
 
+哈哈, 任性地随意补充, 同事推荐了[netlify](https://pengzhang.netlify.com/), 然后跟github绑定下, 意外地好用, 而且还有cdn加速, 个人推荐下. 莫名其妙又多个一个备用站点.
+
 补充点: coding由于免费只有250M, 所以, 图片这些会尽可能放在github上, 从coding去引用. 希望github别被墙了.

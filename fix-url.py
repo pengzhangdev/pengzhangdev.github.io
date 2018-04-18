@@ -51,7 +51,7 @@ def main(argc, argv):
             end_pos = line.find(")")
             url = line[start_pos:end_pos].replace('leanote://', 'http://pengzhangdev.tk:31119/api/')
             originfname = line[start_pos:end_pos]
-            targetfname = 'https://pengzhangdev.github.io/assets/images/' + basename + '-{}'.format(index) + '.png'
+            targetfname = 'https://pengzhang.netlify.com/assets/images/' + basename + '-{}'.format(index) + '.png'
             downfname = os.path.join('docs/assets/images/', basename + '-{}'.format(index) + '.png')
             download_image(url, downfname)
             with open(argv[2], 'a+') as f:
@@ -66,7 +66,7 @@ def main(argc, argv):
             end_pos = line.find(")")
             url = line[start_pos:end_pos].replace('/api/', 'http://pengzhangdev.tk:31119/api/')
             originfname = line[start_pos:end_pos]
-            targetfname = 'https://pengzhangdev.github.io/assets/images/' + basename + '-{}'.format(index) + '.png'
+            targetfname = 'https://pengzhang.netlify.com/assets/images/' + basename + '-{}'.format(index) + '.png'
             downfname = os.path.join('docs/assets/images/', basename + '-{}'.format(index) + '.png')
             download_image(url, downfname)
             with open(argv[2], 'a+') as f:

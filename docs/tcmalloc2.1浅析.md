@@ -9,6 +9,8 @@ history:
 
 # tcmalloc2.1 浅析
 
+来源: https://pengzhangdev.github.io/tcmalloc2.1%E6%B5%85%E6%9E%90/
+
 ## 简介
 
 tcmalloc(thread cached malloc) 是由google为并发程序而开发的内存分配管理器.tcmalloc致力于减少多线程内存请求时对锁的竞争, 在对小内存的申请时,可以在无需锁的情况下高效获取内存;而在获取大内存时,使用高校的spinlocks.正因为tcmalloc是在线程局部空间(TLS)预先存储部分空闲内存用于分配, 在程序刚启动时,其所占用的内存会比dlmalloc或其他的内存管理器更大,但其增长速幅度比其他管理器小,所以,在后期,实际占用内存空间会相接近.

@@ -1036,10 +1036,10 @@ USS - Unique Set Size 进程独自占用的物理内存（不包含共享库占�
 </pre></div>
 
 
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-0.png" />
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-1.png" />
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-2.png" />
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-3.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-0.png" />
+<img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-1.png" />
+<img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-2.png" />
+<img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-3.png" /></p>
 <p><br>
 如果看进程独占内存，　则使用USS. 但是一般考虑到共享内存的情况, 大部分都是依据PSS查看对应进程的内存占用.
 <br></p>
@@ -1452,19 +1452,19 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
 <h4 id="librank">librank <span id="librank"></span><a class="headerlink" href="#librank" title="Permanent link">&para;</a></h4>
 <p>场景: 与procrank互补使用, 是procmem的扩展. 显示所有进程的信息, 需要工具统计分类. 也可以用来查看每个库或共享文件真实占用的内存大小.</p>
 <p>数据来源与procmem一样, 但是procmem针对的是单个进程的内存占用情况. 而librank是显示某个库或者文件被哪些进程共享, 并显示占用大小. 如下图所示.</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-4.png" />
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-5.png" />
-<img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-6.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-4.png" />
+<img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-5.png" />
+<img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-6.png" /></p>
 <h4 id="dumpcache">dumpcache <span id="dumpcache"></span><a class="headerlink" href="#dumpcache" title="Permanent link">&para;</a></h4>
 <p>该工具是android7.0之后才有的工具,用于查看文件系统中有每个文件被cache到内存的大小. 该文件可以用来判断缺页错误时加载的文件.</p>
 <p>在Launcher界面时的输出如下:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-7.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-7.png" /></p>
 <p>稳定播放1080P视频时:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-8.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-8.png" /></p>
 <p>按下遥控器确定键显示UI时:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-9.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-9.png" /></p>
 <p>对比, 可以知道在播放过程中, 显示UI时主要加载的文件是:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-10.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-10.png" /></p>
 <h4 id="bugreport">bugreport 信息分析 <span id="bugreport"></span><a class="headerlink" href="#bugreport" title="Permanent link">&para;</a></h4>
 <p>Android系统想要成为一个功能完备，生态繁荣的操作系统，那就必须提供完整的应用开发环境。而在应用开发中，app程序的调试分析是日常生产中进程会进行的工作。Android为了方便开发人员分析整个系统平台和某个app在运行一段时间之内的所有信息，专门开发了bugreport工具。</p>
 <p><br>
@@ -1484,9 +1484,9 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
   a. 通过浏览器进入服务器地址：http://10.27.254.108:8080/,如下图：</p>
 </li>
 </ol>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-11.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-11.png" /></p>
 <p>b. 点击broswer浏览report.txt文本文件，然后点击upload按钮上传文件，上传后，系统会自动生成系统状态快照，快照名称对应到上传时间，点击快照名称进入系统分析页面，如下：</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-12.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-12.png" /></p>
 <p><strong>该网页服务器的dockerfile如下:</strong></p>
 <div class="codehilite"><pre><span></span>FROM ubuntu:14.04
  MAINTAINER wertherzhang &lt;werther0331@gmail.com&gt;
@@ -1517,7 +1517,7 @@ http://blog.csdn.net/macky0668/article/details/6839498</p>
 </pre></div>
 
 
-<p>附件: <a href="https://pengzhangdev.github.io/assets/images/Android-memory-debug-13.png">chkbugreport-server.zip</a></p>
+<p>附件: <a href="https://pengzhang.netlify.com/assets/images/Android-memory-debug-13.png">chkbugreport-server.zip</a></p>
 <h2 id="_4">应用内存分析<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="android_2">android自带工具<a class="headerlink" href="#android_2" title="Permanent link">&para;</a></h3>
 <h4 id="dumpsys-meminfo_1">dumpsys meminfo 应用内存 <span id="meminfo_app"></span><a class="headerlink" href="#dumpsys-meminfo_1" title="Permanent link">&para;</a></h4>
@@ -1578,7 +1578,7 @@ Uptime: <span class="m">2612261</span> Realtime: <span class="m">2612261</span>
 例子: <code>procmem 2509</code>
 数据来源: <code>/proc/&lt;pid&gt;/maps</code> 和 <code>/proc/&lt;pid&gt;/pagemap</code></p>
 <p><code>Vss      Rss      Pss      Uss     ShCl     ShDi     PrCl     PrDi  Name</code></p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-14.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-14.png" /></p>
 <p>各字段含义:</p>
 <div class="codehilite"><pre><span></span>ShCl  --  shared clean
 ShDi  --  shared dirty
@@ -1593,7 +1593,7 @@ PrDi  --  private dirty
 <p>命令: <code>showmap [-a] [-t] [-v] &lt;pid&gt;</code>
 例子: <code>showmap -a 884</code>
 输出单位: KB</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-15.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-15.png" /></p>
 <p>由于现在内核都使用了动态内存分配的机制, 在大量申请小内存的情况下, 从系统看内存有剩余, 但是进程却无法分配出需要的内存, 这就有可能是由于虚拟地址的内存碎片引起, 无法找到一段大于所请求内存大小的地址空间. </p>
 <p>例子:</p>
 <h4 id="android-oom">Android 应用 OOM<a class="headerlink" href="#android-oom" title="Permanent link">&para;</a></h4>
@@ -1608,27 +1608,27 @@ PrDi  --  private dirty
 <p>以上为网上的结论, 在android5.1.1上测试发现:</p>
 <p><strong>fd问题并不会导致OOM</strong></p>
 <p>代码复用下面内存泄露的代码,在asynctask中执行文件打开操作.</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-16.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-16.png" /></p>
 <p>logcat中输出如下, 并没有OOM输出:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-17.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-17.png" /></p>
 <p>但是这段代码的确证明了打开文件太多会导致shmem创建失败.</p>
 <h2 id="_5">内存泄露分析<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <h3 id="activity">activity 泄露 <span id="activity_leak"></span><a class="headerlink" href="#activity" title="Permanent link">&para;</a></h3>
 <p>activity 的泄露基于android自带工具, 可以快速确定, 但是具体泄露的activity, 需要依赖工具 LeakCanary.</p>
 <p>代码:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-18.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-18.png" /></p>
 <p>界面:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-19.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-19.png" /></p>
 <p>在第一次进入该应用时:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-20.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-20.png" /></p>
 <p>按下BUTTON, 然后退出应用:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-21.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-21.png" /></p>
 <p>第二次进入该应用:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-22.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-22.png" /></p>
 <p>第二次按下BUTTON:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-23.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-23.png" /></p>
 <p>第二次退出应用:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-24.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-24.png" /></p>
 <p>基于 <code>dumpsys meminfo</code> 确认应用有activity泄露后, 单纯通过UI操作基本也可以判断出来哪个activity泄露, 更准确的泄露检测工具是 LeakCanary, 该工具为第三方工具. <span id="LeakCanary"></span>
 具体用法: https://www.liaohuqiu.net/cn/posts/leak-canary-read-me/</p>
 <p>还是以上的例子, 额外增加如下代码. </p>
@@ -1643,21 +1643,21 @@ PrDi  --  private dirty
 
 
 <p>增加application, 如下:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-25.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-25.png" /></p>
 <p>编译运行, 执行上面同样的操作. 在通知中心有如下显示:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-26.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-26.png" /></p>
 <p>点击后可以查看详细的堆栈:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-27.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-27.png" /></p>
 <p>同样在logcat中有如下输出:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-28.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-28.png" /></p>
 <h3 id="strictmode">StrictMode检测应用内存泄露 <span id="strictmode"></span><a class="headerlink" href="#strictmode" title="Permanent link">&para;</a></h3>
 <p>同样是上面的例子, 修改代码如下, 增加strickmode的调用:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-29.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-29.png" /></p>
 <p>同样的上面操作方法, logcat中有如下输出:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-30.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-30.png" /></p>
 <h3 id="libc">基于libc调试内存泄露 <span id="mem_leak"></span><a class="headerlink" href="#libc" title="Permanent link">&para;</a></h3>
 <p>内存泄露的检测依据是, 进程退出时, 还有未释放的内存. 所以, valgrind包括bionic libc中, 能精确检测到泄露的前提条件就是进程退出. 但是这个对于系统级别的进程是无用的, 因为系统级进程并不会退出. 从RD角度, 判断系统级进程是否泄露的依据是内存是否持续增长, 特别是在压力测试的情况下. 所以, 这个部分介绍的工具, 实际上是抓取了持续增长的内存信息, 这些信息, 可能是内存泄露, 也可能是进程正常申请的内存, 需要RD介入判断.</p>
-<p>附件: <a href="https://pengzhangdev.github.io/assets/images/Android-memory-debug-31.png">Memleak_tools_android.zip</a></p>
+<p>附件: <a href="https://pengzhang.netlify.com/assets/images/Android-memory-debug-31.png">Memleak_tools_android.zip</a></p>
 <p>依赖工具:</p>
 <ul>
 <li><code>libc_malloc_debug_leak.so</code> , bionic源码下, 需要编译并push到系统中</li>
@@ -1689,7 +1689,7 @@ PrDi  --  private dirty
 <li>执行 <code>./memincrease.py mem_stack_$pi_$memsize1_$memsize2.log incr_$pid_$memsize1_$memsize2.log</code>, 该过程是对12生成的文件进行统计排序, 从大到小排序.</li>
 </ol>
 <p>例子:</p>
-<p><img alt="" src="https://pengzhangdev.github.io/assets/images/Android-memory-debug-32.png" /></p>
+<p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-32.png" /></p>
 <p>运行一会儿后, 在 /data/local/tmp/目录下存在文件:</p>
 <div class="codehilite"><pre><span></span>mem_snapshot_2158_1.log
 mem_snapshot_2158_2.log

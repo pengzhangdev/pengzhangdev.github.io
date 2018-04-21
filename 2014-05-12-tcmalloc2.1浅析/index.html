@@ -349,6 +349,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dlmalloc浅析/" title="dlmalloc 浅析" class="md-nav__link">
+      dlmalloc 浅析
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -615,6 +627,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2014-03-05-dlmalloc浅析/" title="dlmalloc 浅析" class="md-nav__link">
+      dlmalloc 浅析
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -746,9 +770,7 @@
               
                 
                 
-                <p>作者言: 内存有个系列, 当前tcmalloc中提到的dlmalloc在另一篇文章中. 那篇文章还在迁移, 由于内容比该篇文章详细,耗费时间更多.</p>
-<p>history:</p>
-<ul>
+                <ul>
 <li>version 1.0 done by wertherzhang @2014-05-12 write done with emacs org</li>
 <li>version 1.1 done by wertherzhang @2017-03-16 moved to leanote</li>
 </ul>
@@ -878,365 +900,817 @@
 
 <p>```</p>
 <p>我们重点描述下,TC向CC申请内存的过程.首先,我们需要知道,CC也按照TC的内存分类方式,存在各个分类的箱子.所以,实际上是向CC中的对应分类获取一连串的空闲内存.首先,我们得确定,移动的内存数量,也就是对应分类的内存块个数.默认情况下, 有一个规则确定每个分类对应的该移动的内存数量.以64K为基准,除以对应分类的内存大小,算出来的为移动的内存数量.但是,对于一些极小内存,这个值将很大,所以,我们限制最大为32768个,同理,对于极大内存,这个值&lt;=1,会导致这个分类的内存请求每次都向CC请求,所以,我们这只最小为2,保证最多每2次向CC请求一次内存.下面为,默认的分类和对应的移动数量.</p>
-<p><code>idx : class_size : num_to_move_objs : num_to_move_pages
-    1 : 8 : 8192 : 2
-    2 : 16 : 4096 : 2
-    3 : 32 : 2048 : 2
-    4 : 48 : 1365 : 2
-    5 : 64 : 1024 : 2
-    6 : 80 : 819 : 2
-    7 : 96 : 682 : 2
-    8 : 112 : 585 : 2
-    9 : 128 : 512 : 2
-    10 : 144 : 455 : 2
-    11 : 160 : 409 : 2
-    12 : 176 : 372 : 2
-    13 : 192 : 341 : 2
-    14 : 208 : 315 : 2
-    15 : 224 : 292 : 2
-    16 : 240 : 273 : 2
-    17 : 256 : 256 : 2
-    18 : 288 : 227 : 2
-    19 : 320 : 204 : 2
-    20 : 352 : 186 : 2
-    21 : 384 : 170 : 2
-    22 : 416 : 157 : 2
-    23 : 448 : 146 : 2
-    24 : 480 : 136 : 2
-    25 : 512 : 128 : 2
-    26 : 576 : 113 : 2
-    27 : 640 : 102 : 2
-    28 : 704 : 93 : 2
-    29 : 768 : 85 : 2
-    30 : 832 : 78 : 2
-    31 : 896 : 73 : 2
-    32 : 960 : 68 : 2
-    33 : 1024 : 64 : 2
-    34 : 1152 : 56 : 2
-    35 : 1280 : 51 : 2
-    36 : 1408 : 46 : 2
-    37 : 1536 : 42 : 2
-    38 : 1792 : 36 : 2
-    39 : 2048 : 32 : 2
-    40 : 2304 : 28 : 2
-    41 : 2560 : 25 : 2
-    42 : 2816 : 23 : 3
-    43 : 3072 : 21 : 2
-    44 : 3328 : 19 : 3
-    45 : 4096 : 16 : 2
-    46 : 4608 : 14 : 3
-    47 : 5120 : 12 : 2
-    48 : 6144 : 10 : 3
-    49 : 6656 : 9 : 5
-    50 : 8192 : 8 : 2
-    51 : 9216 : 7 : 5
-    52 : 10240 : 6 : 4
-    53 : 12288 : 5 : 3
-    54 : 13312 : 4 : 5
-    55 : 16384 : 4 : 2
-    56 : 20480 : 3 : 5
-    57 : 24576 : 2 : 3
-    58 : 26624 : 2 : 7
-    59 : 32768 : 2 : 4
-    60 : 40960 : 2 : 5
-    61 : 49152 : 2 : 6
-    62 : 57344 : 2 : 7
-    63 : 65536 : 2 : 8
-    64 : 73728 : 2 : 9
-    65 : 81920 : 2 : 10
-    66 : 90112 : 2 : 11
-    67 : 98304 : 2 : 12
-    68 : 106496 : 2 : 13
-    69 : 114688 : 2 : 14
-    70 : 122880 : 2 : 15
-    71 : 131072 : 2 : 16
-    72 : 139264 : 2 : 17
-    73 : 147456 : 2 : 18
-    74 : 155648 : 2 : 19
-    75 : 163840 : 2 : 20
-    76 : 172032 : 2 : 21
-    77 : 180224 : 2 : 22
-    78 : 188416 : 2 : 23
-    79 : 196608 : 2 : 24
-    80 : 204800 : 2 : 25
-    81 : 212992 : 2 : 26
-    82 : 221184 : 2 : 27
-    83 : 229376 : 2 : 28
-    84 : 237568 : 2 : 29
-    85 : 245760 : 2 : 30
-    86 : 253952 : 2 : 31
-    87 : 262144 : 2 : 32</code></p>
-<p>以上只是默认值,这个值是会随着内存申请次数的增加而调整, google给这个算法取名为慢启动(slow-start)算法. 我们来看下.首先, list有个最大值,我们能移动的大小为list最大长度和默认中的最小值. 为了保证,在大量申请时的效率, 在max length &lt; 默认值时,我们慢慢增长max length, 防止浪费空间,又能有效地逐渐提高效率. 在max length &gt; 默认值时,要么时大量请求,要么是由于请求的内存很大,导致默认值小,所以,这个时候,可以每次增加默认值大小.但最大移动数依然时默认的移动数.</p>
-<p>```
-    // slow-start
-            (setq batch_size num_to_move)
-            (setq list_length get_list_length_max_length)
-            (fetch-mem (min batch_size list_length))
-            (set-list-max-length 
-                    (if (&lt; list_length batch_size)
-                           (+ list_length 1)
-                          (+ list_length batch_size)))</p>
-<div class="codehilite"><pre><span></span><span class="o">//</span> <span class="nt">Remove</span> <span class="nt">some</span> <span class="nt">objects</span> <span class="nt">of</span> <span class="nt">class</span> <span class="s2">&quot;cl&quot;</span> <span class="nt">from</span> <span class="nt">central</span> <span class="nt">cache</span> <span class="nt">and</span> <span class="nt">add</span> <span class="nt">to</span> <span class="nt">thread</span> <span class="nt">heap</span><span class="o">.</span>
-<span class="o">//</span> <span class="nt">On</span> <span class="nt">success</span><span class="o">,</span> <span class="nt">return</span> <span class="nt">the</span> <span class="nt">first</span> <span class="nt">object</span> <span class="nt">for</span> <span class="nt">immediate</span> <span class="nt">use</span><span class="o">;</span> <span class="nt">otherwise</span> <span class="nt">return</span> <span class="nt">NULL</span><span class="o">.</span>
-<span class="nt">void</span><span class="o">*</span> <span class="nt">ThreadCache</span><span class="p">::</span><span class="nd">FetchFromCentralCache</span><span class="o">(</span><span class="nt">size_t</span> <span class="nt">cl</span><span class="o">,</span> <span class="nt">size_t</span> <span class="nt">byte_size</span><span class="o">)</span> <span class="p">{</span>
-  <span class="err">FreeList*</span> <span class="err">list</span> <span class="err">=</span> <span class="err">&amp;list_</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="p">;</span>
-  <span class="err">ASSERT(list-&gt;empty())</span><span class="p">;</span>
-  <span class="err">//</span> <span class="err">batch_size</span> <span class="err">为默认的移动数量</span>
-  <span class="err">const</span> <span class="err">int</span> <span class="err">batch_size</span> <span class="err">=</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">cl</span><span class="p">);</span>
-
-  <span class="err">//</span> <span class="err">考虑到list的大小,我们取list最大长度和batch_size中的最小值.</span>
-  <span class="err">const</span> <span class="err">int</span> <span class="err">num_to_move</span> <span class="err">=</span> <span class="err">min&lt;int&gt;(list-&gt;max_length(),</span> <span class="err">batch_size)</span><span class="p">;</span>
-  <span class="err">void</span> <span class="err">*start,</span> <span class="err">*end</span><span class="p">;</span>
-  <span class="err">//</span> <span class="err">从CC获取内存,</span> <span class="err">只是简单的链表删除操作</span>
-  <span class="err">int</span> <span class="err">fetch_count</span> <span class="err">=</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">central_cache</span><span class="p">()</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="o">.</span><span class="nf">RemoveRange</span><span class="p">(</span>
-      <span class="err">&amp;</span><span class="kc">start</span><span class="p">,</span> <span class="err">&amp;</span><span class="kc">end</span><span class="p">,</span> <span class="n">num_to_move</span><span class="p">);</span>
-
-  <span class="err">ASSERT((start</span> <span class="err">==</span> <span class="err">NULL)</span> <span class="err">==</span> <span class="err">(fetch_count</span> <span class="err">==</span> <span class="err">0))</span><span class="p">;</span>
-  <span class="err">if</span> <span class="err">(--fetch_count</span> <span class="err">&gt;=</span> <span class="err">0)</span> <span class="err">{</span>
-    <span class="err">//</span> <span class="err">size_为获取到的内存大小</span>
-    <span class="err">size_</span> <span class="err">+=</span> <span class="err">byte_size</span> <span class="err">*</span> <span class="err">fetch_count</span><span class="p">;</span>
-    <span class="err">//</span> <span class="err">添加到单向链表中.链表插入操作.</span>
-    <span class="err">list-&gt;PushRange(fetch_count,</span> <span class="err">SLL_Next(start),</span> <span class="err">end)</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="o">//</span> <span class="err">如果</span><span class="nt">list</span><span class="err">的最大长度</span> <span class="o">&lt;</span> <span class="err">默认移动长度</span><span class="o">,</span> <span class="err">则</span><span class="nt">list</span><span class="err">最大长度</span><span class="o">+</span><span class="nt">1</span><span class="o">,</span> <span class="err">慢慢靠近默认移动长度</span><span class="o">.</span>
-  <span class="nt">if</span> <span class="o">(</span><span class="nt">list-</span><span class="o">&gt;</span><span class="nt">max_length</span><span class="o">()</span> <span class="o">&lt;</span> <span class="nt">batch_size</span><span class="o">)</span> <span class="p">{</span>
-    <span class="err">list-&gt;set_max_length(list-&gt;max_length()</span> <span class="err">+</span> <span class="err">1)</span><span class="p">;</span>
-  <span class="p">}</span> <span class="nt">else</span> <span class="p">{</span>
-    <span class="err">//</span> <span class="err">否则,我们直接增长batch_size</span> <span class="err">长度,</span> <span class="err">当然不允许无限增长.</span>
-    <span class="err">int</span> <span class="err">new_length</span> <span class="err">=</span> <span class="err">min&lt;int&gt;(list-&gt;max_length()</span> <span class="err">+</span> <span class="err">batch_size,</span>
-                              <span class="err">kMaxDynamicFreeListLength)</span><span class="p">;</span>
-    <span class="err">//</span> <span class="err">必须保证max_length</span> <span class="err">时batch_size的整数倍,这样才能做到在N次batch_size的移动正好释放完list,</span> <span class="err">而不需要分割.</span>
-    <span class="err">new_length</span> <span class="err">-=</span> <span class="err">new_length</span> <span class="err">%</span> <span class="err">batch_size</span><span class="p">;</span>
-    <span class="err">ASSERT(new_length</span> <span class="err">%</span> <span class="err">batch_size</span> <span class="err">==</span> <span class="err">0)</span><span class="p">;</span>
-    <span class="err">list-&gt;set_max_length(new_length)</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nt">return</span> <span class="nt">start</span><span class="o">;</span>
-<span class="err">}</span>
-</pre></div>
-
-
-<p>```</p>
-<p>这里实际从CC获取空闲空间的函数是RemoveRange函数.首先常试直接从slots中获取,如果slots不够,则再从spans获取.</p>
-<p>```
-    int CentralFreeList::RemoveRange(void <strong>start, void </strong>end, int N) {
-      ASSERT(N &gt; 0);
-      lock_.Lock();
-      if (N == Static::sizemap()-&gt;num_objects_to_move(size_class_) &amp;&amp;
-          used_slots_ &gt; 0) {
-        int slot = --used_slots_;
-        ASSERT(slot &gt;= 0);
-        TCEntry <em>entry = &amp;tc_slots_[slot];
-        </em>start = entry-&gt;head;
-        *end = entry-&gt;tail;
-        lock_.Unlock();
-        return N;
-      }</p>
-<div class="codehilite"><pre><span></span>  int result = 0;
-  void* head = NULL;
-  void* tail = NULL;
-  // TODO: Prefetch multiple TCEntries?
-  tail = FetchFromSpansSafe();
-  if (tail != NULL) {
-    SLL_SetNext(tail, NULL);
-    head = tail;
-    result = 1;
-    while (result &lt; N) {
-      void *t = FetchFromSpans();
-      if (!t) break;
-      SLL_Push(&amp;head, t);
-      result++;
-    }
-  }
-  lock_.Unlock();
-  *start = head;
-  *end = tail;
-  return result;
-}
-
-int SizeMap::NumMoveSize(size_t size) {
-  if (size == 0) return 0;
-
-  int num = static_cast&lt;int&gt;(64.0 * 1024.0 / size);
-  if (num &lt; 2) num = 2;
-
-  if (num &gt; FLAGS_tcmalloc_transfer_num_objects)
-    num = FLAGS_tcmalloc_transfer_num_objects;
-
-  return num;
-}
-```
-</pre></div>
-
-
 </li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>idx</th>
+<th><code>class_size</code></th>
+<th><code>num_to_move_objs</code></th>
+<th><code>num_to_move_pages</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>8</td>
+<td>8192</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>16</td>
+<td>4096</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>32</td>
+<td>2048</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>48</td>
+<td>1365</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>64</td>
+<td>1024</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>80</td>
+<td>819</td>
+<td>2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>96</td>
+<td>682</td>
+<td>2</td>
+</tr>
+<tr>
+<td>8</td>
+<td>112</td>
+<td>585</td>
+<td>2</td>
+</tr>
+<tr>
+<td>9</td>
+<td>128</td>
+<td>512</td>
+<td>2</td>
+</tr>
+<tr>
+<td>10</td>
+<td>144</td>
+<td>455</td>
+<td>2</td>
+</tr>
+<tr>
+<td>11</td>
+<td>160</td>
+<td>409</td>
+<td>2</td>
+</tr>
+<tr>
+<td>12</td>
+<td>176</td>
+<td>372</td>
+<td>2</td>
+</tr>
+<tr>
+<td>13</td>
+<td>192</td>
+<td>341</td>
+<td>2</td>
+</tr>
+<tr>
+<td>14</td>
+<td>208</td>
+<td>315</td>
+<td>2</td>
+</tr>
+<tr>
+<td>15</td>
+<td>224</td>
+<td>292</td>
+<td>2</td>
+</tr>
+<tr>
+<td>16</td>
+<td>240</td>
+<td>273</td>
+<td>2</td>
+</tr>
+<tr>
+<td>17</td>
+<td>256</td>
+<td>256</td>
+<td>2</td>
+</tr>
+<tr>
+<td>18</td>
+<td>288</td>
+<td>227</td>
+<td>2</td>
+</tr>
+<tr>
+<td>19</td>
+<td>320</td>
+<td>204</td>
+<td>2</td>
+</tr>
+<tr>
+<td>20</td>
+<td>352</td>
+<td>186</td>
+<td>2</td>
+</tr>
+<tr>
+<td>21</td>
+<td>384</td>
+<td>170</td>
+<td>2</td>
+</tr>
+<tr>
+<td>22</td>
+<td>416</td>
+<td>157</td>
+<td>2</td>
+</tr>
+<tr>
+<td>23</td>
+<td>448</td>
+<td>146</td>
+<td>2</td>
+</tr>
+<tr>
+<td>24</td>
+<td>480</td>
+<td>136</td>
+<td>2</td>
+</tr>
+<tr>
+<td>25</td>
+<td>512</td>
+<td>128</td>
+<td>2</td>
+</tr>
+<tr>
+<td>26</td>
+<td>576</td>
+<td>113</td>
+<td>2</td>
+</tr>
+<tr>
+<td>27</td>
+<td>640</td>
+<td>102</td>
+<td>2</td>
+</tr>
+<tr>
+<td>28</td>
+<td>704</td>
+<td>93</td>
+<td>2</td>
+</tr>
+<tr>
+<td>29</td>
+<td>768</td>
+<td>85</td>
+<td>2</td>
+</tr>
+<tr>
+<td>30</td>
+<td>832</td>
+<td>78</td>
+<td>2</td>
+</tr>
+<tr>
+<td>31</td>
+<td>896</td>
+<td>73</td>
+<td>2</td>
+</tr>
+<tr>
+<td>32</td>
+<td>960</td>
+<td>68</td>
+<td>2</td>
+</tr>
+<tr>
+<td>33</td>
+<td>1024</td>
+<td>64</td>
+<td>2</td>
+</tr>
+<tr>
+<td>34</td>
+<td>1152</td>
+<td>56</td>
+<td>2</td>
+</tr>
+<tr>
+<td>35</td>
+<td>1280</td>
+<td>51</td>
+<td>2</td>
+</tr>
+<tr>
+<td>36</td>
+<td>1408</td>
+<td>46</td>
+<td>2</td>
+</tr>
+<tr>
+<td>37</td>
+<td>1536</td>
+<td>42</td>
+<td>2</td>
+</tr>
+<tr>
+<td>38</td>
+<td>1792</td>
+<td>36</td>
+<td>2</td>
+</tr>
+<tr>
+<td>39</td>
+<td>2048</td>
+<td>32</td>
+<td>2</td>
+</tr>
+<tr>
+<td>40</td>
+<td>2304</td>
+<td>28</td>
+<td>2</td>
+</tr>
+<tr>
+<td>41</td>
+<td>2560</td>
+<td>25</td>
+<td>2</td>
+</tr>
+<tr>
+<td>42</td>
+<td>2816</td>
+<td>23</td>
+<td>3</td>
+</tr>
+<tr>
+<td>43</td>
+<td>3072</td>
+<td>21</td>
+<td>2</td>
+</tr>
+<tr>
+<td>44</td>
+<td>3328</td>
+<td>19</td>
+<td>3</td>
+</tr>
+<tr>
+<td>45</td>
+<td>4096</td>
+<td>16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>46</td>
+<td>4608</td>
+<td>14</td>
+<td>3</td>
+</tr>
+<tr>
+<td>47</td>
+<td>5120</td>
+<td>12</td>
+<td>2</td>
+</tr>
+<tr>
+<td>48</td>
+<td>6144</td>
+<td>10</td>
+<td>3</td>
+</tr>
+<tr>
+<td>49</td>
+<td>6656</td>
+<td>9</td>
+<td>5</td>
+</tr>
+<tr>
+<td>50</td>
+<td>8192</td>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>51</td>
+<td>9216</td>
+<td>7</td>
+<td>5</td>
+</tr>
+<tr>
+<td>52</td>
+<td>10240</td>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr>
+<td>53</td>
+<td>12288</td>
+<td>5</td>
+<td>3</td>
+</tr>
+<tr>
+<td>54</td>
+<td>13312</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>55</td>
+<td>16384</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>56</td>
+<td>20480</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>57</td>
+<td>24576</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>58</td>
+<td>26624</td>
+<td>2</td>
+<td>7</td>
+</tr>
+<tr>
+<td>59</td>
+<td>32768</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>60</td>
+<td>40960</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>61</td>
+<td>49152</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>62</td>
+<td>57344</td>
+<td>2</td>
+<td>7</td>
+</tr>
+<tr>
+<td>63</td>
+<td>65536</td>
+<td>2</td>
+<td>8</td>
+</tr>
+<tr>
+<td>64</td>
+<td>73728</td>
+<td>2</td>
+<td>9</td>
+</tr>
+<tr>
+<td>65</td>
+<td>81920</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr>
+<td>66</td>
+<td>90112</td>
+<td>2</td>
+<td>11</td>
+</tr>
+<tr>
+<td>67</td>
+<td>98304</td>
+<td>2</td>
+<td>12</td>
+</tr>
+<tr>
+<td>68</td>
+<td>106496</td>
+<td>2</td>
+<td>13</td>
+</tr>
+<tr>
+<td>69</td>
+<td>114688</td>
+<td>2</td>
+<td>14</td>
+</tr>
+<tr>
+<td>70</td>
+<td>122880</td>
+<td>2</td>
+<td>15</td>
+</tr>
+<tr>
+<td>71</td>
+<td>131072</td>
+<td>2</td>
+<td>16</td>
+</tr>
+<tr>
+<td>72</td>
+<td>139264</td>
+<td>2</td>
+<td>17</td>
+</tr>
+<tr>
+<td>73</td>
+<td>147456</td>
+<td>2</td>
+<td>18</td>
+</tr>
+<tr>
+<td>74</td>
+<td>155648</td>
+<td>2</td>
+<td>19</td>
+</tr>
+<tr>
+<td>75</td>
+<td>163840</td>
+<td>2</td>
+<td>20</td>
+</tr>
+<tr>
+<td>76</td>
+<td>172032</td>
+<td>2</td>
+<td>21</td>
+</tr>
+<tr>
+<td>77</td>
+<td>180224</td>
+<td>2</td>
+<td>22</td>
+</tr>
+<tr>
+<td>78</td>
+<td>188416</td>
+<td>2</td>
+<td>23</td>
+</tr>
+<tr>
+<td>79</td>
+<td>196608</td>
+<td>2</td>
+<td>24</td>
+</tr>
+<tr>
+<td>80</td>
+<td>204800</td>
+<td>2</td>
+<td>25</td>
+</tr>
+<tr>
+<td>81</td>
+<td>212992</td>
+<td>2</td>
+<td>26</td>
+</tr>
+<tr>
+<td>82</td>
+<td>221184</td>
+<td>2</td>
+<td>27</td>
+</tr>
+<tr>
+<td>83</td>
+<td>229376</td>
+<td>2</td>
+<td>28</td>
+</tr>
+<tr>
+<td>84</td>
+<td>237568</td>
+<td>2</td>
+<td>29</td>
+</tr>
+<tr>
+<td>85</td>
+<td>245760</td>
+<td>2</td>
+<td>30</td>
+</tr>
+<tr>
+<td>86</td>
+<td>253952</td>
+<td>2</td>
+<td>31</td>
+</tr>
+<tr>
+<td>87</td>
+<td>262144</td>
+<td>2</td>
+<td>32</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span>    <span class="err">以上只是默认值</span><span class="o">,</span><span class="err">这个值是会随着内存申请次数的增加而调整</span><span class="o">,</span> <span class="nt">google</span><span class="err">给这个算法取名为慢启动</span><span class="o">(</span><span class="nt">slow-start</span><span class="o">)</span><span class="err">算法</span><span class="o">.</span> <span class="err">我们来看下</span><span class="o">.</span><span class="err">首先</span><span class="o">,</span> <span class="nt">list</span><span class="err">有个最大值</span><span class="o">,</span><span class="err">我们能移动的大小为</span><span class="nt">list</span><span class="err">最大长度和默认中的最小值</span><span class="o">.</span> <span class="err">为了保证</span><span class="o">,</span><span class="err">在大量申请时的效率</span><span class="o">,</span> <span class="err">在</span><span class="nt">max</span> <span class="nt">length</span> <span class="o">&lt;</span> <span class="err">默认值时</span><span class="o">,</span><span class="err">我们慢慢增长</span><span class="nt">max</span> <span class="nt">length</span><span class="o">,</span> <span class="err">防止浪费空间</span><span class="o">,</span><span class="err">又能有效地逐渐提高效率</span><span class="o">.</span> <span class="err">在</span><span class="nt">max</span> <span class="nt">length</span> <span class="o">&gt;</span> <span class="err">默认值时</span><span class="o">,</span><span class="err">要么时大量请求</span><span class="o">,</span><span class="err">要么是由于请求的内存很大</span><span class="o">,</span><span class="err">导致默认值小</span><span class="o">,</span><span class="err">所以</span><span class="o">,</span><span class="err">这个时候</span><span class="o">,</span><span class="err">可以每次增加默认值大小</span><span class="o">.</span><span class="err">但最大移动数依然时默认的移动数</span><span class="o">.</span>
+
+    <span class="err">```</span>
+        <span class="o">//</span> <span class="nt">slow-start</span>
+                <span class="o">(</span><span class="nt">setq</span> <span class="nt">batch_size</span> <span class="nt">num_to_move</span><span class="o">)</span>
+                <span class="o">(</span><span class="nt">setq</span> <span class="nt">list_length</span> <span class="nt">get_list_length_max_length</span><span class="o">)</span>
+                <span class="o">(</span><span class="nt">fetch-mem</span> <span class="o">(</span><span class="nt">min</span> <span class="nt">batch_size</span> <span class="nt">list_length</span><span class="o">))</span>
+                <span class="o">(</span><span class="nt">set-list-max-length</span> 
+                        <span class="o">(</span><span class="nt">if</span> <span class="o">(&lt;</span> <span class="nt">list_length</span> <span class="nt">batch_size</span><span class="o">)</span>
+                               <span class="o">(+</span> <span class="nt">list_length</span> <span class="nt">1</span><span class="o">)</span>
+                              <span class="o">(+</span> <span class="nt">list_length</span> <span class="nt">batch_size</span><span class="o">)))</span>
+
+        <span class="o">//</span> <span class="nt">Remove</span> <span class="nt">some</span> <span class="nt">objects</span> <span class="nt">of</span> <span class="nt">class</span> <span class="s2">&quot;cl&quot;</span> <span class="nt">from</span> <span class="nt">central</span> <span class="nt">cache</span> <span class="nt">and</span> <span class="nt">add</span> <span class="nt">to</span> <span class="nt">thread</span> <span class="nt">heap</span><span class="o">.</span>
+        <span class="o">//</span> <span class="nt">On</span> <span class="nt">success</span><span class="o">,</span> <span class="nt">return</span> <span class="nt">the</span> <span class="nt">first</span> <span class="nt">object</span> <span class="nt">for</span> <span class="nt">immediate</span> <span class="nt">use</span><span class="o">;</span> <span class="nt">otherwise</span> <span class="nt">return</span> <span class="nt">NULL</span><span class="o">.</span>
+        <span class="nt">void</span><span class="o">*</span> <span class="nt">ThreadCache</span><span class="p">::</span><span class="nd">FetchFromCentralCache</span><span class="o">(</span><span class="nt">size_t</span> <span class="nt">cl</span><span class="o">,</span> <span class="nt">size_t</span> <span class="nt">byte_size</span><span class="o">)</span> <span class="p">{</span>
+          <span class="err">FreeList*</span> <span class="err">list</span> <span class="err">=</span> <span class="err">&amp;list_</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="p">;</span>
+          <span class="err">ASSERT(list-&gt;empty())</span><span class="p">;</span>
+          <span class="err">//</span> <span class="err">batch_size</span> <span class="err">为默认的移动数量</span>
+          <span class="err">const</span> <span class="err">int</span> <span class="err">batch_size</span> <span class="err">=</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">cl</span><span class="p">);</span>
+
+          <span class="err">//</span> <span class="err">考虑到list的大小,我们取list最大长度和batch_size中的最小值.</span>
+          <span class="err">const</span> <span class="err">int</span> <span class="err">num_to_move</span> <span class="err">=</span> <span class="err">min&lt;int&gt;(list-&gt;max_length(),</span> <span class="err">batch_size)</span><span class="p">;</span>
+          <span class="err">void</span> <span class="err">*start,</span> <span class="err">*end</span><span class="p">;</span>
+          <span class="err">//</span> <span class="err">从CC获取内存,</span> <span class="err">只是简单的链表删除操作</span>
+          <span class="err">int</span> <span class="err">fetch_count</span> <span class="err">=</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">central_cache</span><span class="p">()</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="o">.</span><span class="nf">RemoveRange</span><span class="p">(</span>
+              <span class="err">&amp;</span><span class="kc">start</span><span class="p">,</span> <span class="err">&amp;</span><span class="kc">end</span><span class="p">,</span> <span class="n">num_to_move</span><span class="p">);</span>
+
+          <span class="err">ASSERT((start</span> <span class="err">==</span> <span class="err">NULL)</span> <span class="err">==</span> <span class="err">(fetch_count</span> <span class="err">==</span> <span class="err">0))</span><span class="p">;</span>
+          <span class="err">if</span> <span class="err">(--fetch_count</span> <span class="err">&gt;=</span> <span class="err">0)</span> <span class="err">{</span>
+            <span class="err">//</span> <span class="err">size_为获取到的内存大小</span>
+            <span class="err">size_</span> <span class="err">+=</span> <span class="err">byte_size</span> <span class="err">*</span> <span class="err">fetch_count</span><span class="p">;</span>
+            <span class="err">//</span> <span class="err">添加到单向链表中.链表插入操作.</span>
+            <span class="err">list-&gt;PushRange(fetch_count,</span> <span class="err">SLL_Next(start),</span> <span class="err">end)</span><span class="p">;</span>
+          <span class="p">}</span>
+
+          <span class="o">//</span> <span class="err">如果</span><span class="nt">list</span><span class="err">的最大长度</span> <span class="o">&lt;</span> <span class="err">默认移动长度</span><span class="o">,</span> <span class="err">则</span><span class="nt">list</span><span class="err">最大长度</span><span class="o">+</span><span class="nt">1</span><span class="o">,</span> <span class="err">慢慢靠近默认移动长度</span><span class="o">.</span>
+          <span class="nt">if</span> <span class="o">(</span><span class="nt">list-</span><span class="o">&gt;</span><span class="nt">max_length</span><span class="o">()</span> <span class="o">&lt;</span> <span class="nt">batch_size</span><span class="o">)</span> <span class="p">{</span>
+            <span class="err">list-&gt;set_max_length(list-&gt;max_length()</span> <span class="err">+</span> <span class="err">1)</span><span class="p">;</span>
+          <span class="p">}</span> <span class="nt">else</span> <span class="p">{</span>
+            <span class="err">//</span> <span class="err">否则,我们直接增长batch_size</span> <span class="err">长度,</span> <span class="err">当然不允许无限增长.</span>
+            <span class="err">int</span> <span class="err">new_length</span> <span class="err">=</span> <span class="err">min&lt;int&gt;(list-&gt;max_length()</span> <span class="err">+</span> <span class="err">batch_size,</span>
+                                      <span class="err">kMaxDynamicFreeListLength)</span><span class="p">;</span>
+            <span class="err">//</span> <span class="err">必须保证max_length</span> <span class="err">时batch_size的整数倍,这样才能做到在N次batch_size的移动正好释放完list,</span> <span class="err">而不需要分割.</span>
+            <span class="err">new_length</span> <span class="err">-=</span> <span class="err">new_length</span> <span class="err">%</span> <span class="err">batch_size</span><span class="p">;</span>
+            <span class="err">ASSERT(new_length</span> <span class="err">%</span> <span class="err">batch_size</span> <span class="err">==</span> <span class="err">0)</span><span class="p">;</span>
+            <span class="err">list-&gt;set_max_length(new_length)</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="nt">return</span> <span class="nt">start</span><span class="o">;</span>
+        <span class="err">}</span>
+    <span class="err">```</span>
+
+    <span class="err">这里实际从</span><span class="nt">CC</span><span class="err">获取空闲空间的函数是</span><span class="nt">RemoveRange</span><span class="err">函数</span><span class="o">.</span><span class="err">首先常试直接从</span><span class="nt">slots</span><span class="err">中获取</span><span class="o">,</span><span class="err">如果</span><span class="nt">slots</span><span class="err">不够</span><span class="o">,</span><span class="err">则再从</span><span class="nt">spans</span><span class="err">获取</span><span class="o">.</span>
+
+    <span class="err">```</span>
+        <span class="nt">int</span> <span class="nt">CentralFreeList</span><span class="p">::</span><span class="nd">RemoveRange</span><span class="o">(</span><span class="nt">void</span> <span class="o">**</span><span class="nt">start</span><span class="o">,</span> <span class="nt">void</span> <span class="o">**</span><span class="nt">end</span><span class="o">,</span> <span class="nt">int</span> <span class="nt">N</span><span class="o">)</span> <span class="p">{</span>
+          <span class="err">ASSERT(N</span> <span class="err">&gt;</span> <span class="err">0)</span><span class="p">;</span>
+          <span class="err">lock_.Lock()</span><span class="p">;</span>
+          <span class="err">if</span> <span class="err">(N</span> <span class="err">==</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">size_class_</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+              <span class="n">used_slots_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="err">{</span>
+            <span class="n">int</span> <span class="n">slot</span> <span class="o">=</span> <span class="o">--</span><span class="n">used_slots_</span><span class="p">;</span>
+            <span class="err">ASSERT(slot</span> <span class="err">&gt;=</span> <span class="err">0)</span><span class="p">;</span>
+            <span class="err">TCEntry</span> <span class="err">*entry</span> <span class="err">=</span> <span class="err">&amp;tc_slots_</span><span class="cp">[</span><span class="nx">slot</span><span class="cp">]</span><span class="p">;</span>
+            <span class="err">*start</span> <span class="err">=</span> <span class="err">entry-&gt;head</span><span class="p">;</span>
+            <span class="err">*end</span> <span class="err">=</span> <span class="err">entry-&gt;tail</span><span class="p">;</span>
+            <span class="err">lock_.Unlock()</span><span class="p">;</span>
+            <span class="err">return</span> <span class="err">N</span><span class="p">;</span>
+          <span class="p">}</span>
+
+          <span class="nt">int</span> <span class="nt">result</span> <span class="o">=</span> <span class="nt">0</span><span class="o">;</span>
+          <span class="nt">void</span><span class="o">*</span> <span class="nt">head</span> <span class="o">=</span> <span class="nt">NULL</span><span class="o">;</span>
+          <span class="nt">void</span><span class="o">*</span> <span class="nt">tail</span> <span class="o">=</span> <span class="nt">NULL</span><span class="o">;</span>
+          <span class="o">//</span> <span class="nt">TODO</span><span class="o">:</span> <span class="nt">Prefetch</span> <span class="nt">multiple</span> <span class="nt">TCEntries</span><span class="o">?</span>
+          <span class="nt">tail</span> <span class="o">=</span> <span class="nt">FetchFromSpansSafe</span><span class="o">();</span>
+          <span class="nt">if</span> <span class="o">(</span><span class="nt">tail</span> <span class="o">!=</span> <span class="nt">NULL</span><span class="o">)</span> <span class="p">{</span>
+            <span class="err">SLL_SetNext(tail,</span> <span class="err">NULL)</span><span class="p">;</span>
+            <span class="err">head</span> <span class="err">=</span> <span class="err">tail</span><span class="p">;</span>
+            <span class="err">result</span> <span class="err">=</span> <span class="err">1</span><span class="p">;</span>
+            <span class="err">while</span> <span class="err">(result</span> <span class="err">&lt;</span> <span class="err">N)</span> <span class="err">{</span>
+              <span class="err">void</span> <span class="err">*t</span> <span class="err">=</span> <span class="err">FetchFromSpans()</span><span class="p">;</span>
+              <span class="err">if</span> <span class="err">(!t)</span> <span class="err">break</span><span class="p">;</span>
+              <span class="err">SLL_Push(&amp;head,</span> <span class="err">t)</span><span class="p">;</span>
+              <span class="err">result++</span><span class="p">;</span>
+            <span class="p">}</span>
+          <span class="err">}</span>
+          <span class="nt">lock_</span><span class="p">.</span><span class="nc">Unlock</span><span class="o">();</span>
+          <span class="o">*</span><span class="nt">start</span> <span class="o">=</span> <span class="nt">head</span><span class="o">;</span>
+          <span class="o">*</span><span class="nt">end</span> <span class="o">=</span> <span class="nt">tail</span><span class="o">;</span>
+          <span class="nt">return</span> <span class="nt">result</span><span class="o">;</span>
+        <span class="err">}</span>
+
+        <span class="nt">int</span> <span class="nt">SizeMap</span><span class="p">::</span><span class="nd">NumMoveSize</span><span class="o">(</span><span class="nt">size_t</span> <span class="nt">size</span><span class="o">)</span> <span class="p">{</span>
+          <span class="err">if</span> <span class="err">(size</span> <span class="err">==</span> <span class="err">0)</span> <span class="err">return</span> <span class="err">0</span><span class="p">;</span>
+
+          <span class="err">int</span> <span class="err">num</span> <span class="err">=</span> <span class="err">static_cast&lt;int&gt;(64.0</span> <span class="err">*</span> <span class="err">1024.0</span> <span class="err">/</span> <span class="err">size)</span><span class="p">;</span>
+          <span class="err">if</span> <span class="err">(num</span> <span class="err">&lt;</span> <span class="err">2)</span> <span class="err">num</span> <span class="err">=</span> <span class="err">2</span><span class="p">;</span>
+
+          <span class="err">if</span> <span class="err">(num</span> <span class="err">&gt;</span> <span class="err">FLAGS_tcmalloc_transfer_num_objects)</span>
+            <span class="err">num</span> <span class="err">=</span> <span class="err">FLAGS_tcmalloc_transfer_num_objects</span><span class="p">;</span>
+
+          <span class="err">return</span> <span class="err">num</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="err">```</span>
+
+<span class="o">*</span> <span class="nt">TC</span><span class="err">向</span><span class="nt">CC</span><span class="err">释放内存</span>
+    <span class="nt">TC</span><span class="err">向</span><span class="nt">CC</span><span class="err">释放内存的条件是</span><span class="o">,</span><span class="err">在进程向</span><span class="nt">TC</span><span class="err">释放内存时</span><span class="o">,</span><span class="nt">TC</span><span class="err">对应的分类</span><span class="nt">free</span> <span class="nt">list</span><span class="err">的</span> <span class="err">`</span><span class="nt">length</span> <span class="o">&gt;</span> <span class="nt">max_length</span><span class="err">`</span> <span class="err">或者</span> <span class="nt">TC</span><span class="err">的总</span> <span class="err">`</span><span class="nt">size</span> <span class="o">&gt;</span> <span class="nt">max_size</span><span class="err">`</span><span class="o">,</span> <span class="err">分别触发</span><span class="nt">ListTooLong</span><span class="err">和</span><span class="nt">Scavenge</span><span class="err">内存回收</span><span class="o">.</span>
+
+    <span class="nt">ListTooLong</span> <span class="err">回收内存规则</span><span class="o">:</span>
+
+        <span class="o">*</span> <span class="err">如果</span> <span class="err">`</span><span class="nt">list</span> <span class="nt">length</span> <span class="o">&lt;</span> <span class="nt">batch_size</span><span class="err">`</span> <span class="o">,</span><span class="err">则清空链表</span><span class="o">.</span> <span class="err">这种情况下</span><span class="o">,</span><span class="err">只有非频繁内存请求</span><span class="o">,</span><span class="err">才会</span> <span class="err">`</span><span class="nt">length</span> <span class="o">&lt;</span> <span class="nt">batch_size</span><span class="err">`</span><span class="o">,</span> <span class="err">所以</span><span class="o">,</span> <span class="err">在时间和空间上</span><span class="o">,</span><span class="err">考虑优先空间</span><span class="o">,</span><span class="err">释放内存</span><span class="o">.</span>
+        <span class="o">*</span> <span class="err">如果</span> <span class="err">`</span><span class="nt">list</span> <span class="nt">length</span> <span class="o">&gt;</span> <span class="nt">batch_size</span><span class="err">`</span><span class="o">,</span> <span class="err">则释放</span> <span class="err">`</span><span class="nt">batch_size</span><span class="err">`</span> <span class="err">个</span><span class="nt">object</span><span class="o">.</span><span class="err">并且减少</span><span class="nt">list</span><span class="err">的</span><span class="nt">max</span> <span class="nt">length</span><span class="o">,</span> <span class="err">尽可能利用慢启动</span><span class="o">,</span> <span class="err">减少空间浪费的问题</span><span class="o">.</span>
+
+    <span class="nt">Scavenge</span><span class="err">回收内存规则</span><span class="o">:</span>
+
+        <span class="o">*</span> <span class="err">遍历</span><span class="nt">TC</span><span class="err">中所有的</span><span class="nt">free</span> <span class="nt">list</span><span class="o">,</span> <span class="err">将</span><span class="o">(</span><span class="nt">lowwatermark</span> <span class="o">&gt;</span> <span class="nt">0</span><span class="o">)</span><span class="err">的</span><span class="nt">list</span> <span class="err">释放</span> <span class="o">(</span><span class="nt">lowwatermark</span> <span class="o">/</span> <span class="nt">2</span> <span class="o">)</span><span class="err">个</span><span class="nt">objects</span><span class="o">.</span>
+        <span class="o">*</span> <span class="err">如果</span><span class="nt">lowwatermark</span> <span class="o">&gt;</span> <span class="nt">0</span><span class="err">的</span> <span class="err">`</span><span class="nt">list</span> <span class="nt">length</span> <span class="o">&gt;</span> <span class="nt">batch_size</span><span class="err">`</span><span class="o">,</span> <span class="err">则更新`</span><span class="nt">max_length</span><span class="err">`</span> <span class="err">为</span> <span class="err">`</span><span class="nt">max_length</span> <span class="nt">-</span> <span class="nt">batch_size</span><span class="err">`</span><span class="o">,</span> <span class="err">利用慢启动算法</span><span class="o">,</span><span class="err">减慢内存增长的速度</span><span class="o">.</span>
+        <span class="o">*</span> <span class="err">重置所有</span><span class="nt">list</span><span class="err">的</span> <span class="nt">lowwatermark</span><span class="err">为当前的</span><span class="nt">length</span><span class="o">.(</span><span class="nt">lowwatermark</span><span class="err">会在</span><span class="nt">list</span><span class="err">的</span><span class="nt">length</span><span class="err">减小时更新</span><span class="o">,</span><span class="err">始终保持为</span><span class="nt">list</span><span class="err">最小的</span><span class="nt">length</span><span class="o">).</span>
+        <span class="o">*</span> <span class="err">偷取其他</span><span class="nt">TC</span><span class="err">的</span> <span class="err">`</span><span class="nt">max_length</span><span class="err">`</span><span class="o">.</span><span class="err">由于当前</span><span class="nt">TC</span><span class="err">容量不够</span><span class="o">,</span><span class="err">所以</span><span class="o">,</span><span class="err">偷取其他</span><span class="nt">TC</span><span class="err">容</span>
+        <span class="err">量</span><span class="o">,</span><span class="err">保证无用线程不会浪费过多空间</span><span class="o">.</span>
+
+    <span class="nt">TC</span><span class="err">容量偷取</span><span class="o">:</span>
+
+        <span class="o">*</span> <span class="err">如果存在无人认领的内存</span><span class="o">(</span><span class="err">无人认领内存</span><span class="o">:</span><span class="err">线程结束后</span><span class="o">(</span><span class="nt">TC</span><span class="err">的</span><span class="nt">Heap</span><span class="err">被释放</span><span class="o">)</span><span class="err">的内存</span><span class="o">,</span> <span class="err">最大为</span> <span class="nt">8u</span> <span class="o">*</span> <span class="nt">4</span> <span class="o">&lt;&lt;</span> <span class="nt">20</span><span class="o">),</span><span class="err">则优先从其领取需要的内存</span><span class="o">,</span><span class="err">增大当前线程的容量</span><span class="o">.</span>
+        <span class="o">*</span> <span class="err">上述条件不满足</span><span class="o">,</span><span class="err">则遍历所有的</span><span class="nt">TC</span><span class="o">,</span> <span class="err">如果某个</span><span class="nt">TC</span><span class="err">的容量</span> <span class="o">&gt;</span> <span class="nt">kMinThreadCacheSize</span> <span class="o">(</span><span class="nt">kMaxSize</span> <span class="o">*</span> <span class="nt">2</span> <span class="o">=</span> <span class="nt">512K</span><span class="o">)</span> <span class="o">,</span> <span class="err">则偷取其容量</span><span class="o">.</span>
+
+    <span class="err">```</span><span class="nt">cpp</span>        
+        <span class="nt">void</span> <span class="nt">ThreadCache</span><span class="p">::</span><span class="nd">ListTooLong</span><span class="o">(</span><span class="nt">FreeList</span><span class="o">*</span> <span class="nt">list</span><span class="o">,</span> <span class="nt">size_t</span> <span class="nt">cl</span><span class="o">)</span> <span class="p">{</span>
+          <span class="err">const</span> <span class="err">int</span> <span class="err">batch_size</span> <span class="err">=</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">cl</span><span class="p">);</span>
+          <span class="err">//</span> <span class="err">如果list长度小于</span> <span class="err">batch_size,</span> <span class="err">释放所有,</span> <span class="err">否则,</span> <span class="err">释放batch_size个块.</span>
+          <span class="err">ReleaseToCentralCache(list,</span> <span class="err">cl,</span> <span class="err">batch_size)</span><span class="p">;</span>
+
+          <span class="err">if</span> <span class="err">(list-&gt;max_length()</span> <span class="err">&lt;</span> <span class="err">batch_size)</span> <span class="err">{</span>
+            <span class="err">//</span> <span class="err">Slow</span> <span class="err">start</span> <span class="err">the</span> <span class="err">max_length</span> <span class="err">so</span> <span class="err">we</span> <span class="err">don&#39;t</span> <span class="err">overreserve.</span>
+            <span class="err">list-&gt;set_max_length(list-&gt;max_length()</span> <span class="err">+</span> <span class="err">1)</span><span class="p">;</span>
+          <span class="p">}</span> <span class="nt">else</span> <span class="nt">if</span> <span class="o">(</span><span class="nt">list-</span><span class="o">&gt;</span><span class="nt">max_length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="nt">batch_size</span><span class="o">)</span> <span class="p">{</span>
+            <span class="err">//</span> <span class="err">If</span> <span class="err">we</span> <span class="err">consistently</span> <span class="err">go</span> <span class="err">over</span> <span class="err">max_length,</span> <span class="err">shrink</span> <span class="err">max_length.</span>  <span class="err">If</span> <span class="err">we</span> <span class="err">don&#39;t</span>
+            <span class="err">//</span> <span class="err">shrink</span> <span class="err">it,</span> <span class="err">some</span> <span class="err">amount</span> <span class="err">of</span> <span class="err">memory</span> <span class="err">will</span> <span class="err">always</span> <span class="err">stay</span> <span class="err">in</span> <span class="err">this</span> <span class="err">freelist.</span>
+            <span class="err">list-&gt;set_length_overages(list-&gt;length_overages()</span> <span class="err">+</span> <span class="err">1)</span><span class="p">;</span>
+            <span class="err">if</span> <span class="err">(list-&gt;length_overages()</span> <span class="err">&gt;</span> <span class="err">kMaxOverages)</span> <span class="err">{</span>
+              <span class="err">ASSERT(list-&gt;max_length()</span> <span class="err">&gt;</span> <span class="err">batch_size)</span><span class="p">;</span>
+              <span class="err">list-&gt;set_max_length(list-&gt;max_length()</span> <span class="err">-</span> <span class="err">batch_size)</span><span class="p">;</span>
+              <span class="err">list-&gt;set_length_overages(0)</span><span class="p">;</span>
+            <span class="p">}</span>
+          <span class="err">}</span>
+        <span class="err">}</span>
+    <span class="err">```</span>
+
+    <span class="nt">ReleaseToCentralCache</span><span class="err">中执行了</span><span class="o">,</span><span class="err">将链表返回给</span><span class="nt">CC</span><span class="err">的动作</span><span class="o">,</span><span class="err">里面涉及到了</span><span class="nt">slots</span><span class="err">结构</span><span class="o">,</span><span class="err">我们来看下</span><span class="o">.</span>
+
+    <span class="err">```</span>
+        <span class="o">//</span> <span class="nt">Remove</span> <span class="nt">some</span> <span class="nt">objects</span> <span class="nt">of</span> <span class="nt">class</span> <span class="s2">&quot;cl&quot;</span> <span class="nt">from</span> <span class="nt">thread</span> <span class="nt">heap</span> <span class="nt">and</span> <span class="nt">add</span> <span class="nt">to</span> <span class="nt">central</span> <span class="nt">cache</span>
+        <span class="nt">void</span> <span class="nt">ThreadCache</span><span class="p">::</span><span class="nd">ReleaseToCentralCache</span><span class="o">(</span><span class="nt">FreeList</span><span class="o">*</span> <span class="nt">src</span><span class="o">,</span> <span class="nt">size_t</span> <span class="nt">cl</span><span class="o">,</span> <span class="nt">int</span> <span class="nt">N</span><span class="o">)</span> <span class="p">{</span>
+          <span class="err">ASSERT(src</span> <span class="err">==</span> <span class="err">&amp;list_</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="err">)</span><span class="p">;</span>
+          <span class="err">if</span> <span class="err">(N</span> <span class="err">&gt;</span> <span class="err">src-&gt;length())</span> <span class="err">N</span> <span class="err">=</span> <span class="err">src-&gt;length()</span><span class="p">;</span>
+          <span class="err">size_t</span> <span class="err">delta_bytes</span> <span class="err">=</span> <span class="err">N</span> <span class="err">*</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">ByteSizeForClass</span><span class="p">(</span><span class="n">cl</span><span class="p">);</span>
+
+          <span class="err">//</span> <span class="err">We</span> <span class="err">return</span> <span class="err">prepackaged</span> <span class="err">chains</span> <span class="err">of</span> <span class="err">the</span> <span class="err">correct</span> <span class="err">size</span> <span class="err">to</span> <span class="err">the</span> <span class="err">central</span> <span class="err">cache.</span>
+          <span class="err">//</span> <span class="n">TODO</span><span class="p">:</span> <span class="n">Use</span> <span class="n">the</span> <span class="n">same</span> <span class="n">format</span> <span class="n">internally</span> <span class="n">in</span> <span class="n">the</span> <span class="n">thread</span> <span class="n">caches</span><span class="o">?</span>
+          <span class="n">int</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">Static</span><span class="o">::</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">cl</span><span class="p">);</span>
+          <span class="err">while</span> <span class="err">(N</span> <span class="err">&gt;</span> <span class="err">batch_size)</span> <span class="err">{</span>
+            <span class="err">void</span> <span class="err">*tail,</span> <span class="err">*head</span><span class="p">;</span>
+            <span class="err">src-&gt;PopRange(batch_size,</span> <span class="err">&amp;head,</span> <span class="err">&amp;tail)</span><span class="p">;</span>
+            <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">central_cache</span><span class="p">()</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="o">.</span><span class="nf">InsertRange</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">);</span>
+            <span class="err">N</span> <span class="err">-=</span> <span class="err">batch_size</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="nt">void</span> <span class="o">*</span><span class="nt">tail</span><span class="o">,</span> <span class="o">*</span><span class="nt">head</span><span class="o">;</span>
+          <span class="nt">src-</span><span class="o">&gt;</span><span class="nt">PopRange</span><span class="o">(</span><span class="nt">N</span><span class="o">,</span> <span class="o">&amp;</span><span class="nt">head</span><span class="o">,</span> <span class="o">&amp;</span><span class="nt">tail</span><span class="o">);</span>
+          <span class="nt">Static</span><span class="p">::</span><span class="nd">central_cache</span><span class="o">()</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="p">.</span><span class="nc">InsertRange</span><span class="o">(</span><span class="nt">head</span><span class="o">,</span> <span class="nt">tail</span><span class="o">,</span> <span class="nt">N</span><span class="o">);</span>
+          <span class="nt">size_</span> <span class="nt">-</span><span class="o">=</span> <span class="nt">delta_bytes</span><span class="o">;</span>
+        <span class="err">}</span>
+    <span class="err">```</span>
+
+    <span class="err">这个函数实际上是从</span><span class="nt">TC</span><span class="err">释放到</span><span class="nt">CC</span><span class="err">时调用</span><span class="o">.</span>
+
+    <span class="err">```</span>
+        <span class="nt">void</span> <span class="nt">CentralFreeList</span><span class="p">::</span><span class="nd">InsertRange</span><span class="o">(</span><span class="nt">void</span> <span class="o">*</span><span class="nt">start</span><span class="o">,</span> <span class="nt">void</span> <span class="o">*</span><span class="nt">end</span><span class="o">,</span> <span class="nt">int</span> <span class="nt">N</span><span class="o">)</span> <span class="p">{</span>
+          <span class="err">SpinLockHolder</span> <span class="err">h(&amp;lock_)</span><span class="p">;</span>
+          <span class="err">if</span> <span class="err">(N</span> <span class="err">==</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">size_class_</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+            <span class="nf">MakeCacheSpace</span><span class="p">())</span> <span class="err">{</span>
+            <span class="o">//</span> <span class="n">slots</span> <span class="err">是存在</span><span class="n">CC</span> <span class="err">的链表中的结构</span><span class="o">.</span>
+            <span class="o">//</span> <span class="err">每个</span><span class="n">CC</span><span class="err">的链表节点是</span><span class="n">slots</span><span class="o">.</span>
+            <span class="o">//</span> <span class="err">每个</span><span class="n">slots</span><span class="err">中的数据正好是</span><span class="n">TC</span><span class="err">中移动数据的大小</span><span class="o">.</span>
+            <span class="n">int</span> <span class="n">slot</span> <span class="o">=</span> <span class="n">used_slots_</span><span class="o">++</span><span class="p">;</span>
+            <span class="err">ASSERT(slot</span> <span class="err">&gt;=0)</span><span class="p">;</span>
+            <span class="err">ASSERT(slot</span> <span class="err">&lt;</span> <span class="err">max_cache_size_)</span><span class="p">;</span>
+            <span class="err">TCEntry</span> <span class="err">*entry</span> <span class="err">=</span> <span class="err">&amp;tc_slots_</span><span class="cp">[</span><span class="nx">slot</span><span class="cp">]</span><span class="p">;</span>
+            <span class="err">entry-&gt;head</span> <span class="err">=</span> <span class="err">start</span><span class="p">;</span>
+            <span class="err">entry-&gt;tail</span> <span class="err">=</span> <span class="err">end</span><span class="p">;</span>
+            <span class="err">return</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="nt">ReleaseListToSpans</span><span class="o">(</span><span class="nt">start</span><span class="o">);</span>
+        <span class="err">}</span>
+    <span class="err">```</span>
+
+    <span class="err">```</span>
+        <span class="nt">void</span> <span class="nt">ThreadCache</span><span class="p">::</span><span class="nd">Scavenge</span><span class="o">()</span> <span class="p">{</span>
+          <span class="err">//</span> <span class="err">If</span> <span class="err">the</span> <span class="err">low-water</span> <span class="err">mark</span> <span class="err">for</span> <span class="err">the</span> <span class="err">free</span> <span class="err">list</span> <span class="err">is</span> <span class="err">L,</span> <span class="err">it</span> <span class="err">means</span> <span class="err">we</span> <span class="err">would</span>
+          <span class="err">//</span> <span class="err">not</span> <span class="err">have</span> <span class="err">had</span> <span class="err">to</span> <span class="err">allocate</span> <span class="err">anything</span> <span class="err">from</span> <span class="err">the</span> <span class="err">central</span> <span class="err">cache</span> <span class="err">even</span> <span class="err">if</span>
+          <span class="err">//</span> <span class="err">we</span> <span class="err">had</span> <span class="err">reduced</span> <span class="err">the</span> <span class="err">free</span> <span class="err">list</span> <span class="err">size</span> <span class="err">by</span> <span class="err">L.</span>  <span class="err">We</span> <span class="err">aim</span> <span class="err">to</span> <span class="err">get</span> <span class="err">closer</span> <span class="err">to</span>
+          <span class="err">//</span> <span class="err">that</span> <span class="err">situation</span> <span class="err">by</span> <span class="err">dropping</span> <span class="err">L/2</span> <span class="err">nodes</span> <span class="err">from</span> <span class="err">the</span> <span class="err">free</span> <span class="err">list.</span>  <span class="err">This</span>
+          <span class="err">//</span> <span class="err">may</span> <span class="err">not</span> <span class="err">release</span> <span class="err">much</span> <span class="err">memory,</span> <span class="err">but</span> <span class="err">if</span> <span class="err">so</span> <span class="err">we</span> <span class="err">will</span> <span class="err">call</span> <span class="err">scavenge</span> <span class="err">again</span>
+          <span class="err">//</span> <span class="err">pretty</span> <span class="err">soon</span> <span class="err">and</span> <span class="err">the</span> <span class="err">low-water</span> <span class="err">marks</span> <span class="err">will</span> <span class="err">be</span> <span class="err">high</span> <span class="err">on</span> <span class="err">that</span> <span class="err">call.</span>
+          <span class="err">//int64</span> <span class="err">start</span> <span class="err">=</span> <span class="n">CycleClock</span><span class="p">:</span><span class="o">:</span><span class="nf">Now</span><span class="p">();</span>
+          <span class="err">for</span> <span class="err">(int</span> <span class="err">cl</span> <span class="err">=</span> <span class="err">0</span><span class="p">;</span> <span class="err">cl</span> <span class="err">&lt;</span> <span class="err">kNumClasses</span><span class="p">;</span> <span class="err">cl++)</span> <span class="err">{</span>
+            <span class="err">FreeList*</span> <span class="err">list</span> <span class="err">=</span> <span class="err">&amp;list_</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="p">;</span>
+            <span class="err">const</span> <span class="err">int</span> <span class="err">lowmark</span> <span class="err">=</span> <span class="err">list-&gt;lowwatermark()</span><span class="p">;</span>
+            <span class="err">//</span> <span class="err">首先清理</span> <span class="err">lowmark</span> <span class="err">&gt;</span> <span class="err">0</span> <span class="err">的.就算某些lowmark值不对,</span> <span class="err">在该轮结束后,会通过clear_lowwatermark()重置,下一次将会成功释放大量内存.</span>
+            <span class="err">if</span> <span class="err">(lowmark</span> <span class="err">&gt;</span> <span class="err">0)</span> <span class="err">{</span>
+              <span class="err">const</span> <span class="err">int</span> <span class="err">drop</span> <span class="err">=</span> <span class="err">(lowmark</span> <span class="err">&gt;</span> <span class="err">1)</span> <span class="err">?</span> <span class="err">lowmark/2</span> <span class="err">:</span> <span class="err">1</span><span class="p">;</span>
+              <span class="err">ReleaseToCentralCache(list,</span> <span class="err">cl,</span> <span class="err">drop)</span><span class="p">;</span>
+
+              <span class="err">//</span> <span class="err">Shrink</span> <span class="err">the</span> <span class="err">max</span> <span class="err">length</span> <span class="err">if</span> <span class="err">it</span> <span class="err">isn&#39;t</span> <span class="err">used.</span>  <span class="err">Only</span> <span class="err">shrink</span> <span class="err">down</span> <span class="err">to</span>
+              <span class="err">//</span> <span class="err">batch_size</span> <span class="err">--</span> <span class="err">if</span> <span class="err">the</span> <span class="err">thread</span> <span class="err">was</span> <span class="err">active</span> <span class="err">enough</span> <span class="err">to</span> <span class="err">get</span> <span class="err">the</span> <span class="err">max_length</span>
+              <span class="err">//</span> <span class="err">above</span> <span class="err">batch_size,</span> <span class="err">it</span> <span class="err">will</span> <span class="err">likely</span> <span class="err">be</span> <span class="err">that</span> <span class="err">active</span> <span class="err">again.</span>  <span class="err">If</span>
+              <span class="err">//</span> <span class="err">max_length</span> <span class="err">shinks</span> <span class="err">below</span> <span class="err">batch_size,</span> <span class="err">the</span> <span class="err">thread</span> <span class="err">will</span> <span class="err">have</span> <span class="err">to</span>
+              <span class="err">//</span> <span class="err">go</span> <span class="err">through</span> <span class="err">the</span> <span class="err">slow-start</span> <span class="err">behavior</span> <span class="err">again.</span>  <span class="err">The</span> <span class="err">slow-start</span> <span class="err">is</span> <span class="err">useful</span>
+              <span class="err">//</span> <span class="err">mainly</span> <span class="err">for</span> <span class="err">threads</span> <span class="err">that</span> <span class="err">stay</span> <span class="err">relatively</span> <span class="err">idle</span> <span class="err">for</span> <span class="err">their</span> <span class="err">entire</span>
+              <span class="err">//</span> <span class="err">lifetime.</span>
+              <span class="err">//</span> <span class="err">由于该TC内存快满了,所以,我们减少batch_size,</span> <span class="err">减慢慢启动算法,保证空间不会浪费太多.</span>
+              <span class="err">const</span> <span class="err">int</span> <span class="err">batch_size</span> <span class="err">=</span> <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">sizemap</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">num_objects_to_move</span><span class="p">(</span><span class="n">cl</span><span class="p">);</span>
+              <span class="err">if</span> <span class="err">(list-&gt;max_length()</span> <span class="err">&gt;</span> <span class="err">batch_size)</span> <span class="err">{</span>
+                <span class="err">list-&gt;set_max_length(</span>
+                    <span class="err">max&lt;int&gt;(list-&gt;max_length()</span> <span class="err">-</span> <span class="err">batch_size,</span> <span class="err">batch_size))</span><span class="p">;</span> <span class="err">//</span> <span class="err">减少后和batch_size中的最大值.</span>
+              <span class="p">}</span>
+            <span class="err">}</span>
+            <span class="nt">list-</span><span class="o">&gt;</span><span class="nt">clear_lowwatermark</span><span class="o">();</span>  <span class="o">//</span><span class="err">清理低水平标志位</span><span class="o">.</span><span class="err">其实就是设置为当前长度</span><span class="o">...</span>
+          <span class="err">}</span>
+          <span class="o">//</span> <span class="err">无耻地偷取其他线程的容量</span><span class="o">.</span>
+          <span class="nt">IncreaseCacheLimit</span><span class="o">();</span>
+        <span class="err">}</span>
+    <span class="err">```</span>
+
+    <span class="err">以上是内存释放的情况</span><span class="o">,</span><span class="err">还有个保证自己线程容量充裕的无耻做法是</span><span class="o">,</span><span class="err">偷取其他线程的容量</span><span class="o">.</span><span class="err">偷取临近</span><span class="nt">10</span><span class="err">个</span><span class="nt">TC</span><span class="err">的</span> <span class="nt">1</span> <span class="o">&lt;&lt;</span> <span class="nt">16</span><span class="err">容量</span><span class="o">.</span> <span class="err">当然</span><span class="o">,</span><span class="err">如果其容量小于最小值</span><span class="o">,</span><span class="err">就放过了．也就是说</span><span class="o">,</span><span class="err">对于很少启动慢启动的线程</span><span class="o">,</span><span class="err">其线程容量将会由于被偷取而持续减少</span><span class="o">,</span> <span class="err">有效控制了这种线程内存的浪费</span><span class="o">,</span><span class="err">通过这种机制</span><span class="o">,</span><span class="err">有效地保证进程间空间不会浪费太多</span><span class="o">.</span> <span class="err">需求大的线程可以获得更多的容量</span><span class="o">,</span><span class="err">而需求小的线程获取少的容量</span><span class="o">.</span><span class="err">如果存在无人认领的内存</span><span class="o">,</span><span class="err">咱们就偷了</span><span class="o">!!</span><span class="err">所谓无人认领的内存</span><span class="o">,</span><span class="err">是指线程被释放后</span><span class="o">,</span> <span class="err">其释放的内存</span><span class="o">.</span>
+
+    <span class="err">```</span><span class="nt">cpp</span>
+        <span class="nt">void</span> <span class="nt">ThreadCache</span><span class="p">::</span><span class="nd">IncreaseCacheLimitLocked</span><span class="o">()</span> <span class="p">{</span>
+          <span class="err">if</span> <span class="err">(unclaimed_cache_space_</span> <span class="err">&gt;</span> <span class="err">0)</span> <span class="err">{</span>
+            <span class="err">//</span> <span class="err">Possibly</span> <span class="err">make</span> <span class="err">unclaimed_cache_space_</span> <span class="err">negative.</span>
+            <span class="err">unclaimed_cache_space_</span> <span class="err">-=</span> <span class="err">kStealAmount</span><span class="p">;</span>
+            <span class="err">max_size_</span> <span class="err">+=</span> <span class="err">kStealAmount</span><span class="p">;</span>
+            <span class="err">return</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="o">//</span> <span class="nt">Don</span><span class="err">&#39;</span><span class="nt">t</span> <span class="nt">hold</span> <span class="nt">pageheap_lock</span> <span class="nt">too</span> <span class="nt">long</span><span class="o">.</span>  <span class="nt">Try</span> <span class="nt">to</span> <span class="nt">steal</span> <span class="nt">from</span> <span class="nt">10</span> <span class="nt">other</span>
+          <span class="o">//</span> <span class="nt">threads</span> <span class="nt">before</span> <span class="nt">giving</span> <span class="nt">up</span><span class="o">.</span>  <span class="nt">The</span> <span class="nt">i</span> <span class="o">&lt;</span> <span class="nt">10</span> <span class="nt">condition</span> <span class="nt">also</span> <span class="nt">prevents</span> <span class="nt">an</span>
+          <span class="o">//</span> <span class="nt">infinite</span> <span class="nt">loop</span> <span class="nt">in</span> <span class="nt">case</span> <span class="nt">none</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">existing</span> <span class="nt">thread</span> <span class="nt">heaps</span> <span class="nt">are</span>
+          <span class="o">//</span> <span class="nt">suitable</span> <span class="nt">places</span> <span class="nt">to</span> <span class="nt">steal</span> <span class="nt">from</span><span class="o">.</span>
+          <span class="nt">for</span> <span class="o">(</span><span class="nt">int</span> <span class="nt">i</span> <span class="o">=</span> <span class="nt">0</span><span class="o">;</span> <span class="nt">i</span> <span class="o">&lt;</span> <span class="nt">10</span><span class="o">;</span>
+               <span class="o">++</span><span class="nt">i</span><span class="o">,</span> <span class="nt">next_memory_steal_</span> <span class="o">=</span> <span class="nt">next_memory_steal_-</span><span class="o">&gt;</span><span class="nt">next_</span><span class="o">)</span> <span class="p">{</span>
+            <span class="err">//</span> <span class="err">Reached</span> <span class="err">the</span> <span class="err">end</span> <span class="err">of</span> <span class="err">the</span> <span class="err">linked</span> <span class="err">list.</span>  <span class="err">Start</span> <span class="err">at</span> <span class="err">the</span> <span class="err">beginning.</span>
+            <span class="err">if</span> <span class="err">(next_memory_steal_</span> <span class="err">==</span> <span class="err">NULL)</span> <span class="err">{</span>
+              <span class="err">ASSERT(thread_heaps_</span> <span class="err">!=</span> <span class="err">NULL)</span><span class="p">;</span>
+              <span class="err">//</span> <span class="err">next_memory_steal_</span> <span class="err">在初始化时默认为TC的Heap的链表头.</span>
+              <span class="err">//</span> <span class="err">所以,这个循环会不停轮流偷取链表里的所有线程,包括自己.</span>
+              <span class="err">next_memory_steal_</span> <span class="err">=</span> <span class="err">thread_heaps_</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nt">if</span> <span class="o">(</span><span class="nt">next_memory_steal_</span> <span class="o">==</span> <span class="nt">this</span> <span class="o">||</span>
+                <span class="nt">next_memory_steal_-</span><span class="o">&gt;</span><span class="nt">max_size_</span> <span class="o">&lt;=</span> <span class="nt">kMinThreadCacheSize</span><span class="o">)</span> <span class="p">{</span>
+              <span class="err">continue</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nt">next_memory_steal_-</span><span class="o">&gt;</span><span class="nt">max_size_</span> <span class="nt">-</span><span class="o">=</span> <span class="nt">kStealAmount</span><span class="o">;</span>
+            <span class="nt">max_size_</span> <span class="o">+=</span> <span class="nt">kStealAmount</span><span class="o">;</span>
+
+            <span class="nt">next_memory_steal_</span> <span class="o">=</span> <span class="nt">next_memory_steal_-</span><span class="o">&gt;</span><span class="nt">next_</span><span class="o">;</span>
+            <span class="nt">return</span><span class="o">;</span>
+          <span class="err">}</span>
+        <span class="err">}</span>
+    <span class="err">```</span>
+</pre></div>
+
+
+<ul>
 <li>
-<p>TC向CC释放内存
-    TC向CC释放内存的条件是,在进程向TC释放内存时,TC对应的分类free list的 <code>length &gt; max_length</code> 或者 TC的总 <code>size &gt; max_size</code>, 分别触发ListTooLong和Scavenge内存回收.</p>
-<p>ListTooLong 回收内存规则:</p>
-<div class="codehilite"><pre><span></span>* 如果 `list length &lt; batch_size` ,则清空链表. 这种情况下,只有非频繁内存请求,才会 `length &lt; batch_size`, 所以, 在时间和空间上,考虑优先空间,释放内存.
-* 如果 `list length &gt; batch_size`, 则释放 `batch_size` 个object.并且减少list的max length, 尽可能利用慢启动, 减少空间浪费的问题.
-</pre></div>
-
-
-<p>Scavenge回收内存规则:</p>
-<div class="codehilite"><pre><span></span>* 遍历TC中所有的free list, 将(lowwatermark &gt; 0)的list 释放 (lowwatermark / 2 )个objects.
-* 如果lowwatermark &gt; 0的 `list length &gt; batch_size`, 则更新`max_length` 为 `max_length - batch_size`, 利用慢启动算法,减慢内存增长的速度.
-* 重置所有list的 lowwatermark为当前的length.(lowwatermark会在list的length减小时更新,始终保持为list最小的length).
-* 偷取其他TC的 `max_length`.由于当前TC容量不够,所以,偷取其他TC容
-量,保证无用线程不会浪费过多空间.
-</pre></div>
-
-
-<p>TC容量偷取:</p>
-<div class="codehilite"><pre><span></span>* 如果存在无人认领的内存(无人认领内存:线程结束后(TC的Heap被释放)的内存, 最大为 8u * 4 &lt;&lt; 20),则优先从其领取需要的内存,增大当前线程的容量.
-* 上述条件不满足,则遍历所有的TC, 如果某个TC的容量 &gt; kMinThreadCacheSize (kMaxSize * 2 = 512K) , 则偷取其容量.
-</pre></div>
-
-
-<p>```cpp      <br />
-    void ThreadCache::ListTooLong(FreeList* list, size_t cl) {
-      const int batch_size = Static::sizemap()-&gt;num_objects_to_move(cl);
-      // 如果list长度小于 batch_size, 释放所有, 否则, 释放batch_size个块.
-      ReleaseToCentralCache(list, cl, batch_size);</p>
-<div class="codehilite"><pre><span></span>  if (list-&gt;max_length() &lt; batch_size) {
-    // Slow start the max_length so we don&#39;t overreserve.
-    list-&gt;set_max_length(list-&gt;max_length() + 1);
-  } else if (list-&gt;max_length() &gt; batch_size) {
-    // If we consistently go over max_length, shrink max_length.  If we don&#39;t
-    // shrink it, some amount of memory will always stay in this freelist.
-    list-&gt;set_length_overages(list-&gt;length_overages() + 1);
-    if (list-&gt;length_overages() &gt; kMaxOverages) {
-      ASSERT(list-&gt;max_length() &gt; batch_size);
-      list-&gt;set_max_length(list-&gt;max_length() - batch_size);
-      list-&gt;set_length_overages(0);
-    }
-  }
-}
-</pre></div>
-
-
-<p>```</p>
-<p>ReleaseToCentralCache中执行了,将链表返回给CC的动作,里面涉及到了slots结构,我们来看下.</p>
-<p>```
-    // Remove some objects of class "cl" from thread heap and add to central cache
-    void ThreadCache::ReleaseToCentralCache(FreeList* src, size_t cl, int N) {
-      ASSERT(src == &amp;list_[cl]);
-      if (N &gt; src-&gt;length()) N = src-&gt;length();
-      size_t delta_bytes = N * Static::sizemap()-&gt;ByteSizeForClass(cl);</p>
-<div class="codehilite"><pre><span></span>  <span class="o">//</span> <span class="nt">We</span> <span class="nt">return</span> <span class="nt">prepackaged</span> <span class="nt">chains</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">correct</span> <span class="nt">size</span> <span class="nt">to</span> <span class="nt">the</span> <span class="nt">central</span> <span class="nt">cache</span><span class="o">.</span>
-  <span class="o">//</span> <span class="nt">TODO</span><span class="o">:</span> <span class="nt">Use</span> <span class="nt">the</span> <span class="nt">same</span> <span class="nt">format</span> <span class="nt">internally</span> <span class="nt">in</span> <span class="nt">the</span> <span class="nt">thread</span> <span class="nt">caches</span><span class="o">?</span>
-  <span class="nt">int</span> <span class="nt">batch_size</span> <span class="o">=</span> <span class="nt">Static</span><span class="p">::</span><span class="nd">sizemap</span><span class="o">()</span><span class="nt">-</span><span class="o">&gt;</span><span class="nt">num_objects_to_move</span><span class="o">(</span><span class="nt">cl</span><span class="o">);</span>
-  <span class="nt">while</span> <span class="o">(</span><span class="nt">N</span> <span class="o">&gt;</span> <span class="nt">batch_size</span><span class="o">)</span> <span class="p">{</span>
-    <span class="err">void</span> <span class="err">*tail,</span> <span class="err">*head</span><span class="p">;</span>
-    <span class="err">src-&gt;PopRange(batch_size,</span> <span class="err">&amp;head,</span> <span class="err">&amp;tail)</span><span class="p">;</span>
-    <span class="n">Static</span><span class="p">:</span><span class="o">:</span><span class="nf">central_cache</span><span class="p">()</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="o">.</span><span class="nf">InsertRange</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">);</span>
-    <span class="err">N</span> <span class="err">-=</span> <span class="err">batch_size</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nt">void</span> <span class="o">*</span><span class="nt">tail</span><span class="o">,</span> <span class="o">*</span><span class="nt">head</span><span class="o">;</span>
-  <span class="nt">src-</span><span class="o">&gt;</span><span class="nt">PopRange</span><span class="o">(</span><span class="nt">N</span><span class="o">,</span> <span class="o">&amp;</span><span class="nt">head</span><span class="o">,</span> <span class="o">&amp;</span><span class="nt">tail</span><span class="o">);</span>
-  <span class="nt">Static</span><span class="p">::</span><span class="nd">central_cache</span><span class="o">()</span><span class="cp">[</span><span class="nx">cl</span><span class="cp">]</span><span class="p">.</span><span class="nc">InsertRange</span><span class="o">(</span><span class="nt">head</span><span class="o">,</span> <span class="nt">tail</span><span class="o">,</span> <span class="nt">N</span><span class="o">);</span>
-  <span class="nt">size_</span> <span class="nt">-</span><span class="o">=</span> <span class="nt">delta_bytes</span><span class="o">;</span>
-<span class="err">}</span>
-</pre></div>
-
-
-<p>```</p>
-<p>这个函数实际上是从TC释放到CC时调用.</p>
-<p><code>void CentralFreeList::InsertRange(void *start, void *end, int N) {
-      SpinLockHolder h(&amp;lock_);
-      if (N == Static::sizemap()-&gt;num_objects_to_move(size_class_) &amp;&amp;
-        MakeCacheSpace()) {
-        // slots 是存在CC 的链表中的结构.
-        // 每个CC的链表节点是slots.
-        // 每个slots中的数据正好是TC中移动数据的大小.
-        int slot = used_slots_++;
-        ASSERT(slot &gt;=0);
-        ASSERT(slot &lt; max_cache_size_);
-        TCEntry *entry = &amp;tc_slots_[slot];
-        entry-&gt;head = start;
-        entry-&gt;tail = end;
-        return;
-      }
-      ReleaseListToSpans(start);
-    }</code></p>
-<p>```
-    void ThreadCache::Scavenge() {
-      // If the low-water mark for the free list is L, it means we would
-      // not have had to allocate anything from the central cache even if
-      // we had reduced the free list size by L.  We aim to get closer to
-      // that situation by dropping L/2 nodes from the free list.  This
-      // may not release much memory, but if so we will call scavenge again
-      // pretty soon and the low-water marks will be high on that call.
-      //int64 start = CycleClock::Now();
-      for (int cl = 0; cl &lt; kNumClasses; cl++) {
-        FreeList* list = &amp;list_[cl];
-        const int lowmark = list-&gt;lowwatermark();
-        // 首先清理 lowmark &gt; 0 的.就算某些lowmark值不对, 在该轮结束后,会通过clear_lowwatermark()重置,下一次将会成功释放大量内存.
-        if (lowmark &gt; 0) {
-          const int drop = (lowmark &gt; 1) ? lowmark/2 : 1;
-          ReleaseToCentralCache(list, cl, drop);</p>
-<div class="codehilite"><pre><span></span>      <span class="o">//</span> <span class="nt">Shrink</span> <span class="nt">the</span> <span class="nt">max</span> <span class="nt">length</span> <span class="nt">if</span> <span class="nt">it</span> <span class="nt">isn</span><span class="err">&#39;</span><span class="nt">t</span> <span class="nt">used</span><span class="o">.</span>  <span class="nt">Only</span> <span class="nt">shrink</span> <span class="nt">down</span> <span class="nt">to</span>
-      <span class="o">//</span> <span class="nt">batch_size</span> <span class="nt">--</span> <span class="nt">if</span> <span class="nt">the</span> <span class="nt">thread</span> <span class="nt">was</span> <span class="nt">active</span> <span class="nt">enough</span> <span class="nt">to</span> <span class="nt">get</span> <span class="nt">the</span> <span class="nt">max_length</span>
-      <span class="o">//</span> <span class="nt">above</span> <span class="nt">batch_size</span><span class="o">,</span> <span class="nt">it</span> <span class="nt">will</span> <span class="nt">likely</span> <span class="nt">be</span> <span class="nt">that</span> <span class="nt">active</span> <span class="nt">again</span><span class="o">.</span>  <span class="nt">If</span>
-      <span class="o">//</span> <span class="nt">max_length</span> <span class="nt">shinks</span> <span class="nt">below</span> <span class="nt">batch_size</span><span class="o">,</span> <span class="nt">the</span> <span class="nt">thread</span> <span class="nt">will</span> <span class="nt">have</span> <span class="nt">to</span>
-      <span class="o">//</span> <span class="nt">go</span> <span class="nt">through</span> <span class="nt">the</span> <span class="nt">slow-start</span> <span class="nt">behavior</span> <span class="nt">again</span><span class="o">.</span>  <span class="nt">The</span> <span class="nt">slow-start</span> <span class="nt">is</span> <span class="nt">useful</span>
-      <span class="o">//</span> <span class="nt">mainly</span> <span class="nt">for</span> <span class="nt">threads</span> <span class="nt">that</span> <span class="nt">stay</span> <span class="nt">relatively</span> <span class="nt">idle</span> <span class="nt">for</span> <span class="nt">their</span> <span class="nt">entire</span>
-      <span class="o">//</span> <span class="nt">lifetime</span><span class="o">.</span>
-      <span class="o">//</span> <span class="err">由于该</span><span class="nt">TC</span><span class="err">内存快满了</span><span class="o">,</span><span class="err">所以</span><span class="o">,</span><span class="err">我们减少</span><span class="nt">batch_size</span><span class="o">,</span> <span class="err">减慢慢启动算法</span><span class="o">,</span><span class="err">保证空间不会浪费太多</span><span class="o">.</span>
-      <span class="nt">const</span> <span class="nt">int</span> <span class="nt">batch_size</span> <span class="o">=</span> <span class="nt">Static</span><span class="p">::</span><span class="nd">sizemap</span><span class="o">()</span><span class="nt">-</span><span class="o">&gt;</span><span class="nt">num_objects_to_move</span><span class="o">(</span><span class="nt">cl</span><span class="o">);</span>
-      <span class="nt">if</span> <span class="o">(</span><span class="nt">list-</span><span class="o">&gt;</span><span class="nt">max_length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="nt">batch_size</span><span class="o">)</span> <span class="p">{</span>
-        <span class="err">list-&gt;set_max_length(</span>
-            <span class="err">max&lt;int&gt;(list-&gt;max_length()</span> <span class="err">-</span> <span class="err">batch_size,</span> <span class="err">batch_size))</span><span class="p">;</span> <span class="err">//</span> <span class="err">减少后和batch_size中的最大值.</span>
-      <span class="p">}</span>
-    <span class="err">}</span>
-    <span class="nt">list-</span><span class="o">&gt;</span><span class="nt">clear_lowwatermark</span><span class="o">();</span>  <span class="o">//</span><span class="err">清理低水平标志位</span><span class="o">.</span><span class="err">其实就是设置为当前长度</span><span class="o">...</span>
-  <span class="err">}</span>
-  <span class="o">//</span> <span class="err">无耻地偷取其他线程的容量</span><span class="o">.</span>
-  <span class="nt">IncreaseCacheLimit</span><span class="o">();</span>
-<span class="err">}</span>
-</pre></div>
-
-
-<p>```</p>
-<p>以上是内存释放的情况,还有个保证自己线程容量充裕的无耻做法是,偷取其他线程的容量.偷取临近10个TC的 1 &lt;&lt; 16容量. 当然,如果其容量小于最小值,就放过了．也就是说,对于很少启动慢启动的线程,其线程容量将会由于被偷取而持续减少, 有效控制了这种线程内存的浪费,通过这种机制,有效地保证进程间空间不会浪费太多. 需求大的线程可以获得更多的容量,而需求小的线程获取少的容量.如果存在无人认领的内存,咱们就偷了!!所谓无人认领的内存,是指线程被释放后, 其释放的内存.</p>
-<p>```cpp
-    void ThreadCache::IncreaseCacheLimitLocked() {
-      if (unclaimed_cache_space_ &gt; 0) {
-        // Possibly make unclaimed_cache_space_ negative.
-        unclaimed_cache_space_ -= kStealAmount;
-        max_size_ += kStealAmount;
-        return;
-      }
-      // Don't hold pageheap_lock too long.  Try to steal from 10 other
-      // threads before giving up.  The i &lt; 10 condition also prevents an
-      // infinite loop in case none of the existing thread heaps are
-      // suitable places to steal from.
-      for (int i = 0; i &lt; 10;
-           ++i, next_memory_steal_ = next_memory_steal_-&gt;next_) {
-        // Reached the end of the linked list.  Start at the beginning.
-        if (next_memory_steal_ == NULL) {
-          ASSERT(thread_heaps_ != NULL);
-          // next_memory_steal_ 在初始化时默认为TC的Heap的链表头.
-          // 所以,这个循环会不停轮流偷取链表里的所有线程,包括自己.
-          next_memory_steal_ = thread_heaps_;
-        }
-        if (next_memory_steal_ == this ||
-            next_memory_steal_-&gt;max_size_ &lt;= kMinThreadCacheSize) {
-          continue;
-        }
-        next_memory_steal_-&gt;max_size_ -= kStealAmount;
-        max_size_ += kStealAmount;</p>
-<div class="codehilite"><pre><span></span>    next_memory_steal_ = next_memory_steal_-&gt;next_;
-    return;
-  }
-}
-</pre></div>
-
-
-<p>```
-* CC向PH 申请和释放内存</p>
-</li>
+<p>CC向PH 申请和释放内存</p>
+<ul>
 <li>
 <p>PH的内存管理</p>
 <p>PH的管理,跟TC一样也是进行了分类,挺复杂的.首先, 所有的内存,映射到进程空间的内存,都会占据着PH中的某个list. PH的内存是直接从系统的sbrk或者mmap分配的.同样, 大内存也是从PH分配的,所以,它很复杂!</p>
@@ -1882,6 +2356,20 @@ sbrk.它会遍历所有的allocs, 直到能成功分配内存.在我们的系统
             </div>
           </a>
         
+        
+          <a href="../2014-03-05-dlmalloc浅析/" title="dlmalloc 浅析" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                dlmalloc 浅析
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>

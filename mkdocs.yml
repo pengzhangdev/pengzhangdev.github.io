@@ -27,10 +27,6 @@ extra:
         - type: 'netlify'
           link: 'https://pengzhang.netlify.com/'
 
-google_analytics:
-    - 'UA-XXXXXXXX-X'
-    - 'auto'
-
 # Extensions
 markdown_extensions:
     - admonition

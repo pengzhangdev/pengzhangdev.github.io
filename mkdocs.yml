@@ -51,6 +51,9 @@ pages:
     - Python:
         - slackbot详细说明: slackbot.md
 
+    - 搬运工:
+        - C and CPP N 诫 : C-CPP-N诫.md
+
     - 存档:
         - Android内存调试总结: 2017-11-14-Android-memory-debug.md
         - slackbot详细说明: 2017-10-01-slackbot.md
@@ -59,5 +62,6 @@ pages:
         - zram: 2017-08-22-zram.md
         - Android SELinux 规则介绍: 2016-12-12-SEAndroid规则介绍.md
         - tcmalloc2.1 浅析 : 2014-05-12-tcmalloc2.1浅析.md
+        - C and CPP N 诫 : 2014-05-03-C-CPP-N诫.md
         - dlmalloc 浅析 : 2014-03-05-dlmalloc浅析.md
 

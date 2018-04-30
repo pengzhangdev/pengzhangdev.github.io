@@ -809,7 +809,7 @@ activity 的泄露基于android自带工具, 可以快速确定, 但是具体泄
 内存泄露的检测依据是, 进程退出时, 还有未释放的内存. 所以, valgrind包括bionic libc中, 能精确检测到泄露的前提条件就是进程退出. 但是这个对于系统级别的进程是无用的, 因为系统级进程并不会退出. 从RD角度, 判断系统级进程是否泄露的依据是内存是否持续增长, 特别是在压力测试的情况下. 所以, 这个部分介绍的工具, 实际上是抓取了持续增长的内存信息, 这些信息, 可能是内存泄露, 也可能是进程正常申请的内存, 需要RD介入判断.
 
 
-附件: [Memleak_tools_android.zip](https://pengzhang.netlify.com/assets/images/Android-memory-debug-31.png)
+附件: [Memleak_tools_android.zip](https://pengzhang.netlify.com/assets/images/no-permission-to-download-this-tool.zip)
 
 依赖工具:
 

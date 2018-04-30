@@ -76,6 +76,16 @@
     
         
     <url>
+     <loc>https://pengzhangdev.github.io/C-CPP-N诫/</loc>
+     <lastmod>2018-04-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
      <loc>https://pengzhangdev.github.io/2017-11-14-Android-memory-debug/</loc>
      <lastmod>2018-04-30</lastmod>
      <changefreq>daily</changefreq>
@@ -113,6 +123,12 @@
         
     <url>
      <loc>https://pengzhangdev.github.io/2014-05-12-tcmalloc2.1浅析/</loc>
+     <lastmod>2018-04-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://pengzhangdev.github.io/2014-05-03-C-CPP-N诫/</loc>
      <lastmod>2018-04-30</lastmod>
      <changefreq>daily</changefreq>
     </url>

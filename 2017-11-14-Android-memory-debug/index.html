@@ -203,19 +203,6 @@
   
     <li class="md-tabs__item">
       
-        <a href="../C-CPP-N诫/" title="搬运工" class="md-tabs__link">
-          搬运工
-        </a>
-      
-    </li>
-  
-
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
         <a href="./" title="存档" class="md-tabs__link md-tabs__link--active">
           存档
         </a>
@@ -419,54 +406,18 @@
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
-    
-    <label class="md-nav__link" for="nav-5">
-      搬运工
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        搬运工
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../C-CPP-N诫/" title="C and CPP N 诫" class="md-nav__link">
-      C and CPP N 诫
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
-    <label class="md-nav__link" for="nav-6">
+    <label class="md-nav__link" for="nav-5">
       存档
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
+      <label class="md-nav__title" for="nav-5">
         存档
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -794,18 +745,6 @@
   <li class="md-nav__item">
     <a href="../2014-05-12-tcmalloc2.1浅析/" title="tcmalloc2.1 浅析" class="md-nav__link">
       tcmalloc2.1 浅析
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../2014-05-03-C-CPP-N诫/" title="C and CPP N 诫" class="md-nav__link">
-      C and CPP N 诫
     </a>
   </li>
 
@@ -1742,7 +1681,7 @@ PrDi  --  private dirty
 <p><img alt="" src="https://pengzhang.netlify.com/assets/images/Android-memory-debug-30.png" /></p>
 <h3 id="libc">基于libc调试内存泄露 <span id="mem_leak"></span><a class="headerlink" href="#libc" title="Permanent link">&para;</a></h3>
 <p>内存泄露的检测依据是, 进程退出时, 还有未释放的内存. 所以, valgrind包括bionic libc中, 能精确检测到泄露的前提条件就是进程退出. 但是这个对于系统级别的进程是无用的, 因为系统级进程并不会退出. 从RD角度, 判断系统级进程是否泄露的依据是内存是否持续增长, 特别是在压力测试的情况下. 所以, 这个部分介绍的工具, 实际上是抓取了持续增长的内存信息, 这些信息, 可能是内存泄露, 也可能是进程正常申请的内存, 需要RD介入判断.</p>
-<p>附件: <a href="https://pengzhang.netlify.com/assets/images/Android-memory-debug-31.png">Memleak_tools_android.zip</a></p>
+<p>附件: <a href="https://pengzhang.netlify.com/assets/images/no-permission-to-download-this-tool.zip">Memleak_tools_android.zip</a></p>
 <p>依赖工具:</p>
 <ul>
 <li><code>libc_malloc_debug_leak.so</code> , bionic源码下, 需要编译并push到系统中</li>
@@ -1940,7 +1879,7 @@ new size <span class="m">1024</span> count <span class="m">4</span>, total memor
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../C-CPP-N诫/" title="C and CPP N 诫" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../slackbot/" title="slackbot详细说明" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1949,7 +1888,7 @@ new size <span class="m">1024</span> count <span class="m">4</span>, total memor
                 <span class="md-footer-nav__direction">
                   后退
                 </span>
-                C and CPP N 诫
+                slackbot详细说明
               </span>
             </div>
           </a>

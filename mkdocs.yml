@@ -2,7 +2,7 @@ site_name: '万卷茅屋'
 site_description: 'The documents of Werther Zhang'
 copyright: 'Copyright &copy; 2018 Werther Zhang'
 site_author: 'Werther Zhang'
-site_url: 'https://pengzhangdev.github.io'
+site_url: 'https://wertherzhang.com'
 
 theme:
     name: 'material'

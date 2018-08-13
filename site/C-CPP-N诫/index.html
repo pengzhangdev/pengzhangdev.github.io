@@ -1,0 +1,1247 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="The documents of Werther Zhang">
+      
+      
+        <link rel="canonical" href="https://wertherzhang.com/C-CPP-N诫/">
+      
+      
+        <meta name="author" content="Werther Zhang">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="en, jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0, mkdocs-material-3.0.3">
+    
+    
+      
+        <title>C and CPP N 诫 - 万卷茅屋</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="../#ccpp-n" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://wertherzhang.com" title="万卷茅屋" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">whatshot</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                万卷茅屋
+              </span>
+              <span class="md-header-nav__topic">
+                C and CPP N 诫
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="万卷茅屋" class="md-tabs__link">
+        万卷茅屋
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../zram/" title="Android" class="md-tabs__link">
+          Android
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../slackbot/" title="Python" class="md-tabs__link">
+          Python
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="./" title="搬运工" class="md-tabs__link md-tabs__link--active">
+          搬运工
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://wertherzhang.com" title="万卷茅屋" class="md-nav__button md-logo">
+      
+        <i class="md-icon">whatshot</i>
+      
+    </a>
+    万卷茅屋
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="万卷茅屋" class="md-nav__link">
+      万卷茅屋
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Android
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Android
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../zram/" title="zram" class="md-nav__link">
+      zram
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../android8-partiton-table/" title="Android8分区表分析" class="md-nav__link">
+      Android8分区表分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android-AB-system-update/" title="AB系统升级" class="md-nav__link">
+      AB系统升级
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../recovery5.0详解/" title="Recovery5二次开发详解" class="md-nav__link">
+      Recovery5二次开发详解
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android-memory-debug/" title="Android内存调试总结" class="md-nav__link">
+      Android内存调试总结
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SEAndroid规则介绍/" title="Android SELinux 规则介绍" class="md-nav__link">
+      Android SELinux 规则介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tcmalloc2.1浅析/" title="tcmalloc2.1 浅析" class="md-nav__link">
+      tcmalloc2.1 浅析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dlmalloc浅析/" title="dlmalloc 浅析" class="md-nav__link">
+      dlmalloc 浅析
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../slackbot/" title="slackbot详细说明" class="md-nav__link">
+      slackbot详细说明
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      搬运工
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        搬运工
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        C and CPP N 诫
+      </label>
+    
+    <a href="./" title="C and CPP N 诫" class="md-nav__link md-nav__link--active">
+      C and CPP N 诫
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="你不可以使用尚未初始化的变量" class="md-nav__link">
+    你不可以使用尚未初始化的变量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="你不可以存取超过数组既定范围的空间" class="md-nav__link">
+    你不可以存取超过数组既定范围的空间
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dereference" title="你不可以提取(dereference)不知指向何方的指针" class="md-nav__link">
+    你不可以提取(dereference)不知指向何方的指针
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#char" title="你不可以试图用 char* 去更改一个字符串常量" class="md-nav__link">
+    你不可以试图用 char* 去更改一个字符串常量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#malloc-free" title="你不可以只做malloc(), 而不做相应的free()" class="md-nav__link">
+    你不可以只做malloc(), 而不做相应的free()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="不可以在数值运算, 赋值或者比较中混用不同数据类型" class="md-nav__link">
+    不可以在数值运算, 赋值或者比较中混用不同数据类型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macro-define" title="慎用macro (#define)" class="md-nav__link">
+    慎用macro (#define)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debug" title="debug 变得复杂" class="md-nav__link">
+    debug 变得复杂
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="宏函数无返回值" class="md-nav__link">
+    宏函数无返回值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespace" title="没有namespace" class="md-nav__link">
+    没有namespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="可能导致奇怪的或者无法预测的问题" class="md-nav__link">
+    可能导致奇怪的或者无法预测的问题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" title="不要在stack设置过大的变量以免栈溢出" class="md-nav__link">
+    不要在stack设置过大的变量以免栈溢出
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="你不可以使用尚未初始化的变量" class="md-nav__link">
+    你不可以使用尚未初始化的变量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="你不可以存取超过数组既定范围的空间" class="md-nav__link">
+    你不可以存取超过数组既定范围的空间
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dereference" title="你不可以提取(dereference)不知指向何方的指针" class="md-nav__link">
+    你不可以提取(dereference)不知指向何方的指针
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#char" title="你不可以试图用 char* 去更改一个字符串常量" class="md-nav__link">
+    你不可以试图用 char* 去更改一个字符串常量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#malloc-free" title="你不可以只做malloc(), 而不做相应的free()" class="md-nav__link">
+    你不可以只做malloc(), 而不做相应的free()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="不可以在数值运算, 赋值或者比较中混用不同数据类型" class="md-nav__link">
+    不可以在数值运算, 赋值或者比较中混用不同数据类型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macro-define" title="慎用macro (#define)" class="md-nav__link">
+    慎用macro (#define)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debug" title="debug 变得复杂" class="md-nav__link">
+    debug 变得复杂
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="宏函数无返回值" class="md-nav__link">
+    宏函数无返回值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespace" title="没有namespace" class="md-nav__link">
+    没有namespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="可能导致奇怪的或者无法预测的问题" class="md-nav__link">
+    可能导致奇怪的或者无法预测的问题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" title="不要在stack设置过大的变量以免栈溢出" class="md-nav__link">
+    不要在stack设置过大的变量以免栈溢出
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="ccpp-n">C/CPP N诫增修<a class="headerlink" href="#ccpp-n" title="Permanent link">&para;</a></h1>
+<p>内容来自台湾ptt的c/cpp模块, 由于最初看到时觉得对于初学者好用就留下, 并期望转成简体中文版本. 然后适当补充自己的一些理解.</p>
+<h2 id="_1">你不可以使用尚未初始化的变量<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="nf">accumulate</span><span class="p">(</span><span class="kt">int</span> <span class="n">max</span><span class="p">)</span>    <span class="cm">/* 从1累加到max并返回结果 */</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sum</span><span class="p">;</span>    <span class="cm">/* 未初始化, 内容是垃圾数据 */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">num</span> <span class="o">&gt;=</span> <span class="n">max</span><span class="p">;</span> <span class="n">num</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="n">sum</span> <span class="o">+=</span> <span class="n">num</span><span class="p">;</span>  <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span><span class="err"></span>
+</pre></div>
+
+
+<p><br>
+正确例子：</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="nf">accumulate</span><span class="p">(</span><span class="kt">int</span> <span class="n">max</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="cm">/* 初始化为0 */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">num</span> <span class="o">&gt;=</span> <span class="n">max</span><span class="p">;</span> <span class="n">num</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="n">sum</span> <span class="o">+=</span> <span class="n">num</span><span class="p">;</span>  <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>说明:</p>
+<p>根据C Standard，拥有static storage duration的变量，例如全局变量(global variable)或带有static修饰的变量，其初始值(声明的时候若是没有另外设置初始值)为固定值(固定为0)。(但是有些MCU 编译器可能不理会这个规定，所以还是请养成设定初值的好习惯, 即使是全局变量)</p>
+<h2 id="_2">你不可以存取超过数组既定范围的空间<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="n">str</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</pre></div>
+
+
+<p><br>
+正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="n">str</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</pre></div>
+
+
+<p>说明:
+在声明数组时, 如果所给数组的大小为N, 则可访问方位为 0 至 N-1.</p>
+<p><br></p>
+<p>CPP11 之后可以使用 Range-based for loop 来提取array, vector(或者其他正确提供::begin()和::end()方法的class)内的元素可以确保提取的元素一定在正确范围内.</p>
+<p>例子:</p>
+<div class="codehilite"><pre><span></span><span class="c1">//vector</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+
+<span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="nl">i</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="c1">// access by const reference</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&gt;&gt;</span> <span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&gt;&gt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="c1">// array</span>
+<span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">n</span><span class="p">:</span> <span class="n">a</span><span class="p">)</span>  <span class="c1">// the initializer may be an array</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&gt;&gt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>补充资料: http://zh.cppreference.com/w/cpp/language/range-for</p>
+<h2 id="dereference">你不可以提取(dereference)不知指向何方的指针<a class="headerlink" href="#dereference" title="Permanent link">&para;</a></h2>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">char</span> <span class="o">*</span><span class="n">pc1</span><span class="p">;</span>      <span class="cm">/* 未给初始值, 不知指向何方, 野指针 */</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">pc2</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/* pc2 初始化为 NULL */</span>
+<span class="o">*</span><span class="n">pc1</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>     <span class="cm">/* 将 &#39;a&#39; 写到不知何方, 错误 */</span>
+<span class="o">*</span><span class="n">pc2</span> <span class="o">=</span> <span class="sc">&#39;b&#39;</span><span class="p">;</span>     <span class="cm">/* 将 &#39;b&#39; 写到位置 0, 错误 */</span>
+</pre></div>
+
+
+<p>正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">char</span> <span class="n">c</span><span class="p">;</span>          <span class="cm">/* c 的内容未初始化 */</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">pc1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span>  <span class="cm">/* pc1 指向字符变量 c */</span>
+<span class="o">*</span><span class="n">pc1</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>      <span class="cm">/* 将 c 的内容变更为 &#39;a&#39; */</span>
+
+<span class="cm">/* 动态分配10个char, 并将第一个char的地址赋值给 pc2 */</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">pc2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">pc2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;b&#39;</span><span class="p">;</span>    <span class="cm">/* 动态配置第0个字符，内容变为 &#39;b&#39;</span>
+<span class="cm">free(pc2);</span>
+</pre></div>
+
+
+<p>说明:
+指针必须指向一个合法的地址空间, 才能进行操作.</p>
+<p><br></p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>   <span class="cm">/* name 未指向有效空间 */</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Your name, please: &quot;</span><span class="p">);</span>
+<span class="n">fgets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>   <span class="cm">/* 写入未知控件 */</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br></p>
+<p>正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="cm">/* 如果编译器就能决定字符串的最大空间, 那就不要声明成 char* 改用 char[] */</span>
+<span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sc">&#39;\0&#39;</span><span class="p">};</span>   <span class="cm">/* 可读入最长20个字节, 保留1个字节存放&#39;\0&#39; */</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Your name, please: &quot;</span><span class="p">);</span>
+<span class="n">fgets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">stdin</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br></p>
+<p>正确例子(2):</p>
+<p>若是在执行期才能决定字符串的最大长度, C提供两种实现方法:</p>
+<ul>
+<li>使用malloc()函数来动态分配, 注意malloc()分配的字符串会被存放在heap(堆)中. 注意: 检查malloc的返回值是否为NULL</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="kt">size_t</span> <span class="n">length</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入字符串的最大长度(包含末尾的&#39;</span><span class="se">\0</span><span class="s">&#39;): &quot;</span><span class="p">);</span>
+<span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%u&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">length</span><span class="p">);</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>         <span class="c1">// name != NULL</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;您输入的是 %u</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>            <span class="c1">// name == NULL</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;输入值太多或无足够空间&quot;</span><span class="p">);</span>
+<span class="p">}</span><span class="err"></span>
+<span class="cm">/* 最后记得 free() 掉 malloc() 所分配的空间 */</span>
+<span class="n">free</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="n">name</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>  <span class="c1">//(注1)</span>
+</pre></div>
+
+
+<ul>
+<li>C99开始可以使用variable-length array (VLA). 需注意:<ul>
+<li>因为VLA是存放在stack(栈)中, 需要注意不要超过栈大小</li>
+<li>不是所有的编译器支持VLA(<a href="#3.2">注2</a>)</li>
+<li>cpp standard 不支持.</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="kt">float</span> <span class="nf">read_and_process</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">vals</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">read_val</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">process</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span><span class="err"></span>
+</pre></div>
+
+
+<p><br></p>
+<p>正确例子(3):</p>
+<p>cpp的使用者也有两种方法:</p>
+<ul>
+<li>std::vector , 不管数组大小是否改变都可用.</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">;</span>
+<span class="n">v1</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>               <span class="c1">// 重新設定vector size</span>
+</pre></div>
+
+
+<ul>
+<li>cpp 11 后, 如果确定数组大小不会改变, 可以使用std::array</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">5</span><span class="o">&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">};</span> <span class="c1">// a[0]~a[2] = 1,2,3; a[3]之後為0;</span>
+<span class="n">a</span><span class="p">[</span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>                <span class="c1">// a[4] = 0;</span>
+</pre></div>
+
+
+<p><span id="3.1">注1</span>. C++的使用者，C++03或之前请用0代替NULL，C++11开始请改用nullptr.
+<span id="3.2">注2</span>. gcc和clang支持VLA，Visual C++不支持</p>
+<p>补充资料: http://www.cplusplus.com/reference/vector/vector/resize/</p>
+<h2 id="char">你不可以试图用 char* 去更改一个字符串常量<a class="headerlink" href="#char" title="Permanent link">&para;</a></h2>
+<p>试图去更改字符串常量(string literal)的结果会是undefined behavior.</p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">char</span><span class="o">*</span> <span class="n">pc</span> <span class="o">=</span> <span class="s">&quot;john&quot;</span><span class="p">;</span>   <span class="cm">/* pc 现在指向一个字符串常量 */</span>
+<span class="o">*</span><span class="n">pc</span> <span class="o">=</span> <span class="sc">&#39;J&#39;</span><span class="p">;</span>   <span class="cm">/* undefined behaviour，结果无法预测*/</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="s">&quot;jane&quot;</span><span class="p">;</span>         <span class="cm">/* 合法，pc 指到在別的位址的另一个字符串常量*/</span>
+                         <span class="cm">/* 但是&quot;john&quot; 这个字符串还存在原来的地方不会消失*/</span>
+</pre></div>
+
+
+<p>因为 <code>char* pc = "john"</code> 这个动作会新增一个内含元素为 "john\0" 的 static char[5], 然后 pc 会指向这个 static char 的地址(通常只读).</p>
+<p>若是试图存取这个 static char[], Standard 并没有定义结果为何.</p>
+<p><code>pc = "jane"</code> 这个动作会把pc指向另一个没在用的地址然后新增一个内含元素为"jane\n"的 static char[5] .
+但是之前的那个字符串 "john\n" 还是留在原地没有消失.</p>
+<p>通常编译器的做法是将字符串常量放在一块 read only (.rdata) 的区域内. 此区域大小是有限的, 所以如果你重复把pc指给不同的字符串常量, 是有可能出问题的.
+<br>
+正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">char</span> <span class="n">pc</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;john&quot;</span><span class="p">;</span>  <span class="cm">/* pc 现在是合法数组，里面住着字符串 john */</span>
+                    <span class="cm">/* 也就是 pc[0]=&#39;j&#39;, pc[1]=&#39;o&#39;, pc[2]=&#39;h&#39;,</span>
+<span class="cm">                              pc[3]=&#39;n&#39;, pc[4]=&#39;\0&#39;  */</span>
+<span class="o">*</span><span class="n">pc</span> <span class="o">=</span> <span class="sc">&#39;J&#39;</span><span class="p">;</span>
+<span class="n">pc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;H&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>说明: 字符串常量的内容应该是只读的. 您有使用权, 但没有更改权利.
+若您希望使用可以更改的字符串, 那您应该将其放在合法空间.
+<br>
+错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">char</span> <span class="o">*</span><span class="n">s1</span> <span class="o">=</span> <span class="s">&quot;Hello, &quot;</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">s2</span> <span class="o">=</span> <span class="s">&quot;world!&quot;</span><span class="p">;</span>
+<span class="cm">/* strcat() 不会另行分配空间，只会将资料附加到 s1 所指只读字符串后面，</span>
+<span class="cm">   造成写入到程序无权访问的地址空间 */</span>
+<span class="n">strcat</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br></p>
+<p>正确例子(2):</p>
+<div class="codehilite"><pre><span></span><span class="cm">/* s1 声明成数组, 并在末尾保留组头的空间存放附加内容 */</span>
+<span class="kt">char</span> <span class="n">s1</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Hello, &quot;</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">s2</span> <span class="o">=</span> <span class="s">&quot;world!&quot;</span><span class="p">;</span>
+<span class="cm">/* 因为 strcat() 的返回值等于第一个参数值，所以 s3 就不需要了 */</span>
+<span class="n">strcat</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+</pre></div>
+
+
+<p>cpp 对于字符串常量的严格定义为 <code>const char *</code> 或 <code>const char[]</code> .
+但是由于要兼容C, <code>char *</code> 也是允许的写法(不建议).</p>
+<p>不过, 在cpp试图更改字符串常量(要先const_cast)一样是undefined behavior.</p>
+<div class="codehilite"><pre><span></span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">pc</span> <span class="o">=</span> <span class="s">&quot;Hello&quot;</span><span class="p">;</span>
+<span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&gt;</span><span class="kt">char</span><span class="o">*&lt;</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span>
+<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;M&#39;</span><span class="p">;</span> <span class="c1">// undefined behaviour</span>
+</pre></div>
+
+
+<p>备注:
+由于不加const 容易造成混淆, 建议不管c还是cpp, 一律用 const 来修饰常量(编程习惯).</p>
+<p>补充资料:</p>
+<p>http://en.cppreference.com/w/c/language/string_literal
+http://en.cppreference.com/w/cpp/language/string_literal</p>
+<h2 id="malloc-free">你不可以只做malloc(), 而不做相应的free()<a class="headerlink" href="#malloc-free" title="Permanent link">&para;</a></h2>
+<p>编程习惯: 谁申请谁释放的原则.</p>
+<p>首先, malloc() 申请的内存是存放在堆上的, 凡是由malloc()申请的内存, 都要调用对应的free()执行释放, 否则会造成内存泄露.而已经free()的指针, 在指向一个有效的内存空间(malloc分配)之前, 不能再执行free() (double free错误).</p>
+<p>编程习惯: free()的指针一般会指向NULL, 再次free()之前检查是否为NULL, 防止重复free(), 避免野指针.</p>
+<p>例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+<span class="n">p</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>            <span class="c1">// free 不会对空指针有作用</span>
+</pre></div>
+
+
+<p>上文的实现依赖libc中的内存分配实现, 在dlmalloc和tcmalloc中, 基本都会拒绝再次 free 空指针. 但是建议检查 p 是否为空, 不为空再释放内存(编程习惯).</p>
+<p><br></p>
+<p>在cpp中, 同样的 new 之后需要执行 delete (除了<a href="http://zh.cppreference.com/w/cpp/memory/unique_ptr">智能指针</a>).</p>
+<p>注: new 与 delete 对应, new[] 与 delete[] 对应.</p>
+<p>正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">99</span><span class="p">);</span>
+<span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="n">ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>   <span class="cm">/* delete 只会处理指向非NULL的指针 */</span>
+</pre></div>
+
+
+<p>上面的 delete 空指针问题, 建议与C一样的编程习惯.
+<br>
+备注:</p>
+<p>placement new 是不符合上面的规则的. 所谓 placement new, 就是将一个对象写入已申请的内存中, 并调用其构造函数, 与正常的new区别就是, 不申请新的内存, 使用已存在的内存.</p>
+<p>placement new 没有对应的delete, 那么怎么析构和释放内存呢? 显示调用其析构函数, 而内存的释放遵循本节开头, 谁申请谁释放.</p>
+<h2 id="_3">不可以在数值运算, 赋值或者比较中混用不同数据类型<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>本节是对新人的建议, 老鸟其实会各种混用或者类型转换. 而存在如此建议的原因是, 在混用数据类型时, 会类型提升和数值越界两种不容易发现的错误.</p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">2000000000</span> <span class="o">+</span> <span class="mi">2000000000</span><span class="p">;</span>  <span class="cm">/* 超出 int 存放范围 */</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="mi">2000000000</span> <span class="o">+</span> <span class="mi">2000000000</span><span class="p">);</span>
+<span class="kt">double</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span>
+</pre></div>
+
+
+<p>说明: 第一个例子是, int 类型数据相加, 会先将结果存放在int中, 然后强转成unsigned int, 与第二个例子的行为一致.  第三个例子, 结果会是3.0, 因为显示(int)3转成double.</p>
+<p><br>
+正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="cm">/* 全部都用 unsigned int, 注意数字后面的 u, 大写 U 也成 */</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">2000000000u</span> <span class="o">+</span> <span class="mi">2000000000u</span><span class="p">;</span>
+
+<span class="cm">/* 或者是显示转换 */</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span> <span class="mi">2000000000</span> <span class="o">+</span> <span class="mi">2000000000</span><span class="p">;</span>
+
+<span class="kt">double</span> <span class="n">f</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">;</span>
+</pre></div>
+
+
+<p>上面是数值类型混用导致的越界情况.</p>
+<p><br></p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">b</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">9</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>  <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="p">}</span>
+</pre></div>
+
+
+<p>由于 int 与 unsigned 运算时, 类型提升, int 会自动转换成 unsigned, 因此该循环结束条件永远无法满足.</p>
+<p><br></p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">0x80</span><span class="p">;</span>   <span class="cm">/* no problem */</span>
+<span class="kt">char</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">0x80</span><span class="p">;</span>    <span class="cm">/* implementation-defined result */</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">b</span> <span class="o">==</span> <span class="mh">0x80</span> <span class="p">)</span> <span class="p">{</span>        <span class="cm">/* 不一定恒真 */</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;b ok</span><span class="se">\n</span><span class="s">&quot;</span> <span class="p">);</span>
+<span class="p">}</span><span class="err"></span>
+</pre></div>
+
+
+<p>说明: 由于语言未规定 char 天生为 unsigned 或 signed, 因此将 0x80 放入 char 类型的变量, 将视各家编译器不同做法而结果不同.</p>
+<p><br></p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2147483648</span> <span class="p">;</span>  <span class="c1">// 2147483648 = 2 的 31 次方</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">){</span>    <span class="c1">// abs(-2147483648)&gt;0 有可能發生</span>
+    <span class="o">++</span><span class="n">a</span><span class="p">;</span>
+<span class="p">}</span><span class="err"></span>
+</pre></div>
+
+
+<p>说明: 如果你去看C99/C11 standard, 你会发现 long int (4 byte) 变量最大/最小值为(被define在limits.h)</p>
+<div class="codehilite"><pre><span></span>INT_MIN      -2147483647  // compiler实际最小值不可大于 -(2147483648-1) 
+INT_MAX       2147483647  // compiler实际最大值不可大于  (2147483648-1) 
+</pre></div>
+
+
+<p>不过由于32bit能显示的范围就是2**32种，所以一般操作系统会把
+<code>INT_MIN</code> 多减去1，也就是int 的显示范围为-2147483648 ~ +2147483647。</p>
+<p>当程序执行到 <code>abs(-2147483648)&lt;0</code>, 由于int不存在 2147483648, 于是正确结果无法被有限的数位显示 (undefined behavior).</p>
+<h2 id="macro-define">慎用macro (#define)<a class="headerlink" href="#macro-define" title="Permanent link">&para;</a></h2>
+<p>对于新手, 强烈建议慎用macro, 能不用则不用, 能用inline, 则用inline. macro 这工具, 在lisp里, 是个神工具, 能写代码的代码. 在c里, 也是超级好用的工具, 但其危险性不止是对代码的书写者, 同时也对后续的维护者, 阅读者.</p>
+<p>其缺点如下:</p>
+<ul>
+<li>debug 变得复杂 (对代码书写者)</li>
+<li>宏函数无返回值</li>
+<li>没有namespace</li>
+<li>可能导致奇怪的或者无法预测的问题.</li>
+</ul>
+<p><br>
+常用的替代方案:</p>
+<ul>
+<li>enum (定义整数)</li>
+<li>const T (定义常量)</li>
+<li>inline function (定义函数)</li>
+<li>cpp的templat (定义可用不同type参数的函数)</li>
+<li>cpp11的匿名函数 constexpr T (编译器常数)</li>
+</ul>
+<h3 id="debug">debug 变得复杂<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h3>
+<p>由于macro是在预编译期被编译器展开的, 所以, 编译器不会检查其语法而是检查其展开后的语法, 导致编译错误不能准确定位(如果是宏中的错误).</p>
+<p>在运行时出错, 同样会带来该问题.</p>
+<h3 id="_4">宏函数无返回值<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>根据 C Standard 6.10.3.4, 如果某宏的定义里包含跟此宏名称相同的字符串, 则该字符串将不会被预处理.</p>
+<p>所以</p>
+<div class="codehilite"><pre><span></span><span class="cp">#define pr(n) ((n==1)? 1 : pr(n-1))</span>
+<span class="n">cout</span><span class="o">&gt;&gt;</span> <span class="n">pr</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+
+
+<p>预处理后:</p>
+<div class="codehilite"><pre><span></span><span class="n">cout</span><span class="o">&gt;&gt;</span> <span class="p">((</span><span class="mi">5</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="n">pr</span><span class="p">(</span><span class="mi">5</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">&gt;&gt;</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// pr沒有定义, 编译会出错</span>
+</pre></div>
+
+
+<h3 id="namespace">没有namespace<a class="headerlink" href="#namespace" title="Permanent link">&para;</a></h3>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="cp">#define begin() x = 0</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span> <span class="o">=</span> <span class="n">myvector</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+    <span class="n">it</span> <span class="o">!=</span> <span class="n">myvector</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="c1">// begin是std的保留字</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&gt;&gt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&gt;&gt;</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span>
+</pre></div>
+
+
+<p>改善方法: macro 一律使用大写.</p>
+<h3 id="_5">可能导致奇怪的或者无法预测的问题<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&gt;stdio.h&lt;</span><span class="cp"></span>
+<span class="cp">#define SQUARE(x)    (x * x)</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">SQUARE</span><span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="mi">5</span><span class="p">));</span> <span class="c1">// 預處理後變成SQUARE(10-5*10-5)</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span><span class="err"></span>
+</pre></div>
+
+
+<p>正确的例子: 在Macro定义中, 务必为它的参数加上括号</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#define SQUARE(x)    ((x) * (x))</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">SQUARE</span><span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="mi">5</span><span class="p">));</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span><span class="err"></span>
+</pre></div>
+
+
+<p><br></p>
+<p>不过遇到以下情况, 就算添加括号也没用.</p>
+<p>错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="cp">#define MACRO(x)     (((x) * (x)) - ((x) * (x)))</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">MACRO</span><span class="p">(</span><span class="o">++</span><span class="n">x</span><span class="p">));</span> <span class="c1">// 有side effect</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>补充资料:</p>
+<p>http://stackoverflow.com/questions/14041453/why-are-preprocessor-macros-evil-and-what-are-the-alternatives</p>
+<p>http://stackoverflow.com/questions/12447557/can-we-have-recursive-macros</p>
+<p>http://en.cppreference.com/w/cpp/language/lambda</p>
+<h2 id="stack">不要在stack设置过大的变量以免栈溢出<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h2>
+<p>由于编译器自行决定stack的上限, 某些预设是数K或数十KB, 当变量所需的空间过大时, 很容易造成 stack overflow, 程序也会 segmentation fault.</p>
+<p>可能造成栈溢出的原因包括递归太多次或者 stack 设置过大的变量.
+<br>
+错误例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="n">array</span><span class="p">[</span><span class="mi">10000000</span><span class="p">];</span>       <span class="c1">// 在stack声明过大的变量</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">10000000</span><span class="o">&gt;</span> <span class="n">myarray</span><span class="p">;</span> <span class="c1">//在stack声明过大的std::array</span>
+</pre></div>
+
+
+<p><br>
+正确例子:</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="o">*</span><span class="n">array</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span> <span class="mi">10000000</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+<span class="n">v</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">10000000</span><span class="p">);</span>
+</pre></div>
+
+
+<p>说明: 过大的空间建议放在堆上.</p>
+<p>备注:
+在使用heap时, 整个process可用的空间一样有限的, 若是需要频繁地 malloc/free 或 new/delete 较大的空间, 需注意避免造成内存碎片(memory fragmentation).</p>
+<p>由于Linux使用overcommit机制管理内存, malloc即使在内存不足时仍然会传回非NULL的address, 同样的情形在Windows/Mac os 则会回传NULL.</p>
+<p><br>
+补充资料:</p>
+<ul>
+<li>https://zh.wikipedia.org/wiki/%E5%A0%86%E7%96%8A%E6%BA%A2%E4%BD%8D</li>
+<li>http://stackoverflow.com/questions/3770457/what-is-memory-fragmentation</li>
+<li>http://library.softwareverify.com/memory-fragmentation-your-worst-nightmare/ </li>
+<li>
+<p>overcommit跟malloc:</p>
+</li>
+<li>
+<p>http://goo.gl/V9krbB</p>
+</li>
+<li>http://goo.gl/5tCLQc</li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../slackbot/" title="slackbot详细说明" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                slackbot详细说明
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2018 Werther Zhang
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="http://wertherzhang.coding.me/" class="md-footer-social__link fa fa-coding"></a>
+    
+      <a href="https://pengzhang.netlify.com/" class="md-footer-social__link fa fa-netlify"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      
+        
+        
+          
+          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+          
+            
+              
+                <script src="../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+            <script src="../assets/javascripts/lunr/lunr.multi.js"></script>
+          
+        
+      
+      <script>app.initialize({version:"1.0",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

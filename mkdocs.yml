@@ -43,6 +43,7 @@ pages:
         - zram: zram.md
         - Android8分区表分析: android8-partiton-table.md
         - AB系统升级: Android-AB-system-update.md
+        - Recovery5二次开发详解: recovery5.0详解.md
         - Android内存调试总结: Android-memory-debug.md
         - Android SELinux 规则介绍: SEAndroid规则介绍.md
         - tcmalloc2.1 浅析 : tcmalloc2.1浅析.md
@@ -53,15 +54,4 @@ pages:
 
     - 搬运工:
         - C and CPP N 诫 : C-CPP-N诫.md
-
-    - 存档:
-        - Android内存调试总结: 2017-11-14-Android-memory-debug.md
-        - slackbot详细说明: 2017-10-01-slackbot.md
-        - AB系统升级: 2017-09-20-Android-AB-system-update.md
-        - Android8分区表分析: 2017-09-19-android8-partiton-table.md
-        - zram: 2017-08-22-zram.md
-        - Android SELinux 规则介绍: 2016-12-12-SEAndroid规则介绍.md
-        - tcmalloc2.1 浅析 : 2014-05-12-tcmalloc2.1浅析.md
-        - C and CPP N 诫 : 2014-05-03-C-CPP-N诫.md
-        - dlmalloc 浅析 : 2014-03-05-dlmalloc浅析.md
 

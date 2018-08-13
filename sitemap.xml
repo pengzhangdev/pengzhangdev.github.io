@@ -1,144 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
     <url>
      <loc>https://wertherzhang.com/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
      <loc>https://wertherzhang.com/about/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-        
     <url>
      <loc>https://wertherzhang.com/zram/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://wertherzhang.com/android8-partiton-table/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://wertherzhang.com/Android-AB-system-update/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
+    <url>
+     <loc>https://wertherzhang.com/recovery5.0详解/</loc>
+     <lastmod>2018-08-13</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     <url>
      <loc>https://wertherzhang.com/Android-memory-debug/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://wertherzhang.com/SEAndroid规则介绍/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://wertherzhang.com/tcmalloc2.1浅析/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://wertherzhang.com/dlmalloc浅析/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
     <url>
      <loc>https://wertherzhang.com/slackbot/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
     <url>
      <loc>https://wertherzhang.com/C-CPP-N诫/</loc>
-     <lastmod>2018-07-16</lastmod>
+     <lastmod>2018-08-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
-    <url>
-     <loc>https://wertherzhang.com/2017-11-14-Android-memory-debug/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2017-10-01-slackbot/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2017-09-20-Android-AB-system-update/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2017-09-19-android8-partiton-table/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2017-08-22-zram/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2016-12-12-SEAndroid规则介绍/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2014-05-12-tcmalloc2.1浅析/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2014-05-03-C-CPP-N诫/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://wertherzhang.com/2014-03-05-dlmalloc浅析/</loc>
-     <lastmod>2018-07-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
 </urlset>

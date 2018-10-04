@@ -1,5 +1,10 @@
 # 换个角度看init
 
+来源： https://wertherzhang.com/%E8%B7%9F%E6%88%91%E8%AF%BB%E6%BA%90%E7%A0%81--%E6%8D%A2%E4%B8%AA%E8%A7%92%E5%BA%A6%E7%9C%8Binit/
+
+转载请注明来源。
+
+
 本篇虽然归属于跟我读源码系列, 但实际是作者尝试从非源码的角度来进入init, 过程中作者会截取尽量少的源码来辅助理解(所有的代码链接指向 http://androidxref.com/9.0.0_r3/ ).
 
 

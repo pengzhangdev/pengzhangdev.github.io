@@ -835,6 +835,8 @@
                 
                 
                 <h1 id="init">换个角度看init<a class="headerlink" href="#init" title="Permanent link">&para;</a></h1>
+<p>来源： https://wertherzhang.com/%E8%B7%9F%E6%88%91%E8%AF%BB%E6%BA%90%E7%A0%81--%E6%8D%A2%E4%B8%AA%E8%A7%92%E5%BA%A6%E7%9C%8Binit/</p>
+<p>转载请注明来源。</p>
 <p>本篇虽然归属于跟我读源码系列, 但实际是作者尝试从非源码的角度来进入init, 过程中作者会截取尽量少的源码来辅助理解(所有的代码链接指向 http://androidxref.com/9.0.0_r3/ ).</p>
 <p>所有的UNIX系统都有一个特殊的进程, 它是内核启动完毕后, 用户态中启动的第一个进程, 它负责启动系统, 病作为系统中其他进程的祖先进程. 传统上, 这个进程被称为init. Android 也沿用了这个约定俗成的规矩.</p>
 <p>不过Android中的init和UNIX或Linux中的init还是很大区别的, 其中最重要的不同之处在于, Android中的init支持系统属性, 病使用一些指定的rc文件(来规定它的行为). 在介绍这两个特性之后, 我们将拼凑出一副init运行流程的全景图:它的初始化过程和主循环(run-loop)中要做的操作.</p>

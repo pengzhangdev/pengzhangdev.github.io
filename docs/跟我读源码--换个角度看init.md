@@ -52,7 +52,7 @@ Android 的系统属性提供了一个可全局访问的配置设置仓库(类�
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                         $device_tree                         | [process_kernel_dt](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#662) | device tree 中定义的property, 全部转换为 ro.boot. 前缀的property |
 |                           cmdline                            | [process_kernel_cmdline](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#663) | cmdline中定义的property, 全部转换为 ro.boot. 前缀的property  |
-| /system/etc/prop.default 或者 /default.prop , /product/build.prop, /odm/default.prop 和 /vendor/default.prop | 在init的[main](#http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#701)函数中加载.除了从根读取, 其余分区必须在device-tree中定义并在 [DoFirstStageMount](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#612)阶段被挂载, 否则property加载失败. |                          初始设置.                           |
+| /system/etc/prop.default 或者 /default.prop , /product/build.prop, /odm/default.prop 和 /vendor/default.prop | 在init的[main](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#701)函数中加载.除了从根读取, 其余分区必须在device-tree中定义并在 [DoFirstStageMount](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#612)阶段被挂载, 否则property加载失败. |                          初始设置.                           |
 | /system/build.prop, /odm/build.prop, /vendor/build.prop, factory/factory.prop |                   init.rc 中 post-fs 阶段                    |         除了factory.prop 是只加载ro前缀, 其余全加载          |
 |                   /data/property/persist.*                   |                 late-init 或者 data解密完成                  |        重启后不会丢失的property, 必须加上前缀persist         |
 
@@ -60,7 +60,7 @@ Android 的系统属性提供了一个可全局访问的配置设置仓库(类�
 
 
 
-因为init进程是系统中所有进程的祖先, 所以只有它才天生适合实现系统属性的初始化. 在它刚开始初始化的时候, init中的代码会调用 [property_init()](http://androidxref.com/9.0.0_r3/xref/system/core/init/property_service.cpp#103)去安装系统属性. 这个函数(最终)会调用 [map_prop_area_rw()](http://androidxref.com/9.0.0_r3/xref/bionic/libc/system_properties/prop_area.cpp#map_prop_area_rw), 打开 `PROP_FILENAME`  ( 这个定义是 `/dev/__properties__` ) 底下的所有文件, 在关闭文件之前, 调用mmap(2) 以读写的方式映射到内存.  而需要读的进程, 则是调用[__system_properties_init](#http://androidxref.com/9.0.0_r3/xref/bionic/libc/bionic/system_property_api.cpp#47)   , 在 bionic 中被调用([__libc_init_common](#http://androidxref.com/9.0.0_r3/xref/bionic/libc/bionic/libc_init_common.cpp#134)). 下面是模拟器中的输出.
+因为init进程是系统中所有进程的祖先, 所以只有它才天生适合实现系统属性的初始化. 在它刚开始初始化的时候, init中的代码会调用 [property_init()](http://androidxref.com/9.0.0_r3/xref/system/core/init/property_service.cpp#103)去安装系统属性. 这个函数(最终)会调用 [map_prop_area_rw()](http://androidxref.com/9.0.0_r3/xref/bionic/libc/system_properties/prop_area.cpp#map_prop_area_rw), 打开 `PROP_FILENAME`  ( 这个定义是 `/dev/__properties__` ) 底下的所有文件, 在关闭文件之前, 调用mmap(2) 以读写的方式映射到内存.  而需要读的进程, 则是调用[__system_properties_init](http://androidxref.com/9.0.0_r3/xref/bionic/libc/bionic/system_property_api.cpp#47)   , 在 bionic 中被调用([__libc_init_common](http://androidxref.com/9.0.0_r3/xref/bionic/libc/bionic/libc_init_common.cpp#134)). 下面是模拟器中的输出.
 
 ![1537789826206](跟我读源码--换个角度看init.assets/1537789826206.png)
 
@@ -86,7 +86,7 @@ Android 的系统属性提供了一个可全局访问的配置设置仓库(类�
 
 * persist 前缀. 保存在 /data/property 目录, 重启后依然生效.在data解密后或者late-init阶段加载.
 * ro 前缀. 只读属性, 类似C/CPP中的常量定义, 它能且只能被设置1次, 这类属性一般尽可能早设置. 依据前文的加载顺序, 在有两个相同的ro前缀property时, 前面加载的生效, 而非ro前缀的property, 后面加载的生效.
-* ctl 前缀. 这是方便控制init中的服务而设立的 -- 通过把相关服务的名字设置为 ctl.start 和 ctl.stop的值, 就能方便地启动和停止指定服务. (命令行中的start和stop实际上就是通过该property来设置.) 这种能力是受selinux控制的具体的权限定义在 [property.te](#http://androidxref.com/9.0.0_r3/xref/system/sepolicy/prebuilts/api/28.0/public/property.te), 有兴趣可以看下, 所有的property相关权限定义都在这个文件中.
+* ctl 前缀. 这是方便控制init中的服务而设立的 -- 通过把相关服务的名字设置为 ctl.start 和 ctl.stop的值, 就能方便地启动和停止指定服务. (命令行中的start和stop实际上就是通过该property来设置.) 这种能力是受selinux控制的具体的权限定义在 [property.te](http://androidxref.com/9.0.0_r3/xref/system/sepolicy/prebuilts/api/28.0/public/property.te), 有兴趣可以看下, 所有的property相关权限定义都在这个文件中.
 
 这就是为啥前面说的, persist属性的property必须在data分区解密完成后才能加载. 同样带来的一个问题是, core类别的服务, 最好不要使用persist属性控制其逻辑, 如果真有需要, 得考虑data解密的问题和property重新加载更新的情况.
 
@@ -240,11 +240,11 @@ optinos 主要是 class, user, group 等关键字, 会在后文对这些关键�
 
 trigger 命令集也叫init命令集, 其实就是init.rc中所有可执行命令. 我们重点关注下, 定义了哪些命令, 并且命令是如何被使用的.
 
-命令列表定义在 [BuiltinFunctionMap::map](#http://androidxref.com/9.0.0_r3/xref/system/core/init/builtins.cpp#1030), 下面看个例子, 具体命令列表大家自己跳转到源码:
+命令列表定义在 [BuiltinFunctionMap::map](http://androidxref.com/9.0.0_r3/xref/system/core/init/builtins.cpp#1030), 下面看个例子, 具体命令列表大家自己跳转到源码:
 
 ![1538539567761](跟我读源码--换个角度看init.assets/1538539567761.png)
 
-如果想追寻各个参数的含义, 可以查看代码 [FindFunction](#http://androidxref.com/9.0.0_r3/xref/system/core/init/keyword_map.h#39) 和 [Command](#http://androidxref.com/9.0.0_r3/xref/system/core/init/action.cpp#52).
+如果想追寻各个参数的含义, 可以查看代码 [FindFunction](http://androidxref.com/9.0.0_r3/xref/system/core/init/keyword_map.h#39) 和 [Command](http://androidxref.com/9.0.0_r3/xref/system/core/init/action.cpp#52).
 
 
 
@@ -254,15 +254,15 @@ trigger 命令集也叫init命令集, 其实就是init.rc中所有可执行命�
 
 ### service 的 option 集
 
-option 合集定义在 [Service::OptionParserMap::map](#http://androidxref.com/9.0.0_r3/xref/system/core/init/service.cpp#717), 我们重点关注下几乎所有service都会用到的option:
+option 合集定义在 [Service::OptionParserMap::map](http://androidxref.com/9.0.0_r3/xref/system/core/init/service.cpp#717), 我们重点关注下几乎所有service都会用到的option:
 
 * class . 该service所属的类别, 字符串, 如果未设置, 则默认为 default. 可通过 `class_start` 来启动某个类别的服务.
 * user. 指定该进程运行时所属用户
 * group. 指定该进程运行时所属的组.
 * critical. 指定该进程属于critical类型, 该类型的服务连续4次崩溃会导致系统重启.
-* disabled. 指定该服务默认不启动. 如果不设置该属性, 服务都会默认启动.  原理是, 前文的命令集中有命令 `class_start`,  通过 `class_start core` , `class_start main` 等方法启动服务, 而  [class_start ](#http://androidxref.com/9.0.0_r3/xref/system/core/init/builtins.cpp#101)命令无法启动 disabled 服务, 这是该命令区别于普通的 `start` 命令的地方. 
+* disabled. 指定该服务默认不启动. 如果不设置该属性, 服务都会默认启动.  原理是, 前文的命令集中有命令 `class_start`,  通过 `class_start core` , `class_start main` 等方法启动服务, 而  [class_start ](http://androidxref.com/9.0.0_r3/xref/system/core/init/builtins.cpp#101)命令无法启动 disabled 服务, 这是该命令区别于普通的 `start` 命令的地方. 
 * oneshot.  指定该服务如果退出后不自动重启(触发位置为子进程退出的信号处理函数). 其他情况下(比如 start 或者 class_start 命令), 依然可以再次启动该服务.
-* onrestart. 该flag表示如果服务重启, 则重启onrestart后面的服务. 但是通过 `{class_}stop` 或者 `{class_}reset`  命令导致的重启, 不会重启[onrestart定义的相关服务](#http://androidxref.com/9.0.0_r3/xref/system/core/init/service.cpp##362). 
+* onrestart. 该flag表示如果服务重启, 则重启onrestart后面的服务. 但是通过 `{class_}stop` 或者 `{class_}reset`  命令导致的重启, 不会重启[onrestart定义的相关服务](http://androidxref.com/9.0.0_r3/xref/system/core/init/service.cpp##362). 
 
 
 
@@ -276,7 +276,7 @@ option 合集定义在 [Service::OptionParserMap::map](#http://androidxref.com/9
 
 ![1538548688289](跟我读源码--换个角度看init.assets/1538548688289.png)
 
-keychords 也是 service 的option 字段, 这里单独拎出来讲的原因是, 这是类似后门一样的神奇功能, 它允许用户在按下某几个组合键时, 启动某些服务.  "组合键" 当前被定义为在[adbd启动](#http://127.0.0.1:8080/source/xref/aosp/system/core/init/keychords.cpp#69)的情况下同时按下某些按键. 每个按键在linux的输入子系统上都有对应的扫描码, 此处 114, 115, 116 就对应的 VOLUME_DOWN, VOLUME_UP 和 POWER 键的扫描码(扫描码和framework KEYCODE对应表 [Generic.kl](#http://127.0.0.1:8080/source/xref/aosp/frameworks/base/data/keyboards/Generic.kl)).
+keychords 也是 service 的option 字段, 这里单独拎出来讲的原因是, 这是类似后门一样的神奇功能, 它允许用户在按下某几个组合键时, 启动某些服务.  "组合键" 当前被定义为在[adbd启动](http://127.0.0.1:8080/source/xref/aosp/system/core/init/keychords.cpp#69)的情况下同时按下某些按键. 每个按键在linux的输入子系统上都有对应的扫描码, 此处 114, 115, 116 就对应的 VOLUME_DOWN, VOLUME_UP 和 POWER 键的扫描码(扫描码和framework KEYCODE对应表 [Generic.kl](http://127.0.0.1:8080/source/xref/aosp/frameworks/base/data/keyboards/Generic.kl)).
 
 要支持组合键, 则必须存在 /dev/keychord , 且adbd进程正在运行. 如果需要可以通过改代码, 强制该后门全局启用.
 
@@ -315,7 +315,7 @@ generic_x86_64:/ # cat /proc/cmdline
 qemu=1 androidboot.hardware=ranchu clocksource=pit android.qemud=1 console=0 android.checkjni=1 qemu.gles=1 qemu.encrypt=1 qemu.opengles.version=196608 cma=262M androidboot.android_dt_dir=/sys/bus/platform/devices/ANDR0001:00/properties/android/ ramoops.mem_address=0xff018000 ramoops.mem_size=0x10000 memmap=0x10000$0xff018000
 ```
 
-也就是说 system 和 vendor 是在 [DoFirstStageMount](#http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#612) 时挂载, 也是最早挂载的.
+也就是说 system 和 vendor 是在 [DoFirstStageMount](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#612) 时挂载, 也是最早挂载的.
 
 
 
@@ -325,7 +325,7 @@ cache 和 data 分区是定义在  fstab.{hardware} 中
 
 此处忽略带有voldmanaged关键字, 因为该关键字是指这条挂载信息由vold管理并挂载, 而不包含该关键字的都是由init管理并挂载.
 
-那么fstab是什么时候被解析和挂载的呢? 在 init.{hardware}.rc 中 on fs 阶段的 [mount_all](#http://androidxref.com/9.0.0_r3/xref/device/generic/qemu/init.ranchu.rc#2) 命令挂载的.
+那么fstab是什么时候被解析和挂载的呢? 在 init.{hardware}.rc 中 on fs 阶段的 [mount_all](http://androidxref.com/9.0.0_r3/xref/device/generic/qemu/init.ranchu.rc#2) 命令挂载的.
 
 
 
@@ -345,7 +345,7 @@ cache 和 data 分区是定义在  fstab.{hardware} 中
 
 此处, 如果data分区无法被挂载, 并且fstab中有标记data分区是可以被加密的, 那么就会挂载tmpfs, 并尝试解密处理.
 
-解密和挂载data分区的流程在 [cryptfs_restart_internal](#http://androidxref.com/9.0.0_r3/xref/system/vold/cryptfs.cpp#1540) , 其中, 先停止main类型的服务, 然后挂载data分区, 最后再重新启动main类型的服务, 全程通过property `vold.decrypt` 来控制服务的启动和配置. 我们简单看下property的变化.
+解密和挂载data分区的流程在 [cryptfs_restart_internal](http://androidxref.com/9.0.0_r3/xref/system/vold/cryptfs.cpp#1540) , 其中, 先停止main类型的服务, 然后挂载data分区, 最后再重新启动main类型的服务, 全程通过property `vold.decrypt` 来控制服务的启动和配置. 我们简单看下property的变化.
 
 在解密分区前, 设置property为  trigger_reset_main
 
@@ -387,7 +387,7 @@ cache 和 data 分区是定义在  fstab.{hardware} 中
 1. 真实看到的目录是否一样?
 2. 为什么会不一样?
 
-我们先看第二个问题,  默认的挂载到root命名空间, 按照fork继承父进程资源的规则, 同样的子进程就会继承父进程的命名空间和挂载信息. 在函数 [com_android_internal_os_Zygote_nativeUnmountStorageOnInit](#http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/jni/com_android_internal_os_Zygote.cpp#913), 会执行命名空间隔离(类似写时拷贝), 之后在 [MountEmulatedStorage](#http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/jni/com_android_internal_os_Zygote.cpp#381) , 挂载对应的分区.  这里额外得提一下, vold 也会往命名空间中挂载, 特别是动态权限申请的时候, vold 就动态进行分区挂载, 相关代码在 [remountUid](#http://androidxref.com/9.0.0_r3/xref/system/vold/VolumeManager.cpp#443). 
+我们先看第二个问题,  默认的挂载到root命名空间, 按照fork继承父进程资源的规则, 同样的子进程就会继承父进程的命名空间和挂载信息. 在函数 [com_android_internal_os_Zygote_nativeUnmountStorageOnInit](http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/jni/com_android_internal_os_Zygote.cpp#913), 会执行命名空间隔离(类似写时拷贝), 之后在 [MountEmulatedStorage](http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/jni/com_android_internal_os_Zygote.cpp#381) , 挂载对应的分区.  这里额外得提一下, vold 也会往命名空间中挂载, 特别是动态权限申请的时候, vold 就动态进行分区挂载, 相关代码在 [remountUid](http://androidxref.com/9.0.0_r3/xref/system/vold/VolumeManager.cpp#443). 
 
 关于第一个问题, 我们写个程序来真实体验下namespace 带来的神奇.
 
@@ -427,7 +427,7 @@ cache 和 data 分区是定义在  fstab.{hardware} 中
 
 下面看下主循环, 会循环依次执行下面的代码
 
-* 执行 [HandlePowerctlMessage](#http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#755), 处理 property  sys.powerctl, 比如shutdown 或者 reboot
+* 执行 [HandlePowerctlMessage](http://androidxref.com/9.0.0_r3/xref/system/core/init/init.cpp#755), 处理 property  sys.powerctl, 比如shutdown 或者 reboot
 * am.ExecuteOneCommand() , 处理前文添加的trigger的action
 *  RestartProcesses() ,  检查所有已经注册过的服务, 必要时重启服务
 * 轮询如下三个fd:
@@ -443,7 +443,7 @@ cache 和 data 分区是定义在  fstab.{hardware} 中
 
 ### ueventd
 
-作为ueventd执行时, init这个程序是用来管理硬件设备的. 它需要响应内核的通知(netlink), 管理/sys伪文件系统中与各个设备对应的文件并负责让各个进程通过它在/dev/底下创建符号链接指向到这些文件. 为了完成这些操作, uevnetd使用另外的初始化脚本 uevnetd.rc 和  ueventd.{hardware}.rc .这些配置文件比init的配置文件简单多了, 只记录了哪些文件被配置成哪些权限. ueventd 会逐条处理rc文件, 并调用[HandleDeviceEvent](#http://androidxref.com/9.0.0_r3/xref/system/core/init/ueventd.cpp#283) . uevent, 还负责处理fireware的加载, 在kernel 发送 add 消息后, uevent 调用 [HandleFirmwareEvent](#http://androidxref.com/9.0.0_r3/xref/system/core/init/ueventd.cpp#282) 确认子系统是 firmware, 加载数据并发送.
+作为ueventd执行时, init这个程序是用来管理硬件设备的. 它需要响应内核的通知(netlink), 管理/sys伪文件系统中与各个设备对应的文件并负责让各个进程通过它在/dev/底下创建符号链接指向到这些文件. 为了完成这些操作, uevnetd使用另外的初始化脚本 uevnetd.rc 和  ueventd.{hardware}.rc .这些配置文件比init的配置文件简单多了, 只记录了哪些文件被配置成哪些权限. ueventd 会逐条处理rc文件, 并调用[HandleDeviceEvent](http://androidxref.com/9.0.0_r3/xref/system/core/init/ueventd.cpp#283) . uevent, 还负责处理fireware的加载, 在kernel 发送 add 消息后, uevent 调用 [HandleFirmwareEvent](http://androidxref.com/9.0.0_r3/xref/system/core/init/ueventd.cpp#282) 确认子系统是 firmware, 加载数据并发送.
 
 
 

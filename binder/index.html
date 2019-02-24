@@ -13,7 +13,7 @@
         <meta name="description" content="The documents of Werther Zhang">
       
       
-        <link rel="canonical" href="https://wertherzhang.com/about/">
+        <link rel="canonical" href="https://wertherzhang.com/binder/">
       
       
         <meta name="author" content="Werther Zhang">
@@ -42,7 +42,7 @@
     
     
       
-        <title>关于 - 万卷茅屋</title>
+        <title>binder - 万卷茅屋</title>
       
     
     
@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#_1" tabindex="1" class="md-skip">
+      <a href="../#binder" tabindex="1" class="md-skip">
         跳转至
       </a>
     
@@ -111,7 +111,7 @@
                 万卷茅屋
               </span>
               <span class="md-header-nav__topic">
-                关于
+                binder
               </span>
             
           
@@ -159,14 +159,16 @@
       
         
 
-<nav class="md-tabs" data-md-component="tabs">
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
       
         
   <li class="md-tabs__item">
     
-      <a href=".." title="万卷茅屋" class="md-tabs__link md-tabs__link--active">
+      <a href=".." title="万卷茅屋" class="md-tabs__link">
         万卷茅屋
       </a>
     
@@ -180,7 +182,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../zram/" title="Android" class="md-tabs__link">
+        <a href="../zram/" title="Android" class="md-tabs__link md-tabs__link--active">
           Android
         </a>
       
@@ -266,20 +268,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="关于" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../about/" title="关于" class="md-nav__link">
       关于
     </a>
-    
   </li>
 
     
@@ -287,10 +280,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
     <label class="md-nav__link" for="nav-3">
       Android
@@ -402,11 +397,97 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../binder/" title="binder" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        binder
+      </label>
+    
+    <a href="./" title="binder" class="md-nav__link md-nav__link--active">
       binder
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binderbpbn" title="通过binder维护bp和bn的生命周期" class="md-nav__link">
+    通过binder维护bp和bn的生命周期
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="基础概念介绍" class="md-nav__link">
+    基础概念介绍
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binder_1" title="匿名binder的传递" class="md-nav__link">
+    匿名binder的传递
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#native-bp" title="Native BP 引用" class="md-nav__link">
+    Native BP 引用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binder_2" title="binder 驱动强引用传递" class="md-nav__link">
+    binder 驱动强引用传递
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="引用删除" class="md-nav__link">
+    引用删除
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="疑问" class="md-nav__link">
+    疑问
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -540,6 +621,70 @@
     
   
   
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binderbpbn" title="通过binder维护bp和bn的生命周期" class="md-nav__link">
+    通过binder维护bp和bn的生命周期
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="基础概念介绍" class="md-nav__link">
+    基础概念介绍
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binder_1" title="匿名binder的传递" class="md-nav__link">
+    匿名binder的传递
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#native-bp" title="Native BP 引用" class="md-nav__link">
+    Native BP 引用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binder_2" title="binder 驱动强引用传递" class="md-nav__link">
+    binder 驱动强引用传递
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" title="引用删除" class="md-nav__link">
+    引用删除
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="疑问" class="md-nav__link">
+    疑问
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -551,19 +696,88 @@
               
                 
                 
-                <h1 id="_1">本人简介<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>考虑和好久, 还是决定使用英文名字吧. 熟悉我的人, 也猜得出来.</p>
-<p>英文名字: Werther Zhang</p>
-<p>邮箱: werther0331@gmail.com</p>
-<p>本人软件工程师, 混迹上海, 算上漂还是海漂呢?(--.) 反正就是各种努力让自己在上海活下来.</p>
-<p>按家里政委对我的评价, 1s记忆, 像个傻子, 可爱, 话唠.</p>
-<p>但是嘛, 如果是周围人的评价是, 沉默, 内向.</p>
-<p>一直向着财务自由而奋斗, 哈哈哈.</p>
-<p>PS: 关于邮箱的说明, 记得之前有人问为什么用gmail邮箱. 实际上, 本人有两个gmail邮箱, 一个hotmail邮箱, 这个gmail邮箱是最老的一直用到现在, 包括在Android上提交bug也是这个邮箱, 所以就保留习惯了, 还有一个属于个人偏见的原因, 一个公司如果连墙都翻不出去, 那基本告别google/github了, 难以跟上最新的技术也没有什么技术能力了.</p>
-<h1 id="_2">本站简介<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
-<p>在这个站之前, 林林总总已经存在好几个了, 这是第一个真真正正决定持续不断地做下去, 做一辈子. 可能域名会改变(如果coding或者github倒了), 但是内容会一直持续. 目前的地址为 <a href="https://pengzhangdev.github.io">github</a> 和 <a href="http://wertherzhang.coding.me/">coding</a>, 未来可能会增加.可能有人会问, 为什么不自己买一个. 会买的, 但是这个就体现个人性格了, 鸡蛋不放在一个篮子里, 不管是vps还是什么, 都不知道是否能存在一辈子, 既然我是认真在做这件事, 那么就得考虑未来它们倒闭的情况.</p>
-<p>哈哈, 任性地随意补充, 同事推荐了<a href="https://pengzhang.netlify.com/">netlify</a>, 然后跟github绑定下, 意外地好用, 而且还有cdn加速, 个人推荐下. 莫名其妙又多个一个备用站点.</p>
-<p>补充点: coding由于免费只有250M, 所以, 图片这些会尽可能放在github上, 从coding去引用. 希望github别被墙了.</p>
+                <h1 id="binder">binder<a class="headerlink" href="#binder" title="Permanent link">&para;</a></h1>
+<h2 id="binderbpbn">通过binder维护bp和bn的生命周期<a class="headerlink" href="#binderbpbn" title="Permanent link">&para;</a></h2>
+<p>同理, 变量生命周期是使用智能指针维护, 也就是记录强弱引用. 但是通过binder(匿名binder对象)传递, 如果bp还存货, 理论上bn对象就不能被释放, 则binder就需要维护这种引用关系.
+下面我们来看下是怎么引用的.</p>
+<h3 id="_1">基础概念介绍<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>binder_ref</code> 是 bp 在 binder driver 中的对象</li>
+<li><code>binder_node</code> 是 bn 在 binder driver 中的对象.</li>
+</ul>
+<h3 id="binder_1">匿名binder的传递<a class="headerlink" href="#binder_1" title="Permanent link">&para;</a></h3>
+<p>所有binder 的读写都是通过 ioctl, 对应的调用函数是 <code>binder_ioctl_write_read</code> -&gt; <code>binder_thread_write</code></p>
+<p><img alt="" src="../_v_images/20190224132448914_1564959848.png" /></p>
+<p><img alt="" src="../_v_images/20190224132649914_523404096.png" /></p>
+<p><img alt="" src="../_v_images/20190224133223427_1528089282.png" /></p>
+<p><img alt="" src="../_v_images/20190224133452362_1053809813.png" /></p>
+<p><img alt="" src="../_v_images/20190224133626060_285008721.png" /></p>
+<p><img alt="" src="../_v_images/20190224143513432_1506597408.png" /></p>
+<p><img alt="" src="../_v_images/20190224143702925_1898826414.png" /></p>
+<p>这里有一个问题, 到此处, 我们好像没看到跟bn端匿名binder引用计数有关.</p>
+<p>我们回到前面代码, 看下 <code>binder_new_node</code> 的实现.</p>
+<p><img alt="" src="../_v_images/20190224143941460_1546795975.png" /></p>
+<p><img alt="" src="../_v_images/20190224144029128_97938093.png" /></p>
+<p>这里 <code>BINDER_WORK_NODE</code>, 我们看下 <code>binder_thread_read</code>, 也就是匿名binder实现端, 从binder驱动读.</p>
+<p><img alt="" src="../_v_images/20190224144440959_1454650742.png" /></p>
+<p>此处的cmd 是 <code>BR_ACQUIRE</code>, 我们看对应native的代码.</p>
+<p>在 IPCThreadState.cpp 中</p>
+<p><img alt="" src="../_v_images/20190224144711042_1662173328.png" /></p>
+<h3 id="native-bp">Native BP 引用<a class="headerlink" href="#native-bp" title="Permanent link">&para;</a></h3>
+<p>在Native层, 当一个bp对象生成, 并由于智能指针, 在该进程生命周期中被持有强引用时, 相关代码如下</p>
+<p><img alt="" src="../_v_images/20190224080206182_487211333.png" /></p>
+<p>同步调用 incStrongHandle(), 通知binder对象, 我持有了该bp的强引用, 请持有对端bn的一个强引用.</p>
+<p>我们看下  incStrongHandle 这个函数的实现.</p>
+<p><img alt="" src="../_v_images/20190224080334610_1663480183.png" /></p>
+<p>参数是 <code>BC_ACQUIRE</code>,  变量是传递进来的  handle. 后续在驱动代码中, 我们会解释 <code>BC_ACQUIRE</code> 这个变量.</p>
+<p>熟悉代码的都知道 与 binder 驱动通信的代码实现在 talkWithDriver, 而ioctl的指令是 <code>BINDER_WRITE_READ</code>.</p>
+<h3 id="binder_2">binder 驱动强引用传递<a class="headerlink" href="#binder_2" title="Permanent link">&para;</a></h3>
+<p>下面直接看 <code>BINDER_WRITE_READ</code> 在 binder 驱动端的实现</p>
+<p><img alt="" src="../_v_images/20190224080823808_1665292856.png" /></p>
+<p>调用的是 <code>binder_ioctl_write_read</code>,  此处参数是 arg, 也就是 BP 端写入的 mOut.</p>
+<p>下面看下 <code>binder_ioctl_write_read</code> 的实现.</p>
+<p><img alt="" src="../_v_images/20190224081123565_1574697598.png" /></p>
+<p>此处是往binder驱动写数据, 执行的 是 <code>binder_thread_write</code></p>
+<p><img alt="" src="../_v_images/20190224081213717_30463489.png" /></p>
+<p>下面看下 <code>binder_thread_write</code> 的实现</p>
+<p><img alt="" src="../_v_images/20190224081651613_479942230.png" /></p>
+<p>下面我们看下这几个参数在哪里用.</p>
+<p><img alt="" src="../_v_images/20190224081912134_191604984.png" /></p>
+<p>我们先看下 <code>binder_update_ref_for_handle</code> 这个函数的说明</p>
+<p><img alt="" src="../_v_images/20190224082133961_2100009643.png" /></p>
+<p><img alt="" src="../_v_images/20190224082647793_977391176.png" /></p>
+<p><code>binder_ref</code> 对象是通过 mOut 的 handle 找到的, 我们简单看下查找方法.</p>
+<p><img alt="" src="../_v_images/20190224082849214_1753082806.png" /></p>
+<p>通过红黑树, 在已有的所有ref中找到其 <code>ref-&gt;data.desc</code> 与我们写入 mData 中的handle 相同的值. 此处记住下, 后面会通过 <code>/d/binder/state</code> 来看下怎么找引用关系.</p>
+<p>总之通过 mOut  的 handle 值, 我们找到了 binder 驱动中, 该 bp 相对应的对象.</p>
+<p>下面我们继续看, 如何通过 ref 来增加对端 bn 的引用.</p>
+<p><img alt="" src="../_v_images/20190224084103087_764944345.png" /></p>
+<p>ref 对象中包含了 node 对象.</p>
+<p>如果已经有强引用, 则只是将 ref 中的引用数 +1 . </p>
+<h3 id="_2">引用删除<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>从上面两段, 我们知道了 node 和 ref 分别创建时间也相应的增加引用计数的地方.</p>
+<p>我们看下如果是减少引用, 这个变量的作用是啥</p>
+<p>调用路径如下:</p>
+<p><img alt="" src="../_v_images/20190224152149080_867900796.png" /></p>
+<p><img alt="" src="../_v_images/20190224095903818_855208303.png" /></p>
+<p>最终也是调用到 <code>binder_update_ref_for_handle</code> 函数, 接下来的调用顺序与前面引用增加不同.</p>
+<p><img alt="" src="../_v_images/20190224100156586_973386779.png" /></p>
+<p>如果 <code>ref-&gt;data.strong</code> 为 0, 则调用 <code>binder_dec_node</code> 来释放 ref 持有的 binder node 对象. 然后调用 <code>binder_cleanup_ref_olocked()</code> 来将 ref 释放.</p>
+<p><img alt="" src="../_v_images/20190224100418846_522956542.png" /></p>
+<p>是否释放node的标准是</p>
+<p><img alt="" src="../_v_images/20190224100653874_1339368505.png" /></p>
+<p><code>node-&gt;refs</code> 为 空, 也就是说, 所有的bp ref 对象被释放, 则 bn 的 node 也被是否.</p>
+<h3 id="_3">疑问<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>前面看到, 在匿名binder传递的时候, 会创建 ref, 并将其引用+1 .而在对端通过handle, 创建bp时, 又对引用计数+1 了. 而在native的sp指针引用销毁时, 减少引用. 还有一次在哪里?</p>
+<p>我们看下 Binder transaction 的最后一步, 处理回复的消息.</p>
+<p><img alt="" src="../_v_images/20190224153214105_2060548303.png" /></p>
+<p><img alt="" src="../_v_images/20190224153246534_1929594656.png" /></p>
+<p><img alt="" src="../_v_images/20190224153338870_1052308342.png" /></p>
+<p><code>binder_transaction_buffer_release</code> 这个函数比较长, 我们看下其中一部分.</p>
+<p><img alt="" src="../_v_images/20190224153734756_948512638.png" /></p>
+<p>这里的 <code>BINDER_TYPE_HANDLE</code> 对应的是开头匿名binder传递.</p>
+<p>这里解释下原理. 把binder看成本地调用, 则在调用进入函数时, 参数进栈, 而在函数调用完成时, 参数出栈销毁.
+此处就是出栈的原理, 在执行binder调用时, 将参数引用计数加一, 而在调用完成后, 将参数引用计数减一.</p>
                 
                   
                 
@@ -584,7 +798,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href=".." title="万卷茅屋" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../dlmalloc浅析/" title="dlmalloc 浅析" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -593,19 +807,19 @@
                 <span class="md-footer-nav__direction">
                   后退
                 </span>
-                万卷茅屋
+                dlmalloc 浅析
               </span>
             </div>
           </a>
         
         
-          <a href="../zram/" title="zram" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../跟我读源码--换个角度看init/" title="换个角度看init" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                zram
+                换个角度看init
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

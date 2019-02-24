@@ -48,6 +48,7 @@ nav:
         - Android SELinux 规则介绍: SEAndroid规则介绍.md
         - tcmalloc2.1 浅析 : tcmalloc2.1浅析.md
         - dlmalloc 浅析 : dlmalloc浅析.md
+        - binder : binder.md
 
     - 跟我读源码:
         - 换个角度看init: 跟我读源码--换个角度看init.md

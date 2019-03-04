@@ -19,7 +19,7 @@ if [ $coding -eq 0 ]; then
     git remote add coding git@git.coding.net:wertherzhang/wertherzhang.coding.me.git
 fi
 
-git push coding mkdocs
+#git push coding mkdocs
 git push origin mkdocs
 
 git checkout master
@@ -43,7 +43,7 @@ git add ./
 
 git commit -m "update sites"
 
-git push coding master
+#git push coding master
 git push origin master
 
 git checkout mkdocs

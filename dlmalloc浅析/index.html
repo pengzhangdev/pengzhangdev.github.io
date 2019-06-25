@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh" class="no-js">
   <head>
     
@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0, mkdocs-material-3.0.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
     
     
       
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
       
       
         
@@ -57,16 +57,20 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono&display=fallback">
         <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
     
     
   </head>
@@ -85,7 +89,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#dlmalloc" tabindex="1" class="md-skip">
+      <a href="#dlmalloc" tabindex="1" class="md-skip">
         跳转至
       </a>
     
@@ -106,22 +110,21 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            
-              <span class="md-header-nav__topic">
-                万卷茅屋
-              </span>
-              <span class="md-header-nav__topic">
+            <span class="md-header-nav__topic">
+              万卷茅屋
+            </span>
+            <span class="md-header-nav__topic">
+              
                 dlmalloc 浅析
-              </span>
-            
+              
+            </span>
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-            
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
@@ -144,7 +147,6 @@
     </div>
   </div>
 </div>
-          
         
       </div>
       
@@ -1370,38 +1372,38 @@ ok， 插入完成后，咱们把刚才分割剩下的内存存放到dv chunk中
 
 
 <p>以上计算的结果如下,idx为对应箱号,mem对应该箱子中最小的内存大小.</p>
-<div class="codehilite"><pre><span></span>idx 0 mem 256 hex: 100
-idx 1 mem 384 hex: 180
-idx 2 mem 512 hex: 200
-idx 3 mem 768 hex: 300
-idx 4 mem 1024 hex: 400
-idx 5 mem 1536 hex: 600
-idx 6 mem 2048 hex: 800
-idx 7 mem 3072 hex: c00
-idx 8 mem 4096 hex: 1000
-idx 9 mem 6144 hex: 1800
-idx 10 mem 8192 hex: 2000
-idx 11 mem 12288 hex: 3000
-idx 12 mem 16384 hex: 4000
-idx 13 mem 24576 hex: 6000
-idx 14 mem 32768 hex: 8000
-idx 15 mem 49152 hex: c000
-idx 16 mem 65536 hex: 10000
-idx 17 mem 98304 hex: 18000
-idx 18 mem 131072 hex: 20000
-idx 19 mem 196608 hex: 30000
-idx 20 mem 262144 hex: 40000
-idx 21 mem 393216 hex: 60000
-idx 22 mem 524288 hex: 80000
-idx 23 mem 786432 hex: c0000
-idx 24 mem 1048576 hex: 100000
-idx 25 mem 1572864 hex: 180000
-idx 26 mem 2097152 hex: 200000
-idx 27 mem 3145728 hex: 300000
-idx 28 mem 4194304 hex: 400000
-idx 29 mem 6291456 hex: 600000
-idx 30 mem 8388608 hex: 800000
-idx 31 mem 12582912 hex: c00000
+<div class="codehilite"><pre><span></span><span class="n">idx</span> <span class="mi">0</span> <span class="n">mem</span> <span class="mi">256</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">100</span>
+<span class="n">idx</span> <span class="mi">1</span> <span class="n">mem</span> <span class="mi">384</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">180</span>
+<span class="n">idx</span> <span class="mi">2</span> <span class="n">mem</span> <span class="mi">512</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">200</span>
+<span class="n">idx</span> <span class="mi">3</span> <span class="n">mem</span> <span class="mi">768</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">300</span>
+<span class="n">idx</span> <span class="mi">4</span> <span class="n">mem</span> <span class="mi">1024</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">400</span>
+<span class="n">idx</span> <span class="mi">5</span> <span class="n">mem</span> <span class="mi">1536</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">600</span>
+<span class="n">idx</span> <span class="mi">6</span> <span class="n">mem</span> <span class="mi">2048</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">800</span>
+<span class="n">idx</span> <span class="mi">7</span> <span class="n">mem</span> <span class="mi">3072</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c00</span>
+<span class="n">idx</span> <span class="mi">8</span> <span class="n">mem</span> <span class="mi">4096</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">1000</span>
+<span class="n">idx</span> <span class="mi">9</span> <span class="n">mem</span> <span class="mi">6144</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">1800</span>
+<span class="n">idx</span> <span class="mi">10</span> <span class="n">mem</span> <span class="mi">8192</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">2000</span>
+<span class="n">idx</span> <span class="mi">11</span> <span class="n">mem</span> <span class="mi">12288</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">3000</span>
+<span class="n">idx</span> <span class="mi">12</span> <span class="n">mem</span> <span class="mi">16384</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">4000</span>
+<span class="n">idx</span> <span class="mi">13</span> <span class="n">mem</span> <span class="mi">24576</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">6000</span>
+<span class="n">idx</span> <span class="mi">14</span> <span class="n">mem</span> <span class="mi">32768</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">8000</span>
+<span class="n">idx</span> <span class="mi">15</span> <span class="n">mem</span> <span class="mi">49152</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c000</span>
+<span class="n">idx</span> <span class="mi">16</span> <span class="n">mem</span> <span class="mi">65536</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">10000</span>
+<span class="n">idx</span> <span class="mi">17</span> <span class="n">mem</span> <span class="mi">98304</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">18000</span>
+<span class="n">idx</span> <span class="mi">18</span> <span class="n">mem</span> <span class="mi">131072</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">20000</span>
+<span class="n">idx</span> <span class="mi">19</span> <span class="n">mem</span> <span class="mi">196608</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">30000</span>
+<span class="n">idx</span> <span class="mi">20</span> <span class="n">mem</span> <span class="mi">262144</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">40000</span>
+<span class="n">idx</span> <span class="mi">21</span> <span class="n">mem</span> <span class="mi">393216</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">60000</span>
+<span class="n">idx</span> <span class="mi">22</span> <span class="n">mem</span> <span class="mi">524288</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">80000</span>
+<span class="n">idx</span> <span class="mi">23</span> <span class="n">mem</span> <span class="mi">786432</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c0000</span>
+<span class="n">idx</span> <span class="mi">24</span> <span class="n">mem</span> <span class="mi">1048576</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">100000</span>
+<span class="n">idx</span> <span class="mi">25</span> <span class="n">mem</span> <span class="mi">1572864</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">180000</span>
+<span class="n">idx</span> <span class="mi">26</span> <span class="n">mem</span> <span class="mi">2097152</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">200000</span>
+<span class="n">idx</span> <span class="mi">27</span> <span class="n">mem</span> <span class="mi">3145728</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">300000</span>
+<span class="n">idx</span> <span class="mi">28</span> <span class="n">mem</span> <span class="mi">4194304</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">400000</span>
+<span class="n">idx</span> <span class="mi">29</span> <span class="n">mem</span> <span class="mi">6291456</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">600000</span>
+<span class="n">idx</span> <span class="mi">30</span> <span class="n">mem</span> <span class="mi">8388608</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">800000</span>
+<span class="n">idx</span> <span class="mi">31</span> <span class="n">mem</span> <span class="mi">12582912</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c00000</span>
 </pre></div>
 
 
@@ -1468,38 +1470,38 @@ idx 31 mem 12582912 hex: c00000
 
 
 <p><code>(sizebits &gt;&gt; (SIZE_T_BITSIZE-SIZE_T_ONE))</code> 这个就是每一层树的特征码了.结合上面sizebits的值,我们可以算出这个表达式的值为 <code>nb &gt;&gt; (6 + (i &gt;&gt; 1))</code>. 如果,我们再结合<code>compute_tree_index</code> 中的结果,得到如下表.idx为箱号,mem为该箱子中的最小内存,hex为该值的16进制,mid为区分左子树和右子树的特征码,bitshift为特征码的无效位数. 比如,箱子1中,dix为1,其表示的内存范围为[384, 512),则其左子树表示范围为[384,448),右子树为[448,512).448即为该树的第一层的特征码,也就是111000000.如果nb &lt; 448, 则第7位为0,否则第7位为1.所以,只要通过将size &gt;&gt; bitshift 之后与1 做位与运算,就可以判断出在该树对应层该进入其左子树还是右子树.</p>
-<div class="codehilite"><pre><span></span>idx 0 mem 256 hex: 100  mid: 101000000 bitshift: 6
-idx 1 mem 384 hex: 180 mid: 111000000 bitshift: 6
-idx 2 mem 512 hex: 200 mid: 1110000000 bitshift: 7
-idx 3 mem 768 hex: 300 mid: 1010000000 bitshift: 7
-idx 4 mem 1024 hex: 400 mid: 10100000000 bitshift: 8
-idx 5 mem 1536 hex: 600 mid: 11100000000 bitshift: 8
-idx 6 mem 2048 hex: 800 mid: 101000000000 bitshift: 9
-idx 7 mem 3072 hex: c00 mid: 111000000000 bitshift: 9
-idx 8 mem 4096 hex: 1000 mid: 1010000000000 bitshift: 10
-idx 9 mem 6144 hex: 1800 mid: 1110000000000 bitshift: 10
-idx 10 mem 8192 hex: 2000 mid: 10100000000000 bitshift: 11
-idx 11 mem 12288 hex: 3000 mid: 11100000000000 bitshift: 11
-idx 12 mem 16384 hex: 4000 mid: 101000000000000 bitshift: 12
-idx 13 mem 24576 hex: 6000 mid: 111000000000000 bitshift: 12
-idx 14 mem 32768 hex: 8000 mid: 1010000000000000 bitshift: 13
-idx 15 mem 49152 hex: c000 mid: 1110000000000000 bitshift: 13
-idx 16 mem 65536 hex: 10000 mid 10100000000000000 bitshift: 14
-idx 17 mem 98304 hex: 18000 mid 11100000000000000 bitshift: 14
-idx 18 mem 131072 hex: 20000 mid 101000000000000000 bitshift: 15
-idx 19 mem 196608 hex: 30000 mid 111000000000000000 bitshift: 15
-idx 20 mem 262144 hex: 40000 mid 1010000000000000000 bitshift: 16
-idx 21 mem 393216 hex: 60000 mid 1110000000000000000 bitshift: 16
-idx 22 mem 524288 hex: 80000 mid 10100000000000000000 bitshift: 17
-idx 23 mem 786432 hex: c0000 mid 11100000000000000000 bitshift: 17
-idx 24 mem 1048576 hex: 100000 mid 101000000000000000000 bitshift: 18
-idx 25 mem 1572864 hex: 180000 mid 111000000000000000000 bitshift: 18
-idx 26 mem 2097152 hex: 200000 mid 1010000000000000000000 bitshift: 19
-idx 27 mem 3145728 hex: 300000 mid 1110000000000000000000 bitshift: 19
-idx 28 mem 4194304 hex: 400000 mid 10100000000000000000000 bitshift: 20
-idx 29 mem 6291456 hex: 600000 mid 11100000000000000000000 bitshift: 20
-idx 30 mem 8388608 hex: 800000 mid 101000000000000000000000 bitshift: 21
-idx 31 mem 12582912 hex: c00000 bitshift: 31
+<div class="codehilite"><pre><span></span><span class="n">idx</span> <span class="mi">0</span> <span class="n">mem</span> <span class="mi">256</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">100</span>  <span class="n">mid</span><span class="p">:</span> <span class="mi">101000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">6</span>
+<span class="n">idx</span> <span class="mi">1</span> <span class="n">mem</span> <span class="mi">384</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">180</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">111000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">6</span>
+<span class="n">idx</span> <span class="mi">2</span> <span class="n">mem</span> <span class="mi">512</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">200</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">1110000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">7</span>
+<span class="n">idx</span> <span class="mi">3</span> <span class="n">mem</span> <span class="mi">768</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">300</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">1010000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">7</span>
+<span class="n">idx</span> <span class="mi">4</span> <span class="n">mem</span> <span class="mi">1024</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">400</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">10100000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">idx</span> <span class="mi">5</span> <span class="n">mem</span> <span class="mi">1536</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">600</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">11100000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">idx</span> <span class="mi">6</span> <span class="n">mem</span> <span class="mi">2048</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">800</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">101000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">9</span>
+<span class="n">idx</span> <span class="mi">7</span> <span class="n">mem</span> <span class="mi">3072</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c00</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">111000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">9</span>
+<span class="n">idx</span> <span class="mi">8</span> <span class="n">mem</span> <span class="mi">4096</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">1000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">1010000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">10</span>
+<span class="n">idx</span> <span class="mi">9</span> <span class="n">mem</span> <span class="mi">6144</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">1800</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">1110000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">10</span>
+<span class="n">idx</span> <span class="mi">10</span> <span class="n">mem</span> <span class="mi">8192</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">2000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">10100000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">11</span>
+<span class="n">idx</span> <span class="mi">11</span> <span class="n">mem</span> <span class="mi">12288</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">3000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">11100000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">11</span>
+<span class="n">idx</span> <span class="mi">12</span> <span class="n">mem</span> <span class="mi">16384</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">4000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">101000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">12</span>
+<span class="n">idx</span> <span class="mi">13</span> <span class="n">mem</span> <span class="mi">24576</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">6000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">111000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">12</span>
+<span class="n">idx</span> <span class="mi">14</span> <span class="n">mem</span> <span class="mi">32768</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">8000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">1010000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">13</span>
+<span class="n">idx</span> <span class="mi">15</span> <span class="n">mem</span> <span class="mi">49152</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c000</span> <span class="n">mid</span><span class="p">:</span> <span class="mi">1110000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">13</span>
+<span class="n">idx</span> <span class="mi">16</span> <span class="n">mem</span> <span class="mi">65536</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">10000</span> <span class="n">mid</span> <span class="mi">10100000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">14</span>
+<span class="n">idx</span> <span class="mi">17</span> <span class="n">mem</span> <span class="mi">98304</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">18000</span> <span class="n">mid</span> <span class="mi">11100000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">14</span>
+<span class="n">idx</span> <span class="mi">18</span> <span class="n">mem</span> <span class="mi">131072</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">20000</span> <span class="n">mid</span> <span class="mi">101000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">15</span>
+<span class="n">idx</span> <span class="mi">19</span> <span class="n">mem</span> <span class="mi">196608</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">30000</span> <span class="n">mid</span> <span class="mi">111000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">15</span>
+<span class="n">idx</span> <span class="mi">20</span> <span class="n">mem</span> <span class="mi">262144</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">40000</span> <span class="n">mid</span> <span class="mi">1010000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">16</span>
+<span class="n">idx</span> <span class="mi">21</span> <span class="n">mem</span> <span class="mi">393216</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">60000</span> <span class="n">mid</span> <span class="mi">1110000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">16</span>
+<span class="n">idx</span> <span class="mi">22</span> <span class="n">mem</span> <span class="mi">524288</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">80000</span> <span class="n">mid</span> <span class="mi">10100000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">17</span>
+<span class="n">idx</span> <span class="mi">23</span> <span class="n">mem</span> <span class="mi">786432</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c0000</span> <span class="n">mid</span> <span class="mi">11100000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">17</span>
+<span class="n">idx</span> <span class="mi">24</span> <span class="n">mem</span> <span class="mi">1048576</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">100000</span> <span class="n">mid</span> <span class="mi">101000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">18</span>
+<span class="n">idx</span> <span class="mi">25</span> <span class="n">mem</span> <span class="mi">1572864</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">180000</span> <span class="n">mid</span> <span class="mi">111000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">18</span>
+<span class="n">idx</span> <span class="mi">26</span> <span class="n">mem</span> <span class="mi">2097152</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">200000</span> <span class="n">mid</span> <span class="mi">1010000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">19</span>
+<span class="n">idx</span> <span class="mi">27</span> <span class="n">mem</span> <span class="mi">3145728</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">300000</span> <span class="n">mid</span> <span class="mi">1110000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">19</span>
+<span class="n">idx</span> <span class="mi">28</span> <span class="n">mem</span> <span class="mi">4194304</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">400000</span> <span class="n">mid</span> <span class="mi">10100000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">20</span>
+<span class="n">idx</span> <span class="mi">29</span> <span class="n">mem</span> <span class="mi">6291456</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">600000</span> <span class="n">mid</span> <span class="mi">11100000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">20</span>
+<span class="n">idx</span> <span class="mi">30</span> <span class="n">mem</span> <span class="mi">8388608</span> <span class="n">hex</span><span class="p">:</span> <span class="mi">800000</span> <span class="n">mid</span> <span class="mi">101000000000000000000000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">21</span>
+<span class="n">idx</span> <span class="mi">31</span> <span class="n">mem</span> <span class="mi">12582912</span> <span class="n">hex</span><span class="p">:</span> <span class="n">c00000</span> <span class="n">bitshift</span><span class="p">:</span> <span class="mi">31</span>
 </pre></div>
 
 
@@ -2048,10 +2050,10 @@ ssize就是请求增加的大小,然后再次调用sbrk.</p>
 </li>
 <li>dlmalloc通过两个位图分别管理双向链表和dlmalloc树.</li>
 </ul>
-<div class="codehilite"><pre><span></span>+---------------------------segment-------------------------------------+
-+  0X10   |  0X12  |  0x109 |  0x110 |                                  +
-+ chunk0  | chunk1 | chunk2 | chunk3 |            top                   +
-+-----------------------------------------------------------------------+
+<div class="codehilite"><pre><span></span><span class="o">+</span><span class="c1">---------------------------segment-------------------------------------+</span>
+<span class="o">+</span>  <span class="mi">0</span><span class="n">X10</span>   <span class="o">|</span>  <span class="mi">0</span><span class="n">X12</span>  <span class="o">|</span>  <span class="mi">0</span><span class="n">x109</span> <span class="o">|</span>  <span class="mi">0</span><span class="n">x110</span> <span class="o">|</span>                                  <span class="o">+</span>
+<span class="o">+</span> <span class="n">chunk0</span>  <span class="o">|</span> <span class="n">chunk1</span> <span class="o">|</span> <span class="n">chunk2</span> <span class="o">|</span> <span class="n">chunk3</span> <span class="o">|</span>            <span class="n">top</span>                   <span class="o">+</span>
+<span class="o">+</span><span class="c1">-----------------------------------------------------------------------+</span>
 </pre></div>
 
 
@@ -2136,7 +2138,7 @@ top 从segment而来.如果top超过一个阀值,就会通过sbrk,缩小.如果�
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
-                  后退
+                  上一页
                 </span>
                 tcmalloc2.1 浅析
               </span>
@@ -2148,7 +2150,7 @@ top 从segment而来.如果top超过一个阀值,就会通过sbrk,缩小.如果�
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
-                  前进
+                  下一页
                 </span>
                 binder
               </span>
@@ -2176,7 +2178,6 @@ top 从segment而来.如果top超过一个阀值,就会通过sbrk,缩小.如果�
           Material for MkDocs</a>
       </div>
       
-        
   <div class="md-footer-social">
     <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
     
@@ -2186,14 +2187,13 @@ top 从segment而来.如果top超过一个阀值,就会通过sbrk,缩小.如果�
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.245445c6.js"></script>
       
         
         
@@ -2204,10 +2204,6 @@ top 从segment而来.如果top超过一个阀值,就会通过sbrk,缩小.如果�
           
             
               
-                <script src="../assets/javascripts/lunr/tinyseg.js"></script>
-              
-              
-                <script src="../assets/javascripts/lunr/lunr.jp.js"></script>
               
             
           
@@ -2216,10 +2212,7 @@ top 从segment而来.如果top超过一个阀值,就会通过sbrk,缩小.如果�
           
         
       
-      <script>app.initialize({version:"1.0",url:{base:".."}})</script>
-      
-    
-    
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
     
   </body>

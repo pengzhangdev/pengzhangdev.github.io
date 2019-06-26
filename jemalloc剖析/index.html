@@ -1,0 +1,1149 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="The documents of Werther Zhang">
+      
+      
+        <link rel="canonical" href="https://wertherzhang.com/jemalloc剖析/">
+      
+      
+        <meta name="author" content="Werther Zhang">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="en, jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>jemalloc - 万卷茅屋</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono&display=fallback">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-142756153-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#jemalloc" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://wertherzhang.com" title="万卷茅屋" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">whatshot</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              万卷茅屋
+            </span>
+            <span class="md-header-nav__topic">
+              
+                jemalloc
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="万卷茅屋" class="md-tabs__link">
+        万卷茅屋
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../zram/" title="Android" class="md-tabs__link md-tabs__link--active">
+          Android
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../跟我读源码--换个角度看init/" title="跟我读源码" class="md-tabs__link">
+          跟我读源码
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../slackbot/" title="Python" class="md-tabs__link">
+          Python
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../C-CPP-N诫/" title="搬运工" class="md-tabs__link">
+          搬运工
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://wertherzhang.com" title="万卷茅屋" class="md-nav__button md-logo">
+      
+        <i class="md-icon">whatshot</i>
+      
+    </a>
+    万卷茅屋
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="万卷茅屋" class="md-nav__link">
+      万卷茅屋
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Android
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Android
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../zram/" title="zram" class="md-nav__link">
+      zram
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../android8-partiton-table/" title="Android8分区表分析" class="md-nav__link">
+      Android8分区表分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android-AB-system-update/" title="AB系统升级" class="md-nav__link">
+      AB系统升级
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../recovery5.0详解/" title="Recovery5二次开发详解" class="md-nav__link">
+      Recovery5二次开发详解
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android-memory-debug/" title="Android内存调试总结" class="md-nav__link">
+      Android内存调试总结
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SEAndroid规则介绍/" title="Android SELinux 规则介绍" class="md-nav__link">
+      Android SELinux 规则介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tcmalloc2.1浅析/" title="tcmalloc2.1 浅析" class="md-nav__link">
+      tcmalloc2.1 浅析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dlmalloc浅析/" title="dlmalloc 浅析" class="md-nav__link">
+      dlmalloc 浅析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../binder/" title="binder" class="md-nav__link">
+      binder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        jemalloc
+      </label>
+    
+    <a href="./" title="jemalloc" class="md-nav__link md-nav__link--active">
+      jemalloc
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="什么是内存分配器" class="md-nav__link">
+    什么是内存分配器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jemalloc_1" title="jemalloc 简介" class="md-nav__link">
+    jemalloc 简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="基础结构" class="md-nav__link">
+    基础结构
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="存储单元结构" class="md-nav__link">
+    存储单元结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="管理单元" class="md-nav__link">
+    管理单元
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      跟我读源码
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        跟我读源码
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../跟我读源码--换个角度看init/" title="换个角度看init" class="md-nav__link">
+      换个角度看init
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../slackbot/" title="slackbot详细说明" class="md-nav__link">
+      slackbot详细说明
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      搬运工
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        搬运工
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../C-CPP-N诫/" title="C and CPP N 诫" class="md-nav__link">
+      C and CPP N 诫
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="什么是内存分配器" class="md-nav__link">
+    什么是内存分配器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jemalloc_1" title="jemalloc 简介" class="md-nav__link">
+    jemalloc 简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="基础结构" class="md-nav__link">
+    基础结构
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="存储单元结构" class="md-nav__link">
+    存储单元结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="管理单元" class="md-nav__link">
+    管理单元
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="jemalloc">jemalloc剖析 (未完待续)<a class="headerlink" href="#jemalloc" title="Permanent link">&para;</a></h1>
+<h2 id="_1">什么是内存分配器<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>已知的比较好的内存分配器有 dlmalloc, ptmalloc, tcmalloc, jemalloc. 所谓内存分配器, 就是管理和分配内存池里的数据.
+我们先看个简单的jd物流概念.</p>
+<p>一般我们上jd买电子产品, 会直接从昆山仓库发货. 而如果我们买大件物品, 比如买个婴儿车, 作者本人买的时候, 物流就是从武汉先到昆山仓库, 再从昆山仓库到我们用户手里.</p>
+<p>内存分配器就类似jd物流, 我们就是对应通过malloc申请内存的进程. 根据我们申请内存的大小和不同场景, 会从不同的区域划分内存给到我们.</p>
+<p>所以, 我们知道, 内存分配一般都按大小分级, 且一般在内存内存分配器中保存着内存池用于快速申请.</p>
+<h2 id="jemalloc_1">jemalloc 简介<a class="headerlink" href="#jemalloc_1" title="Permanent link">&para;</a></h2>
+<p>dlmalloc 是经典的内存分配器, 其基本实现是类似kernel的伙伴系统.  而 jemalloc 是现代内存分配器, 其最大的优势是多线程分配能力. 在多核环境下, 进程效率的最大瓶颈已经变成如何用好多线程和如何避免锁. jemalloc 实现了尽可能地避免锁, 从而加快多线程环境下的内存申请和释放. </p>
+<h2 id="_2">基础结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">存储单元结构<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../_v_images/20190303114258655_1854192455.png" /></p>
+<ol>
+<li>内存是由一定数量的arena来进行管理. arena 是多核实现中用来避免 cpu cache 访问失败的, 其数量一般为 cpu * 4. 也就是在4核cpu上, 如果进程的线程数在16以内, 则每个线程分配一个Arena, 避免了竞争访问.</li>
+<li>一个arena被分为若干个chunks, 一个chunks一般为2M或者4M.</li>
+<li>chunk 内部包含若干runs, 作为分配小块内存的基础单元</li>
+<li>run 由pages组成, 最终被划分为一定数量的region. 对于小内存请求, region 就是最后给用户的内存.</li>
+</ol>
+<p>但是在Android上, go 版本最多为 1 个 arena, 而非go版本为2个arena.</p>
+<p>我们看下 Chunk 的数据单元, 前面提到一个chunk, 一般2M或者4M, 也就是说, 内存池全部在chunk中, 我们看下是如何组织内存的.</p>
+<p>2M 的Chunk, 其头数据包含 12 页, 剩下的 500页, 就是内存池, 用于返回给到用户的.</p>
+<p><img alt="" src="../_v_images/20190304134630766_1777657540.png" /></p>
+<p>我们看下更详细的结构.</p>
+<p><img alt="" src="../_v_images/20190304140314386_1673335773.png" /></p>
+<p>从上图可以知道, region 是内存分配的最小单元, run 包含多个 region, 是 page 的整数倍, 负责小内存的分配.这整张图其实严格意义上算小内存分配的内存管理图, 但是大内存和超大内存分配, 其实就是小内存的精简版, 所以, 我们这次主要关注小内存.</p>
+<p>熟悉 dlmalloc 或者了解伙伴系统的同学, 应该知道, dlmalloc 在内存划分上进行了分类分级, 不同大小的内存被分类到不同的级别, 然后不同的级别有不用的内存池.
+在上图中, run 就是一个级别, 比如 8byte, 则run下面挂的所有 region 都是8byte, 且所有申请内存 0~8 byte 的, 都会到 8byte 这个run级别下寻找对应的空闲内存.</p>
+<p>所以, 类似上面的物流, 我们换一种类比, 则 region 是商品, run 是物品架, 该架子上放同类商品, 而 chunk 是一个仓库. 一个仓库里可以包含各种不同的货架. 一个货架上只能包含相同的商品.</p>
+<h3 id="_4">管理单元<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>如果我们的仓库是由机器人来分类, 每次来一个订单后, 需要机器人取出指定的商品. 则我们需要设计管理单元和对应的算法, 来让我们的机器人一最快的速度取到我们想要的商品.</p>
+<p>我们依然以小内存分配为例子.  </p>
+<p>在 arena 中存在一个分类的概念.</p>
+<div class="codehilite"><pre><span></span><span class="n">struct</span><span class="w"> </span><span class="n">arena_s</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">unsigned</span><span class="w">        </span><span class="n">ind</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">ind</span><span class="w"> </span><span class="n">表示在</span><span class="w"> </span><span class="n">arenas</span><span class="w"> </span><span class="n">数组中的位置</span><span class="p">,</span><span class="w"> </span><span class="n">前文介绍了</span><span class="w"> </span><span class="n">arena</span><span class="p">,</span><span class="w"> </span><span class="n">提到会有多个</span><span class="p">,</span><span class="w"> </span><span class="n">用于不同CPU的cache</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="n">ql_head</span><span class="p">(</span><span class="n">extent_node_t</span><span class="p">)</span><span class="w">  </span><span class="n">achunks</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">链表</span><span class="p">,</span><span class="w"> </span><span class="n">achunks</span><span class="w"> </span><span class="n">就是前面的仓库</span><span class="p">,</span><span class="w"> </span><span class="n">也就是说这个对象管理了多个仓库</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="p">..</span><span class="w"></span>
+<span class="w">    </span><span class="n">arena_chunk_t</span><span class="w">       </span><span class="o">*</span><span class="n">spare</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">最近访问的仓库</span><span class="p">,</span><span class="w"> </span><span class="n">用于快速访问</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">ql_head</span><span class="p">(</span><span class="n">extent_node_t</span><span class="p">)</span><span class="w">  </span><span class="n">huge</span><span class="p">;</span><span class="w">   </span><span class="o">//</span><span class="w"> </span><span class="n">巨大内存的申请</span><span class="p">,</span><span class="w"> </span><span class="n">此处不介绍</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="n">arena_bin_t</span><span class="w">     </span><span class="n">bins</span><span class="o">[</span><span class="n">NBINS</span><span class="o">]</span><span class="p">;</span><span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">分类</span><span class="p">,</span><span class="w"> </span><span class="n">将所有能管理到的chunk中的run进行分类并放入到不同的</span><span class="w"> </span><span class="n">bins</span><span class="w"> </span><span class="n">中</span><span class="p">.</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>我们关注 bins , 这个就是分类箱子, 就像分类表. 比如一个 8byte 的表, 里面记录的全部都是 8 byte 的货架位置, 通过这个表, 可以快速找到货架位置.</p>
+<p>这个分类为 36 , 也就是说有 36个 bins. 我们来分别看下 bins 结构的内容和36个类别是啥.</p>
+<div class="codehilite"><pre><span></span><span class="n">struct</span><span class="w"> </span><span class="n">arena_bin_s</span><span class="w"> </span><span class="err">{</span><span class="w"> </span>
+<span class="w">    </span><span class="n">malloc_mutex_t</span><span class="w">      </span><span class="n">lock</span><span class="p">;</span><span class="w">      </span><span class="o">//</span><span class="w"> </span><span class="n">锁</span><span class="p">,</span><span class="w"> </span><span class="n">用于多线程访问时</span><span class="p">,</span><span class="w"> </span><span class="n">加锁</span><span class="p">.</span><span class="w"></span>
+<span class="w">    </span><span class="n">arena_run_t</span><span class="w">     </span><span class="o">*</span><span class="n">runcur</span><span class="p">;</span><span class="w">       </span><span class="o">//</span><span class="w"> </span><span class="n">当前未放满的货架</span><span class="w"></span>
+<span class="w">    </span><span class="n">arena_run_heap_t</span><span class="w">    </span><span class="n">runs</span><span class="p">;</span><span class="w">     </span><span class="o">//</span><span class="w"> </span><span class="n">所有未放满的货架</span><span class="w"></span>
+<span class="w">    </span><span class="n">arena_run_heap_t</span><span class="w">    </span><span class="n">runs_avail</span><span class="o">[</span><span class="n">NPSIZES</span><span class="o">]</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">所有未被分类的货架</span><span class="p">,</span><span class="w"> </span><span class="n">在某一类别货架不够时</span><span class="p">,</span><span class="w"> </span><span class="n">从此处获取一个新货架放商品</span><span class="p">.</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="p">...</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>从上面的结构, 很容易猜测找货架的方法, 先查看当前货架, 如果当前货架未满(还有未分配的region), 则直接找到当前货架, 否则从所有未满的货架中寻找一个离最近的(内存地址最低)货架, 并记录为当前货架.</p>
+<p>下面看下货架的分类.</p>
+<table>
+<thead>
+<tr>
+<th>ind</th>
+<th>reg size</th>
+<th>reg num</th>
+<th>run size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0x8</td>
+<td>0x200</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0x10</td>
+<td>0x100</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0x20</td>
+<td>0x800</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0x30</td>
+<td>0x100</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0x40</td>
+<td>0x40</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0x50</td>
+<td>0x100</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0x60</td>
+<td>0x80</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0x70</td>
+<td>0x100</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0x80</td>
+<td>0x20</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0xa0</td>
+<td>0x80</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0xc0</td>
+<td>0x40</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0xe0</td>
+<td>0x80</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0x100</td>
+<td>0x10</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>13</td>
+<td>0x140</td>
+<td>0x40</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>14</td>
+<td>0x180</td>
+<td>0x20</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>15</td>
+<td>0x1c0</td>
+<td>0x40</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>16</td>
+<td>0x200</td>
+<td>0x8</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>17</td>
+<td>0x280</td>
+<td>0x20</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>18</td>
+<td>0x300</td>
+<td>0x10</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>19</td>
+<td>0x380</td>
+<td>0x20</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>20</td>
+<td>0x400</td>
+<td>0x4</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>21</td>
+<td>0x500</td>
+<td>0x10</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>22</td>
+<td>0x600</td>
+<td>0x8</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>23</td>
+<td>0x700</td>
+<td>0x10</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>24</td>
+<td>0x800</td>
+<td>0x2</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>25</td>
+<td>0xa00</td>
+<td>0x8</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>26</td>
+<td>0xc00</td>
+<td>0x4</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>27</td>
+<td>0xe00</td>
+<td>0x8</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>28</td>
+<td>0x1000</td>
+<td>0x1</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>29</td>
+<td>0x1400</td>
+<td>0x4</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>30</td>
+<td>0x1800</td>
+<td>0x2</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>31</td>
+<td>0x1c00</td>
+<td>0x4</td>
+<td>0x7000</td>
+</tr>
+<tr>
+<td>32</td>
+<td>0x2000</td>
+<td>0x1</td>
+<td>0x2000</td>
+</tr>
+<tr>
+<td>33</td>
+<td>0x2800</td>
+<td>0x2</td>
+<td>0x5000</td>
+</tr>
+<tr>
+<td>34</td>
+<td>0x3000</td>
+<td>0x1</td>
+<td>0x3000</td>
+</tr>
+<tr>
+<td>35</td>
+<td>0x3800</td>
+<td>0x2</td>
+<td>0x7000</td>
+</tr>
+</tbody>
+</table>
+<p>通过以上的bin表, 我们找到了货架, 那么, 货架中, 我们怎么知道哪个位置有我们要的商品呢?</p>
+<div class="codehilite"><pre><span></span><span class="n">struct</span><span class="w"> </span><span class="n">arena_run_s</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">szind_t</span><span class="w">     </span><span class="n">binind</span><span class="p">;</span><span class="w">                        </span><span class="o">//</span><span class="w"> </span><span class="n">类别</span><span class="p">,</span><span class="w"> </span><span class="n">也就是</span><span class="w"> </span><span class="n">bin</span><span class="w"> </span><span class="n">的索引号</span><span class="w"></span>
+<span class="w">    </span><span class="n">unsigned</span><span class="w">    </span><span class="n">nfree</span><span class="p">;</span><span class="w">                         </span><span class="o">//</span><span class="w"> </span><span class="n">标记这个货架还有多少有效商品</span><span class="w"></span>
+<span class="w">    </span><span class="n">bitmap_t</span><span class="w">    </span><span class="n">bitmap</span><span class="o">[</span><span class="n">BITMAP_GROUPS_MAX</span><span class="o">]</span><span class="p">;</span><span class="w">     </span><span class="o">//</span><span class="w"> </span><span class="n">商品是否有效的标记</span><span class="p">.</span><span class="w"> </span><span class="n">有效</span><span class="w"> </span><span class="n">为</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">否则</span><span class="w"> </span><span class="n">为</span><span class="w"> </span><span class="mf">0.</span><span class="w"> </span><span class="n">nfree</span><span class="w"> </span><span class="n">就表示</span><span class="w"> </span><span class="n">bitmap</span><span class="w"> </span><span class="n">中</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">的个数</span><span class="p">.</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>从前文我们知道, <code>arena_run_s</code> 对象是在 chunk 的头, 与实际的用户数据是隔离的, 那么是如何通过 bitmap 来找到对应空闲的内存呢?</p>
+<p>我们回到前面的图, 再看一下, <code>arena_chunk_map_misc_t</code> , <code>arena_chunk_map_bits_t</code> 和 剩下的页数都是 499 .   <code>arena_chunk_map_misc_t</code> 是对应每个页的属性, 后续会介绍其作用. <code>arena_chunk_map_bits_t</code> 包含成员 run, 而 arena 中包含的 runcur 指针, 这两个是同一个, arena 指向的实际上就是 <code>arena_chunk_map_bits_t</code> 中的run. 从上表中, 我们知道, run 可能包含多个page, 则499 page, 不会有 499个run, 也就是说 499个 <code>arena_chunk_map_bits_t</code> 中有空. 那么<code>arena_chunk_map_bits_t</code> 与其对应的多个page, 怎么关联呢? 通过偏移.  <code>arena_chunk_map_bits_t</code> 在 499个中的偏移, 与其第一个page在499个page中的偏移相等. 如下:</p>
+<p><img alt="" src="../_v_images/20190304214543544_168598498.png" /></p>
+<p>所以, 我们在已知 run 的情况下, 可以通过其偏移知道 <code>arena_chunk_map_misc_t</code> 的地址, 然后再计算出来其偏移. 再通过偏移计算得到该run对应的第一个page位置. 相应算法如下:</p>
+<p><img alt="" src="../_v_images/20190304215139144_1948823991.png" /></p>
+<p><code>map_bias</code> 就是前文 13*4K 的 13.  <code>map_misc_offset</code> 为 <code>arena_chunk_map_misc_t</code> 数组的基地址, 此处是计算出 miscelm 这个地址在数组中的位置, 然后加上 13 的偏移, 计算出 miscelm 中 run 所管理的第一个 page在 chunk 这个 2M 空间中的位置, 假设是 M. bitmap 中我们找到的第一个 1 的位置, 假设是 N, 则可以计算出来其对应的地址是 <code>chunk + M &lt;&lt; LG_PAGE + reg_offset + reg_size * N</code> . 这个地址, 也就是期望找的货架上的商品, 也即是实际返回给用户的内存地址.</p>
+<p>如果所有的内存请求都是上面的查找方式, 则我们看不到与dlmalloc的差异, 也看不到 jemalloc 所宣传的对多线程, 多核的优势. 那么, 多线程下, 内存是如何分配的呢?</p>
+<p>如果把上面我们已经分析的方式, 比喻成武汉的jd物流仓库, 则线程内的内存申请, 就是昆山仓库. 小商品就直接从昆山仓库发货. 同理, 多线程的小内存分配, 实际在线程内存就可以申请, 不需要请求到 arena . 不过在 Android, go (低内存) 版本使用的是上面这套机制, 只有正常版本, 才开启了 tcache 功能, 在线程内直接申请内存.</p>
+                
+                  
+                
+              
+              
+                
+
+
+  <h2 id="__comments">评论</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://wertherzhang.com/jemalloc剖析/";
+      this.page.identifier =
+        "/jemalloc剖析/";
+    };
+    (function() {
+      var d = document, s = d.createElement("script");
+      s.src = "//wertherzhangblog.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../binder/" title="binder" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                binder
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../跟我读源码--换个角度看init/" title="换个角度看init" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                换个角度看init
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2018 Werther Zhang
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="http://wertherzhang.coding.me/" class="md-footer-social__link fa fa-coding"></a>
+    
+      <a href="https://pengzhang.netlify.com/" class="md-footer-social__link fa fa-netlify"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+          
+            
+              
+              
+            
+          
+          
+            <script src="../assets/javascripts/lunr/lunr.multi.js"></script>
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

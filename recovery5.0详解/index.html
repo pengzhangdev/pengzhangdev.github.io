@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh" class="no-js">
   <head>
     
@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0, mkdocs-material-3.0.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
     
     
       
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.22915126.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
       
       
         
@@ -57,16 +57,45 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
-      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono&display=fallback">
         <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-142756153-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
@@ -85,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#recovery50" tabindex="1" class="md-skip">
+      <a href="#recovery50" tabindex="1" class="md-skip">
         跳转至
       </a>
     
@@ -106,22 +135,21 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            
-              <span class="md-header-nav__topic">
-                万卷茅屋
-              </span>
-              <span class="md-header-nav__topic">
+            <span class="md-header-nav__topic">
+              万卷茅屋
+            </span>
+            <span class="md-header-nav__topic">
+              
                 Recovery5二次开发详解
-              </span>
-            
+              
+            </span>
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-            
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
@@ -144,7 +172,6 @@
     </div>
   </div>
 </div>
-          
         
       </div>
       
@@ -184,6 +211,19 @@
       
         <a href="../zram/" title="Android" class="md-tabs__link md-tabs__link--active">
           Android
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../跟我读源码--换个角度看init/" title="跟我读源码" class="md-tabs__link">
+          跟我读源码
         </a>
       
     </li>
@@ -439,6 +479,12 @@
       
       
       
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
     </ul>
   
 </nav>
@@ -494,6 +540,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../binder/" title="binder" class="md-nav__link">
+      binder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jemalloc剖析/" title="jemalloc" class="md-nav__link">
+      jemalloc
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -509,10 +579,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
-      Python
+      跟我读源码
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-4">
+        跟我读源码
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../跟我读源码--换个角度看init/" title="换个角度看init" class="md-nav__link">
+      换个角度看init
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
         Python
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -542,13 +648,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       搬运工
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         搬运工
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -678,6 +784,12 @@
       
       
       
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
     </ul>
   
 </nav>
@@ -765,48 +877,48 @@
 <br>
 <br>
 下面是基于文件升级的包内容, system下面的数据以文件为单位存在.</p>
-<div class="codehilite"><pre><span></span>Path = update.zip
-Type = zip
-Comment = signed by SignApk
+<div class="codehilite"><pre><span></span><span class="n">Path</span> <span class="o">=</span> <span class="k">update</span><span class="p">.</span><span class="n">zip</span>
+<span class="k">Type</span> <span class="o">=</span> <span class="n">zip</span>
+<span class="k">Comment</span> <span class="o">=</span> <span class="n">signed</span> <span class="k">by</span> <span class="n">SignApk</span>
 
-   Date      Time    Attr   Name
-------------------- ----- ------------------------
-2008-02-29 02:33:46 .....  META-INF/CERT.RSA
-2008-02-29 02:33:46 .....  META-INF/CERT.SF
-2008-02-29 02:33:46 .....  META-INF/MANIFEST.MF
-2008-02-29 02:33:46 .....  META-INF/com/android/metadata
-2008-02-29 02:33:46 .....  META-INF/com/android/otacert
-2008-02-29 02:33:46 .....  META-INF/com/google/android/update-binary
-2008-02-29 02:33:46 .....  META-INF/com/google/android/updater-script
-2008-02-29 02:33:46 .....  boot.img
-2008-02-29 02:33:46 .....  system/
-2008-02-29 02:33:46 .....  system/xxx
-2008-02-29 02:33:46 .....  system/yyy
-------------------- ----- ------------------------
+   <span class="nb">Date</span>      <span class="n">Time</span>    <span class="n">Attr</span>   <span class="n">Name</span>
+<span class="c1">------------------- ----- ------------------------</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="p">.</span><span class="n">RSA</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="p">.</span><span class="n">SF</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">MANIFEST</span><span class="p">.</span><span class="n">MF</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">metadata</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">otacert</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="k">update</span><span class="o">-</span><span class="nb">binary</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">updater</span><span class="o">-</span><span class="n">script</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">boot</span><span class="p">.</span><span class="n">img</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="o">/</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="o">/</span><span class="n">xxx</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="o">/</span><span class="n">yyy</span>
+<span class="c1">------------------- ----- ------------------------</span>
 </pre></div>
 
 
 <p><br>
 <br>
 下面是基于块升级的包内容, system文件全部以二进制数据存在, 以块大小为一个单位.</p>
-<div class="codehilite"><pre><span></span>Path = update.zip
-Type = zip
-Comment = signed by SignApk
+<div class="codehilite"><pre><span></span><span class="n">Path</span> <span class="o">=</span> <span class="k">update</span><span class="p">.</span><span class="n">zip</span>
+<span class="k">Type</span> <span class="o">=</span> <span class="n">zip</span>
+<span class="k">Comment</span> <span class="o">=</span> <span class="n">signed</span> <span class="k">by</span> <span class="n">SignApk</span>
 
-   Date      Time    Attr   Name
-------------------- ----- ------------------------
-2008-02-29 02:33:46 .....  META-INF/CERT.RSA
-2008-02-29 02:33:46 .....  META-INF/CERT.SF
-2008-02-29 02:33:46 .....  META-INF/MANIFEST.MF
-2008-02-29 02:33:46 .....  META-INF/com/android/metadata
-2008-02-29 02:33:46 .....  META-INF/com/android/otacert
-2008-02-29 02:33:46 .....  META-INF/com/google/android/update-binary
-2008-02-29 02:33:46 .....  META-INF/com/google/android/updater-script
-2008-02-29 02:33:46 .....  boot.img
-2008-02-29 02:33:46 .....  system.new.dat
-2008-02-29 02:33:46 .....  system.patch.dat
-2008-02-29 02:33:46 .....  system.transfer.dat
-------------------- ----- ------------------------
+   <span class="nb">Date</span>      <span class="n">Time</span>    <span class="n">Attr</span>   <span class="n">Name</span>
+<span class="c1">------------------- ----- ------------------------</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="p">.</span><span class="n">RSA</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="p">.</span><span class="n">SF</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">MANIFEST</span><span class="p">.</span><span class="n">MF</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">metadata</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">otacert</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="k">update</span><span class="o">-</span><span class="nb">binary</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">updater</span><span class="o">-</span><span class="n">script</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">boot</span><span class="p">.</span><span class="n">img</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="p">.</span><span class="k">new</span><span class="p">.</span><span class="n">dat</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="p">.</span><span class="n">patch</span><span class="p">.</span><span class="n">dat</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="p">.</span><span class="n">transfer</span><span class="p">.</span><span class="n">dat</span>
+<span class="c1">------------------- ----- ------------------------</span>
 </pre></div>
 
 
@@ -838,20 +950,20 @@ Comment = signed by SignApk
 </ul>
 <p>下面详细描述UI的初始化, 特别是xml布局的实现和绘图.</p>
 <p>首先, recovery中的资源的目录组织形式. 具体包含脚本文件, 各个分辨率图片, 各个分辨率的布局文件, 字体文件和中英文文字文件. 具体内容可查看源码res和device下设备资源文件.</p>
-<div class="codehilite"><pre><span></span>res/scripts
-res/scripts/common.xml
-res/images/720L/battery_progress.png
-res/images/720L/battery_charge.png
-res/images/720L/battery_empty.png
-res/images/720L/progress_empty.png
-res/images/720L/progress_fill.png
-res/images/720L/icon-menu.png
-res/styles/1280x720L/statusbar.xml
-res/styles/1280x720L/menu.xml
-res/styles/1280x720L/main.xml
-res/fonts/DroidSansFallback.ttf
-res/string/cn/string.xml
-res/string/en/string.xml
+<div class="codehilite"><pre><span></span><span class="n">res</span><span class="o">/</span><span class="n">scripts</span>
+<span class="n">res</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">common</span><span class="p">.</span><span class="n">xml</span>
+<span class="n">res</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="mi">720</span><span class="n">L</span><span class="o">/</span><span class="n">battery_progress</span><span class="p">.</span><span class="n">png</span>
+<span class="n">res</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="mi">720</span><span class="n">L</span><span class="o">/</span><span class="n">battery_charge</span><span class="p">.</span><span class="n">png</span>
+<span class="n">res</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="mi">720</span><span class="n">L</span><span class="o">/</span><span class="n">battery_empty</span><span class="p">.</span><span class="n">png</span>
+<span class="n">res</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="mi">720</span><span class="n">L</span><span class="o">/</span><span class="n">progress_empty</span><span class="p">.</span><span class="n">png</span>
+<span class="n">res</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="mi">720</span><span class="n">L</span><span class="o">/</span><span class="n">progress_fill</span><span class="p">.</span><span class="n">png</span>
+<span class="n">res</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="mi">720</span><span class="n">L</span><span class="o">/</span><span class="n">icon</span><span class="o">-</span><span class="n">menu</span><span class="p">.</span><span class="n">png</span>
+<span class="n">res</span><span class="o">/</span><span class="n">styles</span><span class="o">/</span><span class="mi">1280</span><span class="n">x720L</span><span class="o">/</span><span class="n">statusbar</span><span class="p">.</span><span class="n">xml</span>
+<span class="n">res</span><span class="o">/</span><span class="n">styles</span><span class="o">/</span><span class="mi">1280</span><span class="n">x720L</span><span class="o">/</span><span class="n">menu</span><span class="p">.</span><span class="n">xml</span>
+<span class="n">res</span><span class="o">/</span><span class="n">styles</span><span class="o">/</span><span class="mi">1280</span><span class="n">x720L</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">xml</span>
+<span class="n">res</span><span class="o">/</span><span class="n">fonts</span><span class="o">/</span><span class="n">DroidSansFallback</span><span class="p">.</span><span class="n">ttf</span>
+<span class="n">res</span><span class="o">/</span><span class="n">string</span><span class="o">/</span><span class="n">cn</span><span class="o">/</span><span class="n">string</span><span class="p">.</span><span class="n">xml</span>
+<span class="n">res</span><span class="o">/</span><span class="n">string</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">string</span><span class="p">.</span><span class="n">xml</span>
 </pre></div>
 
 
@@ -914,22 +1026,22 @@ res/string/en/string.xml
 <p><br>
 包结构变化:
 lzma2压缩后的包结构如下</p>
-<div class="codehilite"><pre><span></span>Path = update.zip
-Type = zip
-Comment = signed by SignApk
+<div class="codehilite"><pre><span></span><span class="n">Path</span> <span class="o">=</span> <span class="k">update</span><span class="p">.</span><span class="n">zip</span>
+<span class="k">Type</span> <span class="o">=</span> <span class="n">zip</span>
+<span class="k">Comment</span> <span class="o">=</span> <span class="n">signed</span> <span class="k">by</span> <span class="n">SignApk</span>
 
-   Date      Time    Attr   Name
-------------------- ----- ------------------------
-2008-02-29 02:33:46 .....  META-INF/CERT.RSA
-2008-02-29 02:33:46 .....  META-INF/CERT.SF
-2008-02-29 02:33:46 .....  META-INF/MANIFEST.MF
-2008-02-29 02:33:46 .....  META-INF/com/android/metadata
-2008-02-29 02:33:46 .....  META-INF/com/android/otacert
-2008-02-29 02:33:46 .....  META-INF/com/google/android/update-binary
-2008-02-29 02:33:46 .....  META-INF/com/google/android/updater-script
-2008-02-29 02:33:46 .....  boot.lzma
-2008-02-29 02:33:46 .....  system.lzma
-------------------- ----- ------------------------
+   <span class="nb">Date</span>      <span class="n">Time</span>    <span class="n">Attr</span>   <span class="n">Name</span>
+<span class="c1">------------------- ----- ------------------------</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="p">.</span><span class="n">RSA</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="p">.</span><span class="n">SF</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">MANIFEST</span><span class="p">.</span><span class="n">MF</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">metadata</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">otacert</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="k">update</span><span class="o">-</span><span class="nb">binary</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">updater</span><span class="o">-</span><span class="n">script</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="n">boot</span><span class="p">.</span><span class="n">lzma</span>
+<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">29</span> <span class="mi">02</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">46</span> <span class="p">.....</span>  <span class="k">system</span><span class="p">.</span><span class="n">lzma</span>
+<span class="c1">------------------- ----- ------------------------</span>
 </pre></div>
 
 
@@ -958,6 +1070,22 @@ device添加规则:</p>
                 
 
 
+  <h2 id="__comments">评论</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://wertherzhang.com/recovery5.0详解/";
+      this.page.identifier =
+        "/recovery5.0详解/";
+    };
+    (function() {
+      var d = document, s = d.createElement("script");
+      s.src = "//wertherzhangblog.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+
               
             </article>
           </div>
@@ -977,7 +1105,7 @@ device添加规则:</p>
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
-                  后退
+                  上一页
                 </span>
                 AB系统升级
               </span>
@@ -989,7 +1117,7 @@ device添加规则:</p>
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
-                  前进
+                  下一页
                 </span>
                 Android内存调试总结
               </span>
@@ -1017,7 +1145,6 @@ device添加规则:</p>
           Material for MkDocs</a>
       </div>
       
-        
   <div class="md-footer-social">
     <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
     
@@ -1027,14 +1154,13 @@ device添加规则:</p>
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.245445c6.js"></script>
       
         
         
@@ -1045,10 +1171,6 @@ device添加规则:</p>
           
             
               
-                <script src="../assets/javascripts/lunr/tinyseg.js"></script>
-              
-              
-                <script src="../assets/javascripts/lunr/lunr.jp.js"></script>
               
             
           
@@ -1057,10 +1179,7 @@ device添加规则:</p>
           
         
       
-      <script>app.initialize({version:"1.0",url:{base:".."}})</script>
-      
-    
-    
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
     
   </body>

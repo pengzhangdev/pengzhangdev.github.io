@@ -40,10 +40,6 @@ markdown_extensions:
     - toc:
         permalink: true
 
-plugins:
-    - git-revision-date
-    - macros
-
 nav:
     - 万卷茅屋: index.md
     - 关于: about.md

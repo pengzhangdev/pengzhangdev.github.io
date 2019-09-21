@@ -44,7 +44,7 @@ nav:
     - 万卷茅屋: index.md
     - 关于: about.md
 
-    - Android:
+    - Android草稿:
         - zram: zram.md
         - Android8分区表分析: android8-partiton-table.md
         - AB系统升级: Android-AB-system-update.md
@@ -55,6 +55,7 @@ nav:
         - dlmalloc 浅析 : dlmalloc浅析.md
         - binder : binder.md
         - jemalloc : jemalloc剖析.md
+        - cpp引用和指针 : cpp引用和指针.md/cpp引用和指针.md 
 
     - 跟我读源码:
         - 换个角度看init: 跟我读源码--换个角度看init.md
